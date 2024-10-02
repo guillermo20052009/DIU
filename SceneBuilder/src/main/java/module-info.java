@@ -13,4 +13,6 @@ module pack.scenebuilder {
 
     opens pack.scenebuilder to javafx.fxml;
     exports pack.scenebuilder;
+    exports controller;
+    opens controller to javafx.fxml;
 }
