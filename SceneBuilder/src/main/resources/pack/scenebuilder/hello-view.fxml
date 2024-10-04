@@ -16,17 +16,17 @@
    <children>
       <HBox alignment="CENTER" prefHeight="4.0" prefWidth="200.0">
          <children>
-            <Button mnemonicParsing="false" text="-">
+            <Button fx:id="Resta" mnemonicParsing="false" onAction="#botonmenos" text="-">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="0">
+            <Button fx:id="Cero" mnemonicParsing="false" onAction="#botoncero"  text="0">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="+" textAlignment="RIGHT">
+            <Button fx:id="suma" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#botonmas"  text="+" textAlignment="RIGHT">
                <HBox.margin>
                   <Insets right="3.0" />
                </HBox.margin>
