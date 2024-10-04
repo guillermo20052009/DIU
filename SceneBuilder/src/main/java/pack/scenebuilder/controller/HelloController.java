@@ -1,7 +1,10 @@
 package pack.scenebuilder.controller;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -14,7 +17,8 @@ public class HelloController {
     @FXML
     public Label numero;
     public TextField cuadro;
-    int numpuls;
+    public IntegerProperty numeroPuls = new SimpleIntegerProperty(0);
+    public ProgressBar barra;
 
     @FXML
     public void handleButtonAction() {
@@ -29,24 +33,33 @@ public class HelloController {
             // Lógica para cuando se presiona Enter
             if (isNumeric(cuadro.getText())) {
                 numero.setText(cuadro.getText());
+                barra.setProgress(barra.getProgress()+0.02);
             } else {
                 numero.setText("0");
+                barra.setProgress(barra.getProgress()+0.02);
             }
         }
     }
 
     public void botonmas(){
-        numpuls=Integer.valueOf(numero.getText());
-        numpuls++;
-        numero.setText(String.valueOf(numpuls));
+        numeroPuls.setValue(Integer.valueOf(numero.getText()));
+        numeroPuls.setValue(numeroPuls.getValue()+1);
+        numero.setText(String.valueOf(numeroPuls.getValue()));
+        barra.setProgress(barra.getProgress()+0.02);
+        numeroPuls.addListener((obs, oldVal, newVal) -> numero.setText(String.valueOf(newVal)));
     }
     public void botonmenos(){
-        numpuls=Integer.valueOf(numero.getText());
-        numpuls--;
-        numero.setText(String.valueOf(numpuls));
+        numeroPuls.setValue(Integer.valueOf(numero.getText()));
+        numeroPuls.setValue(numeroPuls.getValue()-1);
+        numero.setText(String.valueOf(numeroPuls.getValue()));
+        barra.setProgress(barra.getProgress()+0.02);
+        numeroPuls.addListener((obs, oldVal, newVal) -> numero.setText(String.valueOf(newVal)));
     }
     public void botoncero(){
-        numero.setText("0");
+        numeroPuls.setValue(0);
+        numero.setText(String.valueOf(numeroPuls.getValue()));
+        barra.setProgress(barra.getProgress()+0.02);
+        numeroPuls.addListener((obs, oldVal, newVal) -> numero.setText(String.valueOf(newVal)));
     }
 
     private boolean isNumeric(String str) {

@@ -35,6 +35,6 @@
       </HBox>
       <Label fx:id="numero" alignment="TOP_CENTER" text="0" />
       <TextField fx:id="cuadro" onKeyPressed="#handleKeyPressed" promptText="Introduce el numero que quieras" />
-      <ProgressBar prefWidth="200.0" progress="0.0" />
+      <ProgressBar fx:id="barra" prefWidth="200.0" progress="0.0" />
    </children>
 </VBox>
