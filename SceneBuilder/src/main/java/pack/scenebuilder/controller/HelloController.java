@@ -26,6 +26,13 @@ public class HelloController {
             numero.setText("0");
         else
             numero.setText(cuadro.getText());
+
+    }
+
+    @FXML
+    public void initialize(){
+        barra.progressProperty().bind(numeroPuls.divide(50.0));
+        numeroPuls.addListener((obs, oldVal, newVal) -> numero.setText(String.valueOf(newVal)));
     }
     public void handleKeyPressed(KeyEvent event) {
         // Verifica si se presionó la tecla Enter
@@ -33,10 +40,12 @@ public class HelloController {
             // Lógica para cuando se presiona Enter
             if (isNumeric(cuadro.getText())) {
                 numero.setText(cuadro.getText());
-                barra.setProgress(barra.getProgress()+0.02);
+                numeroPuls.setValue(Integer.valueOf(numero.getText()));
+
             } else {
                 numero.setText("0");
-                barra.setProgress(barra.getProgress()+0.02);
+                numeroPuls.setValue(0);
+
             }
         }
     }
@@ -45,21 +54,16 @@ public class HelloController {
         numeroPuls.setValue(Integer.valueOf(numero.getText()));
         numeroPuls.setValue(numeroPuls.getValue()+1);
         numero.setText(String.valueOf(numeroPuls.getValue()));
-        barra.setProgress(barra.getProgress()+0.02);
-        numeroPuls.addListener((obs, oldVal, newVal) -> numero.setText(String.valueOf(newVal)));
+
     }
     public void botonmenos(){
         numeroPuls.setValue(Integer.valueOf(numero.getText()));
         numeroPuls.setValue(numeroPuls.getValue()-1);
         numero.setText(String.valueOf(numeroPuls.getValue()));
-        barra.setProgress(barra.getProgress()+0.02);
-        numeroPuls.addListener((obs, oldVal, newVal) -> numero.setText(String.valueOf(newVal)));
     }
     public void botoncero(){
         numeroPuls.setValue(0);
         numero.setText(String.valueOf(numeroPuls.getValue()));
-        barra.setProgress(barra.getProgress()+0.02);
-        numeroPuls.addListener((obs, oldVal, newVal) -> numero.setText(String.valueOf(newVal)));
     }
 
     private boolean isNumeric(String str) {
