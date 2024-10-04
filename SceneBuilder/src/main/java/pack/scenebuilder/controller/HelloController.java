@@ -20,6 +20,8 @@ public class HelloController {
     public IntegerProperty numeroPuls = new SimpleIntegerProperty(0);
     public ProgressBar barra;
 
+    public VBox caja;
+
     @FXML
     public void handleButtonAction() {
         if (cuadro.getText().compareTo("")==0)
@@ -33,6 +35,7 @@ public class HelloController {
     public void initialize(){
         barra.progressProperty().bind(numeroPuls.divide(50.0));
         numeroPuls.addListener((obs, oldVal, newVal) -> numero.setText(String.valueOf(newVal)));
+        caja.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
     }
     public void handleKeyPressed(KeyEvent event) {
         // Verifica si se presionó la tecla Enter

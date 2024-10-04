@@ -1,0 +1,10 @@
+#caja{
+    -fx-background-color:red;
+}
+#numero{
+  -fx-text-background-color: blue;
+}
+#suma{
+    -fx-background-color:black;
+    -fx-text-fill:white;
+}
