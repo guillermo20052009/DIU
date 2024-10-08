@@ -1,0 +1,9 @@
+.btCero{
+    -fx-background-color:red;
+}
+.texto{
+  -fx-text-background-color: blue;
+}
+.fondo{
+    -fx-background-color:black;
+}
