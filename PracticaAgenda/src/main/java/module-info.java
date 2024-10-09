@@ -12,7 +12,6 @@ module pack.scenebuilder {
     requires com.almasb.fxgl.all;
 
     opens Agenda to javafx.fxml;
-    exports Agenda;
     exports Agenda.controller;
     opens Agenda.controller to javafx.fxml;
 }

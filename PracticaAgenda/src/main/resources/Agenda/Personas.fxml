@@ -9,16 +9,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.Button?>
 
-<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="300.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Agenda.controller.PersonOverviewController">
    <children>
       <SplitPane dividerPositions="0.40301003344481606" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <items>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="personas" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="Nombre" />
-                      <TableColumn prefWidth="75.0" text="Apellido" />
+                      <TableColumn fx:id="nombre" prefWidth="75.0" text="Nombre" />
+                      <TableColumn fx:id="apellido" prefWidth="75.0" text="Apellido" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -49,15 +49,15 @@
                         <Label text="Ciudad" GridPane.rowIndex="3" />
                         <Label text="Codigo postal" GridPane.rowIndex="4" />
                         <Label text="Fecha Nacimiento" GridPane.rowIndex="5" />
-                        <Label text="Label" GridPane.columnIndex="1" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="nombreEtiqueta" text="Label" GridPane.columnIndex="1" />
+                        <Label fx:id="apellidoEtiqueta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label fx:id="calleEtiqueta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="postalEtiqueta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="ciudadEtiqueta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label fx:id="cumpleañosEtiqueta" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                      </children>
                   </GridPane>
-                  <Button layoutX="281.0" layoutY="260.0" mnemonicParsing="false" text="Delete" />
+                  <Button layoutX="281.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleDeletePerson" text="Delete" />
                   <Button layoutX="223.0" layoutY="260.0" mnemonicParsing="false" text="Edit..." />
                   <Button layoutX="161.0" layoutY="261.0" mnemonicParsing="false" text="New..." />
                </children>
