@@ -81,6 +81,34 @@ public class PersonOverviewController {
         }
     }
     @FXML
+    private void handleNewPerson() {
+        Persona tempPerson = new Persona();
+        boolean okClicked = agenda.showPersonEditDialog(tempPerson);
+        if (okClicked) {
+            agenda.getPersonData().add(tempPerson);
+        }
+    }
+
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected person.
+     */
+    @FXML
+    private void handleEditPerson() {
+        Persona selectedPerson = personas.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            boolean okClicked = agenda.showPersonEditDialog(selectedPerson);
+            if (okClicked) {
+                showPersonDetails(selectedPerson);
+            }
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Debes tener seleccionada a una persona para borrrarla");
+            alert.show();
+        }
+    }
+    @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
         nombre.setCellValueFactory(
