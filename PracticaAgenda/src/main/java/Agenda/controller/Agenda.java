@@ -15,6 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import Agenda.controller.PersonOverviewController;
+import Agenda.controller.RootLayoutController;
 
 public class Agenda extends Application {
 
@@ -95,7 +96,7 @@ public class Agenda extends Application {
         try {
             // Load the fxml file and create a new stage for the popup.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Agenda.class.getResource("/Agenda/BirthdayStatistics.fxml"));
+            loader.setLocation(Agenda.class.getResource("/Agenda/EstadisticaCumpleaños.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Birthday Statistics");
