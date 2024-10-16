@@ -1,4 +1,4 @@
-module conversor.converso.fxml {
+module com.example.cambiomoneda {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -12,7 +12,8 @@ module conversor.converso.fxml {
     requires com.almasb.fxgl.all;
     requires AccesoBBDDMoneda;
 
+    opens conversorPropio to javafx.fxml;
     exports conversorPropio.controller;
-    opens conversor to javafx.fxml;
-
+    exports conversorPropio.modelo;
+    opens conversorPropio.controller to javafx.fxml;
 }

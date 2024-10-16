@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="conversorPropio.controller.Controller">
+  <children>
+    <Text layoutX="178.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Conversor Monedas" textAlignment="CENTER" wrappingWidth="244.13000106811523">
+      <font>
+        <Font name="Liberation Mono Bold Italic" size="19.0" />
+      </font>
+    </Text>
+    <TextField fx:id="CuadroEuros" layoutX="97.0" layoutY="102.0" onKeyPressed="#Cambiar" promptText="Introduce Euros" />
+    <TextField fx:id="CuadroDolares" editable="false" layoutX="341.0" layoutY="102.0" promptText="Aqui saldrá la cantidad" />
+    <Text layoutX="131.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Euros" textAlignment="CENTER" wrappingWidth="94.13000106811523">
+      <font>
+        <Font name="Liberation Mono Bold Italic" size="19.0" />
+      </font>
+    </Text>
+    <Text layoutX="375.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dolares" textAlignment="CENTER" wrappingWidth="94.13000106811523">
+      <font>
+        <Font name="Liberation Mono Bold Italic" size="19.0" />
+      </font>
+    </Text>
+  </children>
+</AnchorPane>
