@@ -11,9 +11,11 @@ module com.example.cambiomoneda {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires AccesoBBDDMoneda;
+    requires java.sql;
 
     opens conversorPropio to javafx.fxml;
     exports conversorPropio.controller;
     exports conversorPropio.modelo;
     opens conversorPropio.controller to javafx.fxml;
+    exports conversorPropio;
 }
