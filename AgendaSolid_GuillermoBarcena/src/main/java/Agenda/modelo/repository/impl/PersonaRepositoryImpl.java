@@ -4,6 +4,7 @@ package Agenda.modelo.repository.impl;
 import Agenda.Persona;
 import Agenda.modelo.ExcepcionPersona;
 import Agenda.modelo.PersonaVO;
+import Agenda.modelo.repository.PersonaRepository;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,7 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class PersonaRepositoryImpl {
+public class PersonaRepositoryImpl implements PersonaRepository {
     private final Conexion conexion = new Conexion();
     private Statement stmt;
     private String sentencia;

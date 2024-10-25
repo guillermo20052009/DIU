@@ -12,7 +12,12 @@ module com.example.agendasolid_guillermobarcena {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires AccesoBBDDMoneda;
+    exports Agenda;
+    exports Agenda.modelo.repository.impl;
+    exports Agenda.controller;
+    exports Agenda.modelo;
 
-    opens com.example.agendasolid_guillermobarcena to javafx.fxml;
-    exports com.example.agendasolid_guillermobarcena;
+    opens Agenda to javafx.fxml;
+    opens Agenda.modelo to javafx.fxml;
+    opens Agenda.controller to javafx.fxml;
 }

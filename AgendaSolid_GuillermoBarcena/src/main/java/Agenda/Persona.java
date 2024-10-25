@@ -1,7 +1,8 @@
 package Agenda;
 
 import javafx.beans.property.StringProperty;
-
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 public class Persona {
     private StringProperty nombre;
     private StringProperty apellido;
@@ -10,22 +11,47 @@ public class Persona {
     private StringProperty codigoPostal;
     private StringProperty fechaNacimiento;
 
-    public Persona(StringProperty nombre, StringProperty apellido, StringProperty direccion, StringProperty ciudad, StringProperty codigoPostal, StringProperty fechaNacimiento) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.direccion = direccion;
-        this.ciudad = ciudad;
-        this.codigoPostal = codigoPostal;
-        this.fechaNacimiento = fechaNacimiento;
-    }
+
+        // Constructor que recibe Strings y convierte a StringProperty
+        public Persona(String nombre, String apellido, String direccion, String ciudad, String codigoPostal, String fechaNacimiento) {
+            this.nombre = new SimpleStringProperty(nombre);
+            this.apellido = new SimpleStringProperty(apellido);
+            this.direccion = new SimpleStringProperty(direccion);
+            this.ciudad = new SimpleStringProperty(ciudad);
+            this.codigoPostal = new SimpleStringProperty(codigoPostal);
+            this.fechaNacimiento = new SimpleStringProperty(fechaNacimiento);
+        }
+
+        // Getters y setters para los StringProperty (opcional)
+        public StringProperty nombreProperty() {
+            return nombre;
+        }
+
+        public StringProperty apellidoProperty() {
+            return apellido;
+        }
+
+        public StringProperty direccionProperty() {
+            return direccion;
+        }
+
+        public StringProperty ciudadProperty() {
+            return ciudad;
+        }
+
+        public StringProperty codigoPostalProperty() {
+            return codigoPostal;
+        }
+
+        public StringProperty fechaNacimientoProperty() {
+            return fechaNacimiento;
+        }
 
     public String getNombre() {
         return nombre.get();
     }
 
-    public StringProperty nombreProperty() {
-        return nombre;
-    }
+
 
     public void setNombre(String nombre) {
         this.nombre.set(nombre);
@@ -35,9 +61,7 @@ public class Persona {
         return apellido.get();
     }
 
-    public StringProperty apellidoProperty() {
-        return apellido;
-    }
+
 
     public void setApellido(String apellido) {
         this.apellido.set(apellido);
@@ -47,9 +71,7 @@ public class Persona {
         return direccion.get();
     }
 
-    public StringProperty direccionProperty() {
-        return direccion;
-    }
+
 
     public void setDireccion(String direccion) {
         this.direccion.set(direccion);
@@ -59,9 +81,7 @@ public class Persona {
         return ciudad.get();
     }
 
-    public StringProperty ciudadProperty() {
-        return ciudad;
-    }
+
 
     public void setCiudad(String ciudad) {
         this.ciudad.set(ciudad);
@@ -71,9 +91,7 @@ public class Persona {
         return codigoPostal.get();
     }
 
-    public StringProperty codigoPostalProperty() {
-        return codigoPostal;
-    }
+
 
     public void setCodigoPostal(String codigoPostal) {
         this.codigoPostal.set(codigoPostal);
@@ -83,9 +101,7 @@ public class Persona {
         return fechaNacimiento.get();
     }
 
-    public StringProperty fechaNacimientoProperty() {
-        return fechaNacimiento;
-    }
+
 
     public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento.set(fechaNacimiento);
