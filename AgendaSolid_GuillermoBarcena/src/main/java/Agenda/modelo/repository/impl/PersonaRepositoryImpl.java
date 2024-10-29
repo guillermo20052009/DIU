@@ -87,7 +87,7 @@ public class PersonaRepositoryImpl implements PersonaRepository {
             Connection conn = this.conexion.conectarBD();
             this.stmt = conn.createStatement();
             String sql = String.format(
-                    "UPDATE monedas SET nombre = '%s', apellido = '%s', direccion = '%s', ciudad = '%s', codigoPostal = '%s', fechaNacimiento = '%s' WHERE codigo = %d",
+                    "UPDATE persona SET nombre = '%s', apellido = '%s', direccion = '%s', ciudad = '%s', codigoPostal = '%s', fechaNacimiento = '%s' WHERE codigo = %d",
                     personaVO.getNombre(),
                     personaVO.getApellido(),
                     personaVO.getDireccion(),

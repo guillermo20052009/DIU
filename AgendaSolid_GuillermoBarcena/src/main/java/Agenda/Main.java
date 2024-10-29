@@ -2,6 +2,8 @@ package Agenda;
 
 import Agenda.controller.ControllerDialogo;
 import Agenda.controller.ControllerPersonas;
+import Agenda.controller.ControllerPrincipal;
+import Agenda.controller.CumpleañosController;
 import Agenda.modelo.AgendaModelo;
 import Agenda.modelo.ExcepcionPersona;
 import Agenda.modelo.repository.PersonaRepository;
@@ -42,6 +44,8 @@ public class Main extends Application {
             Scene scene = new Scene(rootLayout);  // Usamos rootLayout para la escena
             this.primaryStage.setScene(scene);
             this.primaryStage.setTitle("Agenda");
+            ControllerPrincipal controllerPrincipal = loader.getController();
+            controllerPrincipal.setMainApp(this);
 
             // Mostrar la vista de personas
             modelo.SetConversorModelo(personaRepository);
@@ -49,7 +53,6 @@ public class Main extends Application {
             this.primaryStage.show();
             personas = FXCollections.observableArrayList(controller.getPersonas());
             controller.setData(personas);
-            System.out.println(personas);
             controller.setMain(this);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -85,6 +88,27 @@ public class Main extends Application {
         } catch (IOException e) {
             e.printStackTrace();
             controller.setclick(false);
+        }
+    }
+    public void showBirthdayStatistics() {
+        try {
+            // Load the fxml file and create a new stage for the popup.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("/Agenda/Cumpleaños.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Birthday Statistics");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the persons into the controller.
+            CumpleañosController controller = loader.getController();
+            dialogStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

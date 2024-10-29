@@ -27,6 +27,7 @@ public class Persona {
             this.apellido = new SimpleStringProperty(apellido);
         }
         public Persona(){
+            this.codigo=new SimpleIntegerProperty(0);
             this.nombre = new SimpleStringProperty("41019");
             this.apellido = new SimpleStringProperty("41019");
             this.direccion = new SimpleStringProperty("41019");

@@ -23,6 +23,7 @@ public class PersonaUtil {
     }
 
     public static PersonaVO convertirVo(Persona persona) {
-         return new PersonaVO(persona.getNombre(),persona.getApellido(),persona.getDireccion(),persona.getCiudad(),persona.getCodigoPostal(),persona.getFechaNacimiento());
+        System.out.println(persona.getCodigo());
+         return new PersonaVO(persona.getCodigo(),persona.getNombre(),persona.getApellido(),persona.getDireccion(),persona.getCiudad(),persona.getCodigoPostal(),persona.getFechaNacimiento());
     }
 }

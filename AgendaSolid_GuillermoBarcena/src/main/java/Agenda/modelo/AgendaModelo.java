@@ -28,5 +28,8 @@ public class AgendaModelo {
     public void addPersona(Persona persona) throws ExcepcionPersona {
         personaRepository.addPersona(PersonaUtil.convertirVo(persona));
     }
+    public void editPersona(PersonaVO p) throws ExcepcionPersona {
+        personaRepository.editPersona(p);
+    }
 
 }

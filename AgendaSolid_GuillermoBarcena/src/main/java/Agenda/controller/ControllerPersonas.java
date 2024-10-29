@@ -5,6 +5,7 @@ import Agenda.Persona;
 import Agenda.modelo.AgendaModelo;
 import Agenda.modelo.ExcepcionPersona;
 import Agenda.util.DateUtil;
+import Agenda.util.PersonaUtil;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -32,9 +33,9 @@ public class ControllerPersonas {
     @FXML
     private Label calleEtiqueta;
     @FXML
-    private Label postalEtiqueta;
-    @FXML
     private Label ciudadEtiqueta;
+    @FXML
+    private Label postalEtiqueta;
     @FXML
     private Label cumpleañosEtiqueta;
 
@@ -76,6 +77,7 @@ public class ControllerPersonas {
         // Listen for selection changes and show the person details when changed.
         tabla.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> showPersonDetails(newValue));
+
     }
 
     public void setController(AgendaModelo modelo) {
@@ -121,20 +123,21 @@ public class ControllerPersonas {
      * Called when the user clicks the edit button. Opens a dialog to edit
      * details for the selected person.
      */
-//    @FXML
-//    private void handleEditPerson() {
-//        Persona selectedPerson = personas.getSelectionModel().getSelectedItem();
-//        if (selectedPerson != null) {
-//            boolean okClicked = agenda.showPersonEditDialog(selectedPerson);
-//            if (okClicked) {
-//                showPersonDetails(selectedPerson);
-//            }
-//
-//        } else {
-//            // Nothing selected.
-//            Alert alert = new Alert(Alert.AlertType.ERROR, "Debes tener seleccionada a una persona para borrrarla");
-//            alert.show();
-//        }
-//    }
+    @FXML
+    private void handleEditPerson() throws ExcepcionPersona {
+        Persona selectedPerson = tabla.getSelectionModel().getSelectedItem();
+        if (selectedPerson != null) {
+            main.showPersonEditDialog(selectedPerson);
+            if (okclicked) {
+                modelo.editPersona(PersonaUtil.convertirVo(selectedPerson));
+                showPersonDetails(selectedPerson);
+            }
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Debes tener seleccionada a una persona para borrrarla");
+            alert.show();
+        }
+    }
 
 }
