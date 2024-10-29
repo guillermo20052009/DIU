@@ -62,11 +62,11 @@
                                     <GridPane.margin>
                                         <Insets />
                                     </GridPane.margin></Label>
-                                <Label fx:id="postalEtiqueta" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                <Label fx:id="ciudadEtiqueta" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                     <GridPane.margin>
                                         <Insets />
                                     </GridPane.margin></Label>
-                                <Label fx:id="ciudadEtiqueta" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                <Label fx:id="postalEtiqueta" styleClass="label-bright" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                     <GridPane.margin>
                                         <Insets />
                                     </GridPane.margin></Label>
@@ -76,9 +76,9 @@
                                     </GridPane.margin></Label>
                             </children>
                         </GridPane>
-                        <Button layoutX="513.0" layoutY="336.0" mnemonicParsing="false" text="Delete" />
+                        <Button layoutX="513.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleDeletePerson" text="Delete" />
                         <Button layoutX="426.0" layoutY="336.0" mnemonicParsing="false"  text="Edit..." />
-                        <Button layoutX="335.0" layoutY="336.0" mnemonicParsing="false"  text="New..." />
+                        <Button layoutX="335.0" layoutY="336.0" mnemonicParsing="false" onAction="#handleNewPerson" text="New..." />
                     </children>
                 </AnchorPane>
             </items>

@@ -22,7 +22,7 @@ public class PersonaRepositoryImpl implements PersonaRepository {
     public PersonaRepositoryImpl() {
     }
 
-    public ArrayList<PersonaVO> ObtenerListaMonedas() throws ExcepcionPersona {
+    public ArrayList<PersonaVO> ObtenerListaPersonas() throws ExcepcionPersona {
         try {
             Connection conn = this.conexion.conectarBD();
             this.personas = new ArrayList();
@@ -50,12 +50,12 @@ public class PersonaRepositoryImpl implements PersonaRepository {
         }
     }
 
-    public void addMoneda(PersonaVO p) throws ExcepcionPersona {
+    public void addPersona(PersonaVO p) throws ExcepcionPersona {
         try {
             Connection conn = this.conexion.conectarBD();
             this.stmt = conn.createStatement();
 
-            this.sentencia = "INSERT INTO personas (nombre, apellido, direccion, ciudad, codigoPostal, fechaNacimiento) " +
+            this.sentencia = "INSERT INTO persona (Nombre, Apellido, Direccion, Ciudad, CodigoPostal, FechaNacimiento) " +
                     "VALUES ('" + p.getNombre() + "', '" + p.getApellido() + "', '" + p.getDireccion() + "', '" +
                     p.getCiudad() + "', '" + p.getCodigoPostal() + "', '" + p.getFechaNacimiento() + "')";
 
@@ -69,7 +69,7 @@ public class PersonaRepositoryImpl implements PersonaRepository {
         }
     }
 
-    public void deleteMoneda(Integer idPersona) throws ExcepcionPersona {
+    public void deletePersona(Integer idPersona) throws ExcepcionPersona {
         try {
             Connection conn = this.conexion.conectarBD();
             this.stmt = conn.createStatement();
@@ -82,7 +82,7 @@ public class PersonaRepositoryImpl implements PersonaRepository {
         }
     }
 
-    public void editMoneda(PersonaVO personaVO) throws ExcepcionPersona {
+    public void editPersona(PersonaVO personaVO) throws ExcepcionPersona {
         try {
             Connection conn = this.conexion.conectarBD();
             this.stmt = conn.createStatement();

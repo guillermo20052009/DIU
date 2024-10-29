@@ -1,9 +1,9 @@
 package Agenda;
 
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.beans.property.StringProperty;
 public class Persona {
+    private IntegerProperty codigo;
     private StringProperty nombre;
     private StringProperty apellido;
     private StringProperty direccion;
@@ -13,7 +13,8 @@ public class Persona {
 
 
         // Constructor que recibe Strings y convierte a StringProperty
-        public Persona(String nombre, String apellido, String direccion, String ciudad, String codigoPostal, String fechaNacimiento) {
+        public Persona(int id,String nombre, String apellido, String direccion, String ciudad, String codigoPostal, String fechaNacimiento) {
+            this.codigo = new SimpleIntegerProperty(id);
             this.nombre = new SimpleStringProperty(nombre);
             this.apellido = new SimpleStringProperty(apellido);
             this.direccion = new SimpleStringProperty(direccion);
@@ -21,11 +22,24 @@ public class Persona {
             this.codigoPostal = new SimpleStringProperty(codigoPostal);
             this.fechaNacimiento = new SimpleStringProperty(fechaNacimiento);
         }
+        public Persona(String nombre, String apellido){
+            this.nombre = new SimpleStringProperty(nombre);
+            this.apellido = new SimpleStringProperty(apellido);
+        }
+        public Persona(){
+            this.nombre = new SimpleStringProperty("41019");
+            this.apellido = new SimpleStringProperty("41019");
+            this.direccion = new SimpleStringProperty("41019");
+            this.ciudad = new SimpleStringProperty("41019");
+            this.codigoPostal = new SimpleStringProperty("41019");
+            this.fechaNacimiento = new SimpleStringProperty("05-01-2005");
+        }
 
         // Getters y setters para los StringProperty (opcional)
         public StringProperty nombreProperty() {
             return nombre;
         }
+
 
         public StringProperty apellidoProperty() {
             return apellido;
@@ -51,7 +65,17 @@ public class Persona {
         return nombre.get();
     }
 
+    public int getCodigo() {
+        return codigo.get();
+    }
 
+    public IntegerProperty codigoProperty() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo.set(codigo);
+    }
 
     public void setNombre(String nombre) {
         this.nombre.set(nombre);

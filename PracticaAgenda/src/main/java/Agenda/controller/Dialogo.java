@@ -110,16 +110,9 @@ public class Dialogo {
         if (calle.getText() == null || calle.getText().length() == 0) {
             errorMessage += "No valid street!\n";
         }
-
-        if (calle.getText() == null || calle.getText().length() == 0) {
-            errorMessage += "No valid postal code!\n";
-        } else {
             // try to parse the postal code into an int.
-            try {
-                Integer.parseInt(postal.getText());
-            } catch (NumberFormatException e) {
-                errorMessage += "No valid postal code (must be an integer)!\n";
-            }
+        if (postal.getText() == null || postal.getText().length() == 0) {
+                errorMessage += "No valid Codigo Postal\n";
         }
 
         if (ciudad.getText() == null || ciudad.getText().length() == 0) {
@@ -128,10 +121,6 @@ public class Dialogo {
 
         if (cumpleaños.getText() == null || cumpleaños.getText().length() == 0) {
             errorMessage += "No valid birthday!\n";
-        } else {
-            if (!DateUtil.validDate(cumpleaños.getText())) {
-                errorMessage += "No valid birthday. Use the format dd.mm.yyyy!\n";
-            }
         }
 
         if (errorMessage.length() == 0) {

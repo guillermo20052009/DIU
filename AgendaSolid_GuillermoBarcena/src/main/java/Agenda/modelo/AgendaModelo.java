@@ -19,8 +19,14 @@ public class AgendaModelo {
         this.personaRepository=impl;
     }
     public ArrayList<Persona> setPersona() throws ExcepcionPersona {
-        ArrayList<PersonaVO> monedaVOs = this.personaRepository.ObtenerListaMonedas();
-        return PersonaUtil.convertir(monedaVOs);
+        ArrayList<PersonaVO> monedaVOs = this.personaRepository.ObtenerListaPersonas();
+        return PersonaUtil.convertirVo(monedaVOs);
+    }
+    public void deletePersona(Persona persona) throws ExcepcionPersona {
+        personaRepository.deletePersona(persona.getCodigo());
+    }
+    public void addPersona(Persona persona) throws ExcepcionPersona {
+        personaRepository.addPersona(PersonaUtil.convertirVo(persona));
     }
 
 }

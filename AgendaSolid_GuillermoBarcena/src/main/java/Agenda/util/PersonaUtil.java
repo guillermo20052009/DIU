@@ -5,6 +5,8 @@ import Agenda.modelo.PersonaVO;
 import Modelo.ExcepcionMoneda;
 import Modelo.MonedaVO;
 import Modelo.repository.MonedaRepository;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 
@@ -13,10 +15,14 @@ public class PersonaUtil {
 
     public PersonaUtil(){}
 
-    public static ArrayList<Persona> convertir(ArrayList<PersonaVO> personas2) {
+    public static ArrayList<Persona> convertirVo(ArrayList<PersonaVO> personas2) {
         for (PersonaVO sujeto : personas2) {
-            personas.add(new Persona(sujeto.getNombre(),sujeto.getApellido(),sujeto.getDireccion(),sujeto.getCiudad(),sujeto.getCodigoPostal(),sujeto.getFechaNacimiento()));
+            personas.add(new Persona(sujeto.getCodigo(),sujeto.getNombre(),sujeto.getApellido(),sujeto.getDireccion(),sujeto.getCiudad(),sujeto.getCodigoPostal(),sujeto.getFechaNacimiento()));
         }
         return personas;
+    }
+
+    public static PersonaVO convertirVo(Persona persona) {
+         return new PersonaVO(persona.getNombre(),persona.getApellido(),persona.getDireccion(),persona.getCiudad(),persona.getCodigoPostal(),persona.getFechaNacimiento());
     }
 }
