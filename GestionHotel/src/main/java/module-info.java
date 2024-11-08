@@ -10,6 +10,7 @@ module gestionhotel.gestionhotel {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
 
     opens gestionhotel to javafx.fxml;
     exports gestionhotel;

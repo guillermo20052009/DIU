@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane focusTraversable="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestionhotel.controller.MainController">
+  <top>
+    <HBox spacing="10" style=" -fx-border-color: #2E3B46; -fx-background-color: #2E3B46; -fx-border-radius: 5; -fx-padding: 0 0 18 0">
+      <children>
+        <Label style="-fx-font-size: 18px;" text="Usuarios" textFill="WHITE">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin></Label>
+        <TextField fx:id="searchField" promptText="Buscar..." style="-fx-background-color: #D1D9E6; -fx-text-fill: #3C4A5D;">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin></TextField>
+        <Button fx:id="searchButton" style="-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;" text="Buscar">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin></Button>
+      </children>
+    </HBox>
+  </top>
+
+  <center>
+    <StackPane>
+      <children>
+        <!-- VBox contenedor con padding para el espacio alrededor -->
+        <VBox fx:id="userCardContainer" spacing="10" style="-fx-padding: 25 0 25 0; -fx-background-color: #D1E4F1;">
+          <children>
+            <!-- Tarjeta de usuario 1 -->
+            <VBox style="-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5;">
+              <children>
+                <!-- Información principal -->
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Juanjo Paredes" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin></Label>
+                <Label text="juanjop@ejemplo.com" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin></Label>
+                <Label text="PR Manager · Madrid" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin></Label>
+
+                <!-- Progreso -->
+                <HBox alignment="CENTER_LEFT" spacing="10" />
+
+                <!-- Botones -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                  <children>
+                    <Button style="-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;" text="Asignar">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="5.0" />
+                                 </HBox.margin></Button>
+                  </children>
+                </HBox>
+
+                <!-- Información financiera -->
+                <HBox alignment="CENTER_LEFT" spacing="10" />
+
+                <!-- Tareas y mensajes -->
+                <HBox alignment="CENTER_LEFT" spacing="10" />
+              </children>
+            </VBox>
+
+            <!-- Tarjeta de usuario 2 (duplicada) -->
+            <VBox style="-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5;">
+              <children>
+                <!-- Información principal -->
+                <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Maria González" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin></Label>
+                <Label text="maria.g@ejemplo.com" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin></Label>
+                <Label text="Product Manager · Barcelona" textFill="WHITE">
+                           <VBox.margin>
+                              <Insets left="5.0" />
+                           </VBox.margin></Label>
+
+                <!-- Progreso -->
+                <HBox alignment="CENTER_LEFT" spacing="10" />
+
+                <!-- Botones -->
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                  <children>
+                    <Button style="-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;" text="Asignar">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="5.0" />
+                                 </HBox.margin></Button>
+                  </children>
+                </HBox>
+
+                <!-- Información financiera -->
+                <HBox alignment="CENTER_LEFT" spacing="10" />
+
+                <!-- Tareas y mensajes -->
+                <HBox alignment="CENTER_LEFT" spacing="10" />
+              </children>
+            </VBox>
+          </children>
+        </VBox>
+      </children>
+    </StackPane>
+  </center>
+</BorderPane>
