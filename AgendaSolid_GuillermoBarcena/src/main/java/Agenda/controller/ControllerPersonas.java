@@ -131,6 +131,8 @@ public class ControllerPersonas {
             if (okclicked) {
                 modelo.editPersona(PersonaUtil.convertirVo(selectedPerson));
                 showPersonDetails(selectedPerson);
+                nombre.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+                apellido.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
             }
 
         } else {

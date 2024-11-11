@@ -11,17 +11,21 @@ import Agenda.modelo.repository.impl.PersonaRepositoryImpl;
 import Agenda.util.PersonaUtil;
 import Modelo.ExcepcionMoneda;
 import javafx.application.Application;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 
@@ -32,6 +36,7 @@ public class Main extends Application {
     BorderPane rootLayout;
     public ObservableList<Persona> personas;
     private Stage primaryStage;
+    public DoubleProperty limite;
 
     @Override
     public void start (Stage primaryStage) throws ExcepcionMoneda {
@@ -46,6 +51,7 @@ public class Main extends Application {
             this.primaryStage.setTitle("Agenda");
             ControllerPrincipal controllerPrincipal = loader.getController();
             controllerPrincipal.setMainApp(this);
+            this.primaryStage.show();
 
             // Mostrar la vista de personas
             modelo.SetConversorModelo(personaRepository);
@@ -55,7 +61,6 @@ public class Main extends Application {
             controller.setData(personas);
             controller.setMain(this);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         } catch (ExcepcionPersona e) {
             throw new RuntimeException(e);
@@ -71,13 +76,14 @@ public class Main extends Application {
             // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Editar persona");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
 
             // Set the person into the controller.
             ControllerDialogo controller = loader.getController();
+            limite=new SimpleDoubleProperty(personas.size());
+            controller.BindNumber(limite);
             controller.setDialogStage(dialogStage);
             controller.setPerson(person);
 
@@ -105,7 +111,10 @@ public class Main extends Application {
 
             // Set the persons into the controller.
             CumpleañosController controller = loader.getController();
+            controller.setPersonData(personas);
             dialogStage.show();
+
+
 
         } catch (IOException e) {
             e.printStackTrace();

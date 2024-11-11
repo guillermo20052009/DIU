@@ -49,7 +49,7 @@ public class CumpleañosController {
         int[] monthCounter = new int[12];
         for (Persona p : persons) {
             String fechanacimiento = p.getFechaNacimiento(); // Suponiendo que este es el string
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Ajusta el patrón según el formato de tu fecha
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Ajusta el patrón según el formato de tu fecha
             try {
                 LocalDate fechaNacimientoDate = LocalDate.parse(fechanacimiento, formatter);
                 int month = fechaNacimientoDate.getMonthValue() - 1; // Resta 1 si necesitas un índice basado en 0

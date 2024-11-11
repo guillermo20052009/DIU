@@ -27,7 +27,8 @@ public class Main extends Application {
         primaryStage.show();
         modelo=new PersonaModelo();
         modelo.setPersonaRepository(personaRepository);
-        modelo.obtenerListaPersonas();
+        controller.setPersonaModelo(modelo);
+        controller.setPersonas();
 
     }
 

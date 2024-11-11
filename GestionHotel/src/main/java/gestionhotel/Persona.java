@@ -10,7 +10,7 @@ public class Persona {
     private SimpleStringProperty localidad;
     private SimpleStringProperty provincia;
 
-    public Persona(String nombre, String DNI, String apellidos, String direccion, String localidad, String provincia) {
+    public Persona(String DNI, String nombre, String apellidos, String direccion, String localidad, String provincia) {
         this.Nombre = new SimpleStringProperty(nombre);
         this.DNI = new SimpleStringProperty(DNI);
         this.Apellidos = new SimpleStringProperty(apellidos);
@@ -89,5 +89,17 @@ public class Persona {
 
     public void setProvincia(String provincia) {
         this.provincia.set(provincia);
+    }
+
+    @Override
+    public String toString() {
+        return "Persona{" +
+                "DNI=" + DNI.get() +
+                ", Nombre=" + Nombre.get() +
+                ", Apellidos=" + Apellidos.get() +
+                ", direccion=" + direccion.get() +
+                ", localidad=" + localidad.get() +
+                ", provincia=" + provincia.get() +
+                '}';
     }
 }

@@ -1,8 +1,12 @@
 package Agenda.controller;
 
 import Agenda.modelo.AgendaModelo;
+
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import Agenda.Persona;
@@ -21,19 +25,23 @@ public class ControllerDialogo {
     private TextField ciudad;
     @FXML
     private TextField cumpleaños;
+    @FXML
+    private ProgressBar barra;
 
 
     private AgendaModelo modelo;
     private Stage dialogStage;
     private Persona person;
     private boolean okClicked = false;
-
+    private DoubleProperty valor = new SimpleDoubleProperty(0);
     /**
      * Initializes the controller class. This method is automatically called
      * after the fxml file has been loaded.
      */
     @FXML
     private void initialize() {
+        // Vincular la ProgressBar a la propiedad de progreso
+        barra.progressProperty().bind(valor.divide(50));
     }
 
     /**
@@ -72,15 +80,20 @@ public class ControllerDialogo {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            person.setNombre(nombre.getText());
-            person.setApellido(apellido.getText());
-            person.setDireccion(calle.getText());
-            person.setCiudad(ciudad.getText());
-            person.setCodigoPostal(postal.getText());
-            person.setFechaNacimiento(cumpleaños.getText());
+            if (valor.get() < 50) {
+                person.setNombre(nombre.getText());
+                person.setApellido(apellido.getText());
+                person.setDireccion(calle.getText());
+                person.setCiudad(ciudad.getText());
+                person.setCodigoPostal(postal.getText());
+                person.setFechaNacimiento(cumpleaños.getText());
 
-            okClicked = true;
-            dialogStage.close();
+                okClicked = true;
+                dialogStage.close();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR, "Ya has guardado 50 contactos");
+                alert.show();
+            }
         }
     }
     public void setDialogStage(Stage dialogStage) {
@@ -136,4 +149,9 @@ public class ControllerDialogo {
             return false;
         }
     }
+    public void BindNumber(DoubleProperty anotherValue) {
+        // Vincular progressValue con anotherValue
+        valor.bindBidirectional(anotherValue);
+    }
+
 }
