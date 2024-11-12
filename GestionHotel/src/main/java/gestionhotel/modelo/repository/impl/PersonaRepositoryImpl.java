@@ -4,10 +4,7 @@ import gestionhotel.modelo.PersonaVO;
 import gestionhotel.modelo.repository.ExcepcionPersona;
 import gestionhotel.modelo.repository.PersonaRepository;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 
@@ -66,18 +63,19 @@ public class PersonaRepositoryImpl implements PersonaRepository {
         }
     }
 
-    public void deletePersona(Integer idPersona) throws ExcepcionPersona {
+    public void deletePersona(String dniPersona) throws ExcepcionPersona {
         try {
             Connection conn = this.conexion.conectarBD();
-            this.stmt = conn.createStatement();
-            Statement comando = conn.createStatement();
-            String sql = String.format("DELETE FROM persona WHERE codigo = %d", idPersona);
-            comando.executeUpdate(sql);
+            String sql = "DELETE FROM persona WHERE DNI = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, dniPersona);  // Asignar el valor de dniPersona de forma segura
+            pstmt.executeUpdate();
             this.conexion.desconectarBD(conn);
         } catch (SQLException var5) {
             throw new ExcepcionPersona("No se ha podido realizar la eliminación");
         }
     }
+
 
     public void editPersona(PersonaVO personaVO) throws ExcepcionPersona {
         try {

@@ -29,10 +29,10 @@ public class Main extends Application {
         modelo.setPersonaRepository(personaRepository);
         controller.setPersonaModelo(modelo);
         controller.setPersonas();
-
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 }
+

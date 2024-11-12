@@ -9,7 +9,7 @@ public interface PersonaRepository {
 
     void addPersona(PersonaVO var1) throws ExcepcionPersona;
 
-    void deletePersona(Integer var1) throws ExcepcionPersona;
+    void deletePersona(String var1) throws ExcepcionPersona;
 
     void editPersona(PersonaVO var1) throws ExcepcionPersona;
 

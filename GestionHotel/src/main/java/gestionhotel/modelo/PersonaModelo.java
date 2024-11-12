@@ -22,5 +22,8 @@ public class PersonaModelo {
         personas=personaRepository.ObtenerListaPersonas();
         return PersonaUtil.convertirVo(personas);
     }
+    public void eliminarPersona(String dni) throws ExcepcionPersona {
+        personaRepository.deletePersona(dni);
+    }
 
 }
