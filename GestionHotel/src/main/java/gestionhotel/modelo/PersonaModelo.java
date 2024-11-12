@@ -25,5 +25,8 @@ public class PersonaModelo {
     public void eliminarPersona(String dni) throws ExcepcionPersona {
         personaRepository.deletePersona(dni);
     }
+    public void actualizarPersona(Persona persona) throws ExcepcionPersona {
+        personaRepository.editPersona(PersonaUtil.convertirVo(persona));
+    }
 
 }

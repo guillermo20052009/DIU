@@ -8,7 +8,7 @@ public class PersonaVO {
     private String localidad;
     private String provincia;
 
-    public PersonaVO(String DNI, String apellidos, String nombre, String direccion, String localidad, String provincia) {
+    public PersonaVO(String DNI, String nombre, String apellidos, String direccion, String localidad, String provincia) {
         this.DNI = DNI;
         this.apellidos = apellidos;
         this.nombre = nombre;

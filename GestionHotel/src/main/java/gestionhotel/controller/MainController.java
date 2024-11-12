@@ -1,5 +1,6 @@
 package gestionhotel.controller;
 
+import gestionhotel.Main;
 import gestionhotel.Persona;
 import gestionhotel.modelo.PersonaModelo;
 import gestionhotel.modelo.repository.ExcepcionPersona;
@@ -11,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.lang.reflect.Method;
@@ -29,6 +32,7 @@ public class MainController {
 
     private PersonaModelo personaModelo;
     private ArrayList<Persona> personas;
+    Main main;
 
     public void initialize() {
         // Ajustar la sensibilidad del desplazamiento para hacerlo más suave
@@ -45,6 +49,9 @@ public class MainController {
     }
 
 
+    public void setMain(Main main) {
+        this.main = main;
+    }
     public void setPersonaModelo(PersonaModelo personaModelo) {
         this.personaModelo = personaModelo;
     }
@@ -67,7 +74,6 @@ public class MainController {
 
             Label dniLabel = new Label("DNI: " + persona.getDNI());
             dniLabel.setTextFill(javafx.scene.paint.Color.WHITE);
-
             Label nameLabel = new Label("Nombre: " + persona.getNombre() + " " + persona.getApellidos());
             nameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
             nameLabel.setTextFill(javafx.scene.paint.Color.WHITE);
@@ -93,11 +99,11 @@ public class MainController {
 
             Button editar = new Button("Editar");
             editar.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE");
-            eliminar.setId(persona.getDNI());
-            eliminar.setOnAction(event -> {
+            editar.setId(persona.getDNI());
+            editar.setOnAction(event -> {
                 try {
                     editar(persona);
-                } catch (ExcepcionPersona e) {
+                } catch (ExcepcionPersona | IOException e) {
                     throw new RuntimeException(e);
                 }
             });
@@ -172,8 +178,8 @@ public class MainController {
             }
         }
     }
-    public void editar(Persona persona) throws ExcepcionPersona {
-
+    public void editar(Persona persona) throws ExcepcionPersona, IOException {
+        main.EditarONuevo(persona);
     }
 
 }

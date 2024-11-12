@@ -1,6 +1,7 @@
 package gestionhotel;
 
 import gestionhotel.controller.MainController;
+import gestionhotel.controller.NuevoEditarController;
 import gestionhotel.modelo.PersonaModelo;
 import gestionhotel.modelo.repository.PersonaRepository;
 import gestionhotel.modelo.repository.impl.PersonaRepositoryImpl;
@@ -9,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Main extends Application {
         MainController controller;
@@ -29,6 +32,23 @@ public class Main extends Application {
         modelo.setPersonaRepository(personaRepository);
         controller.setPersonaModelo(modelo);
         controller.setPersonas();
+        controller.setMain(this);
+    }
+
+    public Persona EditarONuevo(Persona persona) throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("Editar Persona");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditar.fxml"));
+        Parent root = loader.load();
+        NuevoEditarController controller2 = loader.getController();
+        stage.setScene(new Scene(root, 600, 400));
+        controller2.setPersona(persona);
+        controller2.setPersonaModelo(modelo);
+        stage.show();
+        return persona;
+    }
+    public void EditarONuevo(){
+
     }
 
     public static void main(String[] args) {

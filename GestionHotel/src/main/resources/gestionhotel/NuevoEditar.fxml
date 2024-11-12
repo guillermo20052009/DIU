@@ -1,14 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<GridPane xmlns:fx="http://javafx.com/fxml/1" alignment="center" hgap="10" vgap="10" style="-fx-background-color: #A2B9C0;" fx:controller="gestionhotel.controller.NuevoEditarController">
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gestionhotel.controller.NuevoEditarController"
-            prefHeight="400.0" prefWidth="600.0">
+    <!-- Título -->
+    <Label text="Editar Cliente" GridPane.columnSpan="2" style="-fx-text-fill: #4D8FAC;">
+        <font>
+            <Font name="Arial" size="24"/>
+        </font>
+    </Label>
 
-</AnchorPane>
+    <!-- DNI (no editable) -->
+    <Label text="DNI:" textFill="#6E7C7F" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+    <TextField fx:id="dniField" GridPane.rowIndex="1" GridPane.columnIndex="1" editable="false"
+               style="-fx-background-color: #6E7C7F; -fx-text-fill: white;"/>
+
+    <!-- Nombre -->
+    <Label text="Nombre:" textFill="#6E7C7F" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+    <TextField fx:id="nombreField" GridPane.rowIndex="2" GridPane.columnIndex="1"
+               style="-fx-background-color: #6E7C7F; -fx-text-fill: white;"/>
+
+    <!-- Apellidos -->
+    <Label text="Apellidos:" textFill="#6E7C7F" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+    <TextField fx:id="apellidosField" GridPane.rowIndex="3" GridPane.columnIndex="1"
+               style="-fx-background-color: #6E7C7F; -fx-text-fill: white;"/>
+
+    <!-- Dirección -->
+    <Label text="Dirección:" textFill="#6E7C7F" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+    <TextField fx:id="direccionField" GridPane.rowIndex="4" GridPane.columnIndex="1"
+               style="-fx-background-color: #6E7C7F; -fx-text-fill: white;"/>
+
+    <!-- Localidad -->
+    <Label text="Localidad:" textFill="#6E7C7F" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+    <TextField fx:id="localidadField" GridPane.rowIndex="5" GridPane.columnIndex="1"
+               style="-fx-background-color: #6E7C7F; -fx-text-fill: white;"/>
+
+    <!-- Provincia -->
+    <Label text="Provincia:" textFill="#6E7C7F" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+    <TextField fx:id="provinciaField" GridPane.rowIndex="6" GridPane.columnIndex="1"
+               style="-fx-background-color: #6E7C7F; -fx-text-fill: white;"/>
+
+    <!-- Botón Guardar -->
+    <HBox  alignment="center" GridPane.rowIndex="7" GridPane.columnSpan="2">
+        <Button text="Guardar" fx:id="guardarButton" style="-fx-background-color: #4D8FAC; -fx-text-fill: white;" onAction="#guardarCliente"/>
+    </HBox>
+
+</GridPane>

@@ -80,17 +80,15 @@ public class PersonaRepositoryImpl implements PersonaRepository {
     public void editPersona(PersonaVO personaVO) throws ExcepcionPersona {
         try {
             Connection conn = this.conexion.conectarBD();
-            this.stmt = conn.createStatement();
-            String sql = String.format(
-                    "UPDATE persona SET nombre = '%s', apellidos = '%s', direccion = '%s', localidad = '%s', provincia = '%s' WHERE DNI = %s",
-                    personaVO.getNombre(),
-                    personaVO.getApellidos(),
-                    personaVO.getDireccion(),
-                    personaVO.getLocalidad(),
-                    personaVO.getProvincia(),
-                    personaVO.getDNI()
-            );
-            this.stmt.executeUpdate(sql);
+            String sql = "UPDATE persona SET nombre = ?, apellidos = ?, direccion = ?, localidad = ?, provincia = ? WHERE DNI = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, personaVO.getNombre());
+            stmt.setString(2, personaVO.getApellidos());
+            stmt.setString(3, personaVO.getDireccion());
+            stmt.setString(4, personaVO.getLocalidad());
+            stmt.setString(5, personaVO.getProvincia());
+            stmt.setString(6, personaVO.getDNI());
+            stmt.executeUpdate();
         } catch (Exception var4) {
             throw new ExcepcionPersona("No se ha podido realizar la edición");
         }

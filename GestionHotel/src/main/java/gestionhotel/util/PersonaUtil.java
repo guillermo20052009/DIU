@@ -14,4 +14,7 @@ public class PersonaUtil {
         }
         return personas;
     }
+    public static PersonaVO convertirVo(Persona persona) {
+       return new PersonaVO(persona.getDNI(),persona.getNombre(),persona.getApellidos(),persona.getDireccion(),persona.getLocalidad(),persona.getProvincia());
+    }
 }
