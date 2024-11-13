@@ -35,7 +35,7 @@ public class Main extends Application {
         controller.setMain(this);
     }
 
-    public Persona EditarONuevo(Persona persona) throws IOException {
+    public void EditarONuevo(Persona persona) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Editar Persona");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditar.fxml"));
@@ -44,11 +44,20 @@ public class Main extends Application {
         stage.setScene(new Scene(root, 600, 400));
         controller2.setPersona(persona);
         controller2.setPersonaModelo(modelo);
+        controller2.setMainController(controller);
         stage.show();
-        return persona;
     }
-    public void EditarONuevo(){
-
+    public void EditarONuevo() throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("Añadir Persona");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditar.fxml"));
+        Parent root = loader.load();
+        NuevoEditarController controller2 = loader.getController();
+        stage.setScene(new Scene(root, 600, 400));
+        controller2.setPersona(new Persona("Introduce Dni","Introduce nombre","Introduce apellidos","Introduce Direccion","Introduce localidad","Introduce Provincia"));
+        controller2.setPersonaModelo(modelo);
+        controller2.setMainController(controller);
+        stage.show();
     }
 
     public static void main(String[] args) {

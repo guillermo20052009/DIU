@@ -28,5 +28,8 @@ public class PersonaModelo {
     public void actualizarPersona(Persona persona) throws ExcepcionPersona {
         personaRepository.editPersona(PersonaUtil.convertirVo(persona));
     }
+    public void addPersona(Persona persona) throws ExcepcionPersona {
+        personaRepository.addPersona(PersonaUtil.convertirVo(persona));
+    }
 
 }

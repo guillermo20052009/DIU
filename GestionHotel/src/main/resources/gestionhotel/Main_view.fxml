@@ -16,6 +16,11 @@
                         <Insets left="10.0" top="15.0" />
                     </HBox.margin>
                 </Label>
+            <Button fx:id="searchButton1" onAction="#añadirUsuario" style="-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;" text="Añadir">
+               <HBox.margin>
+                  <Insets top="15.0" />
+               </HBox.margin>
+            </Button>
 
                 <!-- Alineación a la derecha para el TextField y el Button -->
                 <Region HBox.hgrow="ALWAYS" />

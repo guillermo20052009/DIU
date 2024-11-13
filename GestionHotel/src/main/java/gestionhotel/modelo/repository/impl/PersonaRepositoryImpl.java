@@ -44,22 +44,24 @@ public class PersonaRepositoryImpl implements PersonaRepository {
         }
     }
 
-    public void addPersona(PersonaVO p) throws ExcepcionPersona {
+    public void addPersona(PersonaVO personaVO) throws ExcepcionPersona {
         try {
             Connection conn = this.conexion.conectarBD();
-            this.stmt = conn.createStatement();
+            String sql = "INSERT INTO persona (nombre, apellidos, direccion, localidad, provincia, DNI) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, personaVO.getNombre());
+            stmt.setString(2, personaVO.getApellidos());
+            stmt.setString(3, personaVO.getDireccion());
+            stmt.setString(4, personaVO.getLocalidad());
+            stmt.setString(5, personaVO.getProvincia());
+            System.out.println(personaVO.getDNI());
+            stmt.setString(6, personaVO.getDNI());
 
-            this.sentencia = "INSERT INTO persona (DNI,Nombre, Apellido, Direccion, Ciudad, CodigoPostal, FechaNacimiento) " +
-                    "VALUES ('" + p.getDNI() + "', '" + p.getNombre() + "', '" + p.getApellidos() + "', '" +
-                    p.getDireccion() + "', '" + p.getLocalidad() + "', '" + p.getProvincia() + "')";
-
-
-
-            this.stmt.executeUpdate(this.sentencia);
-            this.stmt.close();
-            this.conexion.desconectarBD(conn);
-        } catch (SQLException var3) {
-            throw new ExcepcionPersona("No se ha podido realizar la operación");
+            stmt.executeUpdate();
+            System.out.println("Registro insertado correctamente");  // Cambié "hola" por un mensaje más claro
+        } catch (Exception e) {
+            e.printStackTrace();  // Imprime el detalle del error
+            throw new ExcepcionPersona("No se ha podido realizar la edición");
         }
     }
 

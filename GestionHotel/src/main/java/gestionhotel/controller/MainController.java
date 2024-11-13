@@ -52,6 +52,7 @@ public class MainController {
     public void setMain(Main main) {
         this.main = main;
     }
+
     public void setPersonaModelo(PersonaModelo personaModelo) {
         this.personaModelo = personaModelo;
     }
@@ -61,68 +62,86 @@ public class MainController {
         setData();  // Llama a setData para generar las tarjetas
     }
 
-    public void setData() {
-        userCardContainer.getChildren().clear();  // Limpiar las tarjetas antes de agregar nuevas
-        int cont=0;
-        for (Persona persona : personas) {
-            VBox userCard = new VBox();
-            userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
+    // Función que crea una nueva tarjeta para una persona
+    public VBox nuevaTarjeta(Persona persona) {
+        VBox userCard = new VBox();
+        userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
 
-            // Asegúrate de que el DNI esté almacenado correctamente
-            userCard.setUserData(persona.getDNI());  // Almacena el DNI como dato asociado a la tarjeta
-            // Verifica que el DNI esté correctamente asignado
+        // Almacena el DNI como dato asociado a la tarjeta
+        userCard.setUserData(persona.getDNI());
 
-            Label dniLabel = new Label("DNI: " + persona.getDNI());
-            dniLabel.setTextFill(javafx.scene.paint.Color.WHITE);
-            Label nameLabel = new Label("Nombre: " + persona.getNombre() + " " + persona.getApellidos());
-            nameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-            nameLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+        // Crear las etiquetas para DNI, Nombre y Dirección
+        Label dniLabel = new Label("DNI: " + persona.getDNI());
+        dniLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+        dniLabel.setId("dniLabel");
+        Label nameLabel = new Label("Nombre: " + persona.getNombre() + " " + persona.getApellidos());
+        nameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+        nameLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+        nameLabel.setId("nameLabel");
 
-            Label addressLabel = new Label("Dirección: " + persona.getDireccion() + ", "
-                    + persona.getLocalidad() + ", "
-                    + persona.getProvincia());
-            addressLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+        Label addressLabel = new Label("Dirección: " + persona.getDireccion() + ", "
+                + persona.getLocalidad() + ", "
+                + persona.getProvincia());
+        addressLabel.setTextFill(javafx.scene.paint.Color.WHITE);
+        addressLabel.setId("addressLabel");
 
-            Button eliminar = new Button("Eliminar");
-            eliminar.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;");
-            eliminar.setId(persona.getDNI());
-            eliminar.setOnAction(event -> {
-                try {
-                    eliminar(eliminar.getId());
-                } catch (ExcepcionPersona e) {
-                    throw new RuntimeException(e);
-                }
-            });
+        // Crear botones
+        Button eliminar = new Button("Eliminar");
+        eliminar.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;");
+        eliminar.setId(persona.getDNI());
+        eliminar.setOnAction(event -> {
+            try {
+                eliminar(eliminar.getId());
+            } catch (ExcepcionPersona e) {
+                throw new RuntimeException(e);
+            }
+        });
 
-            HBox separacion = new HBox();
-            separacion.setPadding(new Insets(3));
+        HBox separacion = new HBox();
+        separacion.setPadding(new Insets(3));
 
-            Button editar = new Button("Editar");
-            editar.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE");
-            editar.setId(persona.getDNI());
-            editar.setOnAction(event -> {
-                try {
-                    editar(persona);
-                } catch (ExcepcionPersona | IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+        Button editar = new Button("Editar");
+        editar.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE");
+        editar.setId(persona.getDNI());
+        editar.setOnAction(event -> {
+            try {
+                editar(persona);
+            } catch (ExcepcionPersona | IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
+        HBox separacion2 = new HBox();
+        separacion2.setPadding(new Insets(3));
 
-            HBox separacion2 = new HBox();
-            separacion2.setPadding(new Insets(3));
+        Button reservas = new Button("Ver Reservas");
+        reservas.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE");
 
-            Button reservas = new Button("Ver Reservas");
-            reservas.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE");
+        // Agregar los nodos a la tarjeta
+        userCard.getChildren().addAll(dniLabel, nameLabel, addressLabel, eliminar, separacion, editar, separacion2, reservas);
 
-            userCard.getChildren().addAll(dniLabel, nameLabel, addressLabel,eliminar,separacion,editar,separacion2,reservas);
-            userCardContainer.getChildren().add(userCard);
-        }
-
+        return userCard;  // Devolver la tarjeta creada
     }
+
+    // Función que establece los datos en el contenedor de tarjetas
+    public void setData() {
+      // Limpiar las tarjetas antes de agregar nuevas
+        for (Persona persona : personas) {
+            VBox userCard = nuevaTarjeta(persona);  // Llamar a la función que crea la tarjeta
+            userCardContainer.getChildren().add(userCard);  // Agregar la tarjeta al contenedor
+        }
+    }
+    public void setData(VBox userCard) {
+        // Limpiar las tarjetas antes de agregar nuevas
+        for (Persona persona : personas) {
+            userCardContainer.getChildren().add(userCard);  // Agregar la tarjeta al contenedor
+        }
+    }
+
+
     @FXML
     private void buscarPorDNI() {
-        boolean encontrado=false;
+        boolean encontrado = false;
         String dniBusqueda = searchField.getText().trim();// Verifica lo que se está buscando
 
         for (javafx.scene.Node node : userCardContainer.getChildren()) {
@@ -134,8 +153,8 @@ public class MainController {
 
             // Si el DNI coincide, cambia el color de la tarjeta
             if (dniBusqueda.equals(dniTarjeta)) {
-                encontrado=true;
-                userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #FFDD57; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");  // Resaltar tarjeta
+                encontrado = true;
+                userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #2689a6; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");  // Resaltar tarjeta
                 double targetScrollValue = userCardContainer.getChildren().indexOf(userCard) / (double) userCardContainer.getChildren().size();
                 scrollPane.setVvalue(targetScrollValue);
             } else {
@@ -150,7 +169,8 @@ public class MainController {
             alert.show();
         }
     }
-    public void eliminar (String id) throws ExcepcionPersona {
+
+    public void eliminar(String id) throws ExcepcionPersona {
         personaModelo.eliminarPersona(id);
         eliminarCard(id);
     }
@@ -169,6 +189,7 @@ public class MainController {
                 encontrado = true;
                 iterator.remove(); // Eliminar el nodo de la lista de manera segura
             }
+        }
             if (!encontrado) {
                 Alert alert = new Alert(Alert.AlertType.ERROR, "No se ha podido eliminar");
                 alert.show();
@@ -176,12 +197,50 @@ public class MainController {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Eliminado con exito");
                 alert.show();
             }
-        }
     }
+
+
     public void editar(Persona persona) throws ExcepcionPersona, IOException {
         main.EditarONuevo(persona);
     }
+    public void añadirUsuario() throws ExcepcionPersona, IOException {
+        main.EditarONuevo();
+    }
 
+    public void actualizarCard(Persona persona) {
+        boolean encontrado = false;
+        ObservableList<Node> children = userCardContainer.getChildren();
+        Iterator<Node> iterator = children.iterator();
+        while (iterator.hasNext() && !encontrado) {
+            VBox userCard = (VBox) iterator.next();
+            String dniTarjeta = (String) userCard.getUserData();  // Obtener el DNI almacenado en la tarjeta
+            if (persona.getDNI().equals(dniTarjeta)) {
+                encontrado = true;
+                // Recorre los nodos dentro de la tarjeta y actualiza los `Label` correspondientes
+                for (Node node : userCard.getChildren()) {
+                    if (node instanceof Label) {
+                        Label label = (Label) node;
+                        // Actualiza el contenido según el `id` de cada `Label`
+                        switch (label.getId()) {
+                            case "dniLabel":
+                                label.setText("DNI: "+persona.getDNI());
+                                break;
+                            case "nameLabel":
+                                label.setText("Nombre: " + persona.getNombre() + " " + persona.getApellidos());
+                                break;
+                            case "addressLabel":
+                                label.setText("Dirección: " + persona.getDireccion() + ", "
+                                        + persona.getLocalidad() + ", "
+                                        + persona.getProvincia());
+                                break;
+                            // Añade más casos si tienes otros campos en la tarjeta
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
+
 
 

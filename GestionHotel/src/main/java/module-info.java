@@ -11,6 +11,7 @@ module gestionhotel.gestionhotel {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.sql;
+    requires java.desktop;
 
     opens gestionhotel to javafx.fxml;
     exports gestionhotel;
