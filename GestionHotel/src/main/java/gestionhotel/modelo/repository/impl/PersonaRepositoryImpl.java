@@ -54,11 +54,9 @@ public class PersonaRepositoryImpl implements PersonaRepository {
             stmt.setString(3, personaVO.getDireccion());
             stmt.setString(4, personaVO.getLocalidad());
             stmt.setString(5, personaVO.getProvincia());
-            System.out.println(personaVO.getDNI());
             stmt.setString(6, personaVO.getDNI());
 
             stmt.executeUpdate();
-            System.out.println("Registro insertado correctamente");  // Cambié "hola" por un mensaje más claro
         } catch (Exception e) {
             e.printStackTrace();  // Imprime el detalle del error
             throw new ExcepcionPersona("No se ha podido realizar la edición");

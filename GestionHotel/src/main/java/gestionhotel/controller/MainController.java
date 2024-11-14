@@ -12,6 +12,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ public class MainController {
 
     private PersonaModelo personaModelo;
     private ArrayList<Persona> personas;
-    Main main;
+    private Main main;
 
     public void initialize() {
         // Ajustar la sensibilidad del desplazamiento para hacerlo más suave
@@ -85,6 +87,17 @@ public class MainController {
         addressLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         addressLabel.setId("addressLabel");
 
+//        ImageView imageView = new ImageView();
+//        imageView.setFitWidth(50); // Tamaño de la imagen
+//        imageView.setFitHeight(50);
+//        try {
+//            Image image = new Image("https://cdn.icon-icons.com/icons2/109/PNG/256/clipping_picture_photo_18532.png", 100, 100, true, true);
+//            imageView.setImage(image);
+//
+//        } catch (Exception e) {
+//            System.out.println("Error al cargar la imagen para " + persona.getDNI());
+//        }
+
         // Crear botones
         Button eliminar = new Button("Eliminar");
         eliminar.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;");
@@ -116,6 +129,14 @@ public class MainController {
 
         Button reservas = new Button("Ver Reservas");
         reservas.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE");
+        reservas.setId(persona.getDNI());
+        reservas.setOnAction(event -> {
+            try {
+                verReserva(reservas.getId());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         // Agregar los nodos a la tarjeta
         userCard.getChildren().addAll(dniLabel, nameLabel, addressLabel, eliminar, separacion, editar, separacion2, reservas);
@@ -133,9 +154,7 @@ public class MainController {
     }
     public void setData(VBox userCard) {
         // Limpiar las tarjetas antes de agregar nuevas
-        for (Persona persona : personas) {
             userCardContainer.getChildren().add(userCard);  // Agregar la tarjeta al contenedor
-        }
     }
 
 
@@ -205,6 +224,10 @@ public class MainController {
     }
     public void añadirUsuario() throws ExcepcionPersona, IOException {
         main.EditarONuevo();
+    }
+    public void verReserva(String id) throws IOException {
+
+    main.verReserva(id);
     }
 
     public void actualizarCard(Persona persona) {

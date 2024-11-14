@@ -2,9 +2,12 @@ package gestionhotel;
 
 import gestionhotel.controller.MainController;
 import gestionhotel.controller.NuevoEditarController;
+import gestionhotel.controller.ReservaController;
 import gestionhotel.modelo.PersonaModelo;
+import gestionhotel.modelo.ReservaModelo;
 import gestionhotel.modelo.repository.PersonaRepository;
 import gestionhotel.modelo.repository.impl.PersonaRepositoryImpl;
+import gestionhotel.modelo.repository.impl.ReservaRepositoryImpl;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +20,8 @@ public class Main extends Application {
         MainController controller;
         PersonaModelo modelo;
         PersonaRepositoryImpl personaRepository = new PersonaRepositoryImpl();
+        ReservaModelo reservaModelo;
+        ReservaRepositoryImpl reservaRepository = new ReservaRepositoryImpl();
 
 
     @Override
@@ -57,6 +62,21 @@ public class Main extends Application {
         controller2.setPersona(new Persona("Introduce Dni","Introduce nombre","Introduce apellidos","Introduce Direccion","Introduce localidad","Introduce Provincia"));
         controller2.setPersonaModelo(modelo);
         controller2.setMainController(controller);
+        stage.show();
+    }
+    public void verReserva(String dni) throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("Reservas");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/VistaReservas.fxml"));
+        Parent root = loader.load();
+        ReservaController controller2 = loader.getController();
+        reservaModelo=new ReservaModelo();
+        reservaModelo.setPersonaRepository(reservaRepository);
+        controller2.setReservaModelo(reservaModelo);
+        controller2.setDni(dni);
+        controller2.setReservas();
+        controller2.setData();
+        stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
 

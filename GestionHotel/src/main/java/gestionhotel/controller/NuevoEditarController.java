@@ -98,8 +98,7 @@ public class NuevoEditarController {
                 }
 
                 if (dniField.isEditable()){
-                    mainController.nuevaTarjeta(persona);
-                    mainController.setData();
+                    mainController.setData(mainController.nuevaTarjeta(persona));
                 } else {
                     mainController.actualizarCard(persona);
                 }

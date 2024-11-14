@@ -3,6 +3,7 @@ package gestionhotel.modelo.repository.impl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class Conexion {
 
@@ -11,7 +12,10 @@ public class Conexion {
 
     public Connection conectarBD() throws SQLException {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/Hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Connection conn = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/Hotel?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+                    "root",
+                    "");
             Class.forName("com.mysql.cj.jdbc.Driver");
             return conn;
         } catch (SQLException var2) {

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane focusTraversable="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestionhotel.controller.ReservaController">
+    <top>
+        <HBox spacing="10" style=" -fx-border-color: #3D4C56; -fx-background-color: #3D4C56; -fx-border-radius: 5; -fx-padding: 0 0 18 0">
+            <children>
+                <!-- Centrado del Label -->
+                <Label fx:id="titulo" style="-fx-font-size: 18px;" textFill="WHITE" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets left="10.0" top="15.0" />
+                    </HBox.margin>
+                </Label>
+                <Button fx:id="searchButton1"  style="-fx-background-color: #6B88A2; -fx-text-fill: WHITE;" text="Añadir">
+                    <HBox.margin>
+                        <Insets top="15.0" />
+                    </HBox.margin>
+                </Button>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" style="-fx-background-color: #F0F4F7;">
+            <content>
+                <GridPane fx:id="userCardContainer" hgap="15" vgap="15" style="-fx-padding: 25 0 25 0;">
+
+                </GridPane>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
