@@ -1,5 +1,6 @@
 package gestionhotel;
 
+import gestionhotel.controller.DetallesReservaController;
 import gestionhotel.controller.MainController;
 import gestionhotel.controller.NuevoEditarController;
 import gestionhotel.controller.ReservaController;
@@ -76,9 +77,23 @@ public class Main extends Application {
         controller2.setDni(dni);
         controller2.setReservas();
         controller2.setData();
+        controller2.setMain(this);
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
+
     }
+    public void verDetalleReserva(Reserva reserva) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/DetallesReserva.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 600, 400);
+        DetallesReservaController controller2 = loader.getController();
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+        controller2.setData(reserva);
+
+    }
+
 
     public static void main(String[] args) {
         launch(args);

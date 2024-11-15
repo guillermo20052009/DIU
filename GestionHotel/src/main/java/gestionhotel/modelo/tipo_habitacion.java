@@ -1,8 +1,8 @@
 package gestionhotel.modelo;
 
 public enum tipo_habitacion {
-    DOBLEINDIVIDUAL,
+    DOBLE_INDIVIDUAL,
     DOBLE,
-    JUNIORSUITE,
+    JUNIOR_SUITE,
     SUITE
 }

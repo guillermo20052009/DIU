@@ -2,6 +2,6 @@ package gestionhotel.modelo;
 
 public enum Regimen {
     DESAYUNO,
-    MEDIAPENSION,
-    PENSIONCOMPLETA
+    MEDIA_PENSION,
+    PENSION_COMPLETA
 }

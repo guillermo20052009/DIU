@@ -2,9 +2,11 @@ package gestionhotel.controller;
 
 import gestionhotel.Main;
 import gestionhotel.Persona;
+import gestionhotel.Reserva;
 import gestionhotel.modelo.PersonaModelo;
 import gestionhotel.modelo.repository.ExcepcionPersona;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -15,6 +17,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,6 +26,10 @@ import javafx.scene.control.Button;
 
 public class MainController {
 
+    @FXML
+    private Button editButton;
+    @FXML
+    private Button deleteButton;
     @FXML
     private TextField searchField;
     @FXML
@@ -68,7 +75,13 @@ public class MainController {
     public VBox nuevaTarjeta(Persona persona) {
         VBox userCard = new VBox();
         userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
-
+        userCard.setOnMouseClicked( (Event e) -> {
+            try {
+                Seleccionar(e);  // Pasa el evento como parámetro
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         // Almacena el DNI como dato asociado a la tarjeta
         userCard.setUserData(persona.getDNI());
 
@@ -87,59 +100,8 @@ public class MainController {
         addressLabel.setTextFill(javafx.scene.paint.Color.WHITE);
         addressLabel.setId("addressLabel");
 
-//        ImageView imageView = new ImageView();
-//        imageView.setFitWidth(50); // Tamaño de la imagen
-//        imageView.setFitHeight(50);
-//        try {
-//            Image image = new Image("https://cdn.icon-icons.com/icons2/109/PNG/256/clipping_picture_photo_18532.png", 100, 100, true, true);
-//            imageView.setImage(image);
-//
-//        } catch (Exception e) {
-//            System.out.println("Error al cargar la imagen para " + persona.getDNI());
-//        }
-
-        // Crear botones
-        Button eliminar = new Button("Eliminar");
-        eliminar.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;");
-        eliminar.setId(persona.getDNI());
-        eliminar.setOnAction(event -> {
-            try {
-                eliminar(eliminar.getId());
-            } catch (ExcepcionPersona e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        HBox separacion = new HBox();
-        separacion.setPadding(new Insets(3));
-
-        Button editar = new Button("Editar");
-        editar.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE");
-        editar.setId(persona.getDNI());
-        editar.setOnAction(event -> {
-            try {
-                editar(persona);
-            } catch (ExcepcionPersona | IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
-        HBox separacion2 = new HBox();
-        separacion2.setPadding(new Insets(3));
-
-        Button reservas = new Button("Ver Reservas");
-        reservas.setStyle("-fx-background-color: #4D8FAC; -fx-text-fill: WHITE");
-        reservas.setId(persona.getDNI());
-        reservas.setOnAction(event -> {
-            try {
-                verReserva(reservas.getId());
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
-
         // Agregar los nodos a la tarjeta
-        userCard.getChildren().addAll(dniLabel, nameLabel, addressLabel, eliminar, separacion, editar, separacion2, reservas);
+        userCard.getChildren().addAll(dniLabel, nameLabel, addressLabel);
 
         return userCard;  // Devolver la tarjeta creada
     }
@@ -228,6 +190,14 @@ public class MainController {
     public void verReserva(String id) throws IOException {
 
     main.verReserva(id);
+    }
+
+    public void Seleccionar(Event event) throws IOException {
+        VBox vbox = (VBox) event.getSource();
+        String id = vbox.getId();
+
+
+        main.verDetalleReserva(reserva);
     }
 
     public void actualizarCard(Persona persona) {
