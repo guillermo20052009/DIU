@@ -94,10 +94,11 @@ public class ReservaController {
 
     public void setData(){
         mostrarTarjetasReserva();
-
-
     }
-
+    @FXML
+    private void añadir(){
+        System.out.println("hola");
+    }
 
     public void initialize() {
         // Crear las columnas y definir el ancho

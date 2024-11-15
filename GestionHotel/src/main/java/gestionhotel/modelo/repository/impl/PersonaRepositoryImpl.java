@@ -68,7 +68,7 @@ public class PersonaRepositoryImpl implements PersonaRepository {
             Connection conn = this.conexion.conectarBD();
             String sql = "DELETE FROM persona WHERE DNI = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, dniPersona);  // Asignar el valor de dniPersona de forma segura
+            pstmt.setString(1, dniPersona);  // Asignar el valor de dniPersona de forma segur
             pstmt.executeUpdate();
             this.conexion.desconectarBD(conn);
         } catch (SQLException var5) {

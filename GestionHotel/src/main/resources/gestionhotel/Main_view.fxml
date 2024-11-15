@@ -32,6 +32,11 @@
 
                 <Button fx:id="deleteButton" style="-fx-background-color: #E57373; -fx-text-fill: WHITE;" text="Eliminar">
                     <HBox.margin>
+                        <Insets  top="15.0" />
+                    </HBox.margin>
+                </Button>
+                <Button fx:id="reservasButton" style="-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;" text="Reservas">
+                    <HBox.margin>
                         <Insets right="10.0" top="15.0" />
                     </HBox.margin>
                 </Button>

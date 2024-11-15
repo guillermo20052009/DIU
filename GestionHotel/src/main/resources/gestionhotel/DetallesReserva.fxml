@@ -43,7 +43,7 @@
     </center>
 
     <bottom>
-        <Button text="Cerrar"
+        <Button text="Cerrar" fx:id="cancelButton" onAction="#cerrar"
                 style="-fx-background-color: #2A4D69; -fx-text-fill: #FFFFFF; -fx-font-size: 16px; -fx-font-weight: bold;"
                 BorderPane.alignment="CENTER" />
     </bottom>

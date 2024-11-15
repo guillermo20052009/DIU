@@ -6,7 +6,9 @@ import gestionhotel.Reserva;
 import gestionhotel.modelo.PersonaModelo;
 import gestionhotel.modelo.repository.ExcepcionPersona;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -31,6 +33,8 @@ public class MainController {
     @FXML
     private Button deleteButton;
     @FXML
+    private Button reservasButton;
+    @FXML
     private TextField searchField;
     @FXML
     private Button searchButton;
@@ -39,6 +43,7 @@ public class MainController {
     @FXML
     private ScrollPane scrollPane;
 
+    private VBox lastSelectedVBox;
     private PersonaModelo personaModelo;
     private ArrayList<Persona> personas;
     private Main main;
@@ -55,6 +60,38 @@ public class MainController {
 
             event.consume();
         });
+        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    eliminar(deleteButton.getId());
+                } catch (ExcepcionPersona e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        editButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    editar(getPersona(editButton.getId()));
+                } catch (ExcepcionPersona e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        reservasButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    verReserva(reservasButton.getId());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
 
@@ -70,6 +107,14 @@ public class MainController {
         personas = personaModelo.obtenerListaPersonas();
         setData();  // Llama a setData para generar las tarjetas
     }
+    public Persona getPersona(String id){
+        for (Persona persona : personas) {
+            if (persona.getDNI().equals(id)) {
+                return persona;
+            }
+        }
+        return null;
+    }
 
     // Función que crea una nueva tarjeta para una persona
     public VBox nuevaTarjeta(Persona persona) {
@@ -82,6 +127,7 @@ public class MainController {
                 throw new RuntimeException(ex);
             }
         });
+        userCard.setId(persona.getDNI());
         // Almacena el DNI como dato asociado a la tarjeta
         userCard.setUserData(persona.getDNI());
 
@@ -128,15 +174,16 @@ public class MainController {
         for (javafx.scene.Node node : userCardContainer.getChildren()) {
             VBox userCard = (VBox) node;
             String dniTarjeta = (String) userCard.getUserData();  // Obtener el DNI almacenado en la tarjeta
-
-            // Verifica el DNI que se obtiene de la tarjeta
-            // Depura para ver si el DNI está correctamente recuperado
-
-            // Si el DNI coincide, cambia el color de la tarjeta
             if (dniBusqueda.equals(dniTarjeta)) {
                 encontrado = true;
                 userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #2689a6; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");  // Resaltar tarjeta
                 double targetScrollValue = userCardContainer.getChildren().indexOf(userCard) / (double) userCardContainer.getChildren().size();
+
+                lastSelectedVBox = userCard;
+                String id = userCard.getId();
+                deleteButton.setId(id);
+                editButton.setId(id);
+                reservasButton.setId(id);
                 scrollPane.setVvalue(targetScrollValue);
             } else {
                 userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");  // Color normal
@@ -182,22 +229,36 @@ public class MainController {
 
 
     public void editar(Persona persona) throws ExcepcionPersona, IOException {
-        main.EditarONuevo(persona);
+        if (lastSelectedVBox!=null)
+            main.EditarONuevo(persona);
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Debe tener a un usuario seleccionado");
+            alert.show();
+        }
     }
     public void añadirUsuario() throws ExcepcionPersona, IOException {
         main.EditarONuevo();
     }
     public void verReserva(String id) throws IOException {
-
-    main.verReserva(id);
+        if (lastSelectedVBox!=null)
+            main.verReserva(id);
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Debe tener a un usuario seleccionado");
+            alert.show();
+        }
     }
 
     public void Seleccionar(Event event) throws IOException {
         VBox vbox = (VBox) event.getSource();
+        if (lastSelectedVBox != null && lastSelectedVBox != vbox) {
+            lastSelectedVBox.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
+        }
+        vbox.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #2689a6; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
+        lastSelectedVBox = vbox;
         String id = vbox.getId();
-
-
-        main.verDetalleReserva(reserva);
+        deleteButton.setId(id);
+        editButton.setId(id);
+        reservasButton.setId(id);
     }
 
     public void actualizarCard(Persona persona) {

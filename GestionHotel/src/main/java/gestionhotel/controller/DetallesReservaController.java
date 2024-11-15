@@ -2,8 +2,10 @@ package gestionhotel.controller;
 
 import gestionhotel.Reserva;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class DetallesReservaController {
 
@@ -26,6 +28,8 @@ public class DetallesReservaController {
     @FXML
     private Label dniClienteLabel;
     @FXML
+    Button cancelButton;
+    @FXML
     private void initialize() {
         // Verifica que los elementos en el FXML se hayan cargado correctamente
         System.out.println("Controlador cargado correctamente");
@@ -42,4 +46,11 @@ public class DetallesReservaController {
         numeroHabitacionesLabel.setText(String.valueOf(reserva.getNumero_habitaciones()));
         dniClienteLabel.setText(reserva.getDni_cliente());
     }
+
+    @FXML
+    public void cerrar(){
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
+
 }
