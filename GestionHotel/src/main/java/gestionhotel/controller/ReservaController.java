@@ -82,7 +82,7 @@ public class ReservaController {
 
             // Ajustar la posición de la siguiente tarjeta
             col++;
-            if (col > 1) { // Cambiar de columna después de la segunda tarjeta en la fila
+            if (col > 3) { // Cambiar de columna después de la segunda tarjeta en la fila
                 col = 0;
                 row++;
             }
@@ -96,22 +96,30 @@ public class ReservaController {
         mostrarTarjetasReserva();
     }
     @FXML
-    private void añadir(){
-        System.out.println("hola");
+    private void añadir() throws IOException {
+        main.AñadirReservaEditar(dni);
     }
 
     public void initialize() {
         // Crear las columnas y definir el ancho
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(50);
+        col1.setPercentWidth(25);
         col1.setHalignment(HPos.CENTER);
 
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(50);
+        col2.setPercentWidth(25);
         col2.setHalignment(HPos.CENTER);
 
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPercentWidth(25);
+        col3.setHalignment(HPos.CENTER);
+
+        ColumnConstraints col4 = new ColumnConstraints();
+        col4.setPercentWidth(25);
+        col4.setHalignment(HPos.CENTER);
+
         // Asignar las ColumnConstraints al GridPane
-        userCardContainer.getColumnConstraints().addAll(col1, col2);
+        userCardContainer.getColumnConstraints().addAll(col1, col2,col3,col4);
     }
 
     public void setReservas() throws ExcepcionReserva {

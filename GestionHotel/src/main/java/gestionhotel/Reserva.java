@@ -31,6 +31,16 @@ public class Reserva {
         this.dni_cliente = new SimpleStringProperty(dni_cliente);  // StringProperty
     }
 
+    public Reserva(Date fechaLlegada, Date fechaSalida, tipo_habitacion tipoHabitacion, boolean fumador, Regimen regimen, Integer numero_habitaciones, String dni_cliente) {
+        this.fechaLlegada = fechaLlegada;
+        this.fechaSalida = fechaSalida;
+        this.tipoHabitacion = tipoHabitacion;
+        this.fumador = fumador;
+        this.regimen = regimen;
+        this.numero_habitaciones = new SimpleIntegerProperty(numero_habitaciones);
+        this.dni_cliente =  new SimpleStringProperty(dni_cliente);
+    }
+
     public Date getFechaLlegada() {
         return fechaLlegada;
     }

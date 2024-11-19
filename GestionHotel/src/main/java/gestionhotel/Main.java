@@ -1,9 +1,6 @@
 package gestionhotel;
 
-import gestionhotel.controller.DetallesReservaController;
-import gestionhotel.controller.MainController;
-import gestionhotel.controller.NuevoEditarController;
-import gestionhotel.controller.ReservaController;
+import gestionhotel.controller.*;
 import gestionhotel.modelo.PersonaModelo;
 import gestionhotel.modelo.ReservaModelo;
 import gestionhotel.modelo.repository.PersonaRepository;
@@ -47,7 +44,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditar.fxml"));
         Parent root = loader.load();
         NuevoEditarController controller2 = loader.getController();
-        stage.setScene(new Scene(root, 600, 400));
+        stage.setScene(new Scene(root, 450, 400));
         controller2.setPersona(persona);
         controller2.setPersonaModelo(modelo);
         controller2.setMainController(controller);
@@ -59,7 +56,7 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditar.fxml"));
         Parent root = loader.load();
         NuevoEditarController controller2 = loader.getController();
-        stage.setScene(new Scene(root, 600, 400));
+        stage.setScene(new Scene(root, 450, 400));
         controller2.setPersona(new Persona("Introduce Dni","Introduce nombre","Introduce apellidos","Introduce Direccion","Introduce localidad","Introduce Provincia"));
         controller2.setPersonaModelo(modelo);
         controller2.setMainController(controller);
@@ -85,13 +82,23 @@ public class Main extends Application {
     public void verDetalleReserva(Reserva reserva) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/DetallesReserva.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 475, 375);
         DetallesReservaController controller2 = loader.getController();
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
         controller2.setData(reserva);
-
+    }
+    public void AñadirReservaEditar(String dni) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditarReserva.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 600, 500);
+        NuevoEditarReserva controller2 = loader.getController();
+        Stage stage = new Stage();
+        controller2.setDniTextField(dni);
+        controller2.setReservaModelo(reservaModelo);
+        stage.setScene(scene);
+        stage.show();
     }
 
 

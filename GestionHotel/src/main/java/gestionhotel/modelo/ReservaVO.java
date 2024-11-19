@@ -22,6 +22,15 @@ public class ReservaVO {
         this.fechaLlegada = fechaLlegada;
         this.idReserva = idReserva;
     }
+    public ReservaVO(int numero_habitaciones, String regimen, boolean fumador, String tipo_habitacion, Date fechaSalida, Date fechaLlegada, String dni_cliente) {
+        this.dni_cliente = dni_cliente;
+        this.numero_habitaciones = numero_habitaciones;
+        this.regimen = regimen;
+        this.fumador = fumador;
+        this.tipo_habitacion = tipo_habitacion;
+        this.fechaSalida = fechaSalida;
+        this.fechaLlegada = fechaLlegada;
+    }
 
     public int getIdReserva() {
         return idReserva;

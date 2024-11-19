@@ -1,14 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gestionhotel.NuevoEditarReserva"
-            prefHeight="400.0" prefWidth="600.0">
+<?import java.lang.String?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="gestionhotel.controller.NuevoEditarReserva"
+      alignment="CENTER" spacing="20" style="-fx-background-color: #E3F2FD;" prefWidth="600" prefHeight="500">
+    <!-- Título -->
+    <Label text="Formulario de Reservas" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1E88E5;" />
 
-</AnchorPane>
+    <!-- Datos del Cliente -->
+    <VBox spacing="10" alignment="CENTER">
+        <Label text="Datos del cliente" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1565C0;" />
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="DNI:" style="-fx-font-size: 14px;" />
+            <TextField fx:id="dniTextField" prefWidth="200" />
+        </HBox>
+    </VBox>
+
+    <!-- Datos de la Reserva -->
+    <VBox spacing="15" alignment="CENTER">
+        <Label text="Datos de la reserva" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1565C0;" />
+        <HBox spacing="20" alignment="CENTER">
+            <VBox spacing="5" alignment="CENTER">
+                <Label text="Fecha de llegada:" style="-fx-font-size: 14px;" />
+                <DatePicker fx:id="fechaLlegadaDatePicker" />
+            </VBox>
+            <VBox spacing="5" alignment="CENTER">
+                <Label text="Fecha de salida:" style="-fx-font-size: 14px;" />
+                <DatePicker fx:id="fechaSalidaDatePicker" />
+            </VBox>
+        </HBox>
+        <HBox spacing="20" alignment="CENTER">
+            <VBox spacing="5" alignment="CENTER">
+                <Label text="Número de habitaciones:" style="-fx-font-size: 14px;" />
+                <Spinner fx:id="numeroHabitacionesSpinner" min="1" max="1" initialValue="1" prefWidth="100" />
+            </VBox>
+            <VBox spacing="5" alignment="CENTER">
+                <Label text="Tipo de habitación:" style="-fx-font-size: 14px;" />
+                <ComboBox fx:id="tipoHabitacionComboBox" prefWidth="150">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="Doble individual" />
+                            <String fx:value="Doble" />
+                            <String fx:value="Junior Suite" />
+                            <String fx:value="Suite" />
+                        </FXCollections>
+                    </items>
+                </ComboBox>
+            </VBox>
+        </HBox>
+        <CheckBox fx:id="fumadorCheckBox" text="Fumador" />
+        <VBox spacing="5" alignment="CENTER">
+            <Label text="Régimen:" style="-fx-font-size: 14px;" />
+            <RadioButton text="Alojamiento desayuno" fx:id="alojamientoRadioButton" />
+            <RadioButton text="Media pension" fx:id="mediaPensionRadioButton" />
+            <RadioButton text="Pension completa" fx:id="pensionCompletaRadioButton" />
+        </VBox>
+    </VBox>
+
+    <!-- Botones -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="aceptarButton" text="Aceptar" style="-fx-background-color: #70bc3e; -fx-text-fill:#FFFFFF ;" onAction="#añadir"/>
+        <Button fx:id="limpiarButton" text="Limpiar" style="-fx-background-color: #64B5F6; -fx-text-fill: white;" onAction="#limpiarFormulario" />
+        <Button fx:id="cancelarButton" text="Cancelar" style="-fx-background-color: #E57373; -fx-text-fill: white;" />
+    </HBox>
+</VBox>
+
