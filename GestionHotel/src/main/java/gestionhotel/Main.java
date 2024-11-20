@@ -20,6 +20,7 @@ public class Main extends Application {
         PersonaRepositoryImpl personaRepository = new PersonaRepositoryImpl();
         ReservaModelo reservaModelo;
         ReservaRepositoryImpl reservaRepository = new ReservaRepositoryImpl();
+        ReservaController controllerReserva;
 
 
     @Override
@@ -67,14 +68,14 @@ public class Main extends Application {
         stage.setTitle("Reservas");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/VistaReservas.fxml"));
         Parent root = loader.load();
-        ReservaController controller2 = loader.getController();
+        controllerReserva = loader.getController();
         reservaModelo=new ReservaModelo();
         reservaModelo.setPersonaRepository(reservaRepository);
-        controller2.setReservaModelo(reservaModelo);
-        controller2.setDni(dni);
-        controller2.setReservas();
-        controller2.setData();
-        controller2.setMain(this);
+        controllerReserva.setReservaModelo(reservaModelo);
+        controllerReserva.setDni(dni);
+        controllerReserva.setReservas();
+        controllerReserva.setData();
+        controllerReserva.setMain(this);
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
 
@@ -85,6 +86,9 @@ public class Main extends Application {
         Scene scene = new Scene(root, 475, 375);
         DetallesReservaController controller2 = loader.getController();
         Stage stage = new Stage();
+        controller2.ReservaModelo(reservaModelo);
+        controller2.setReservaController(controllerReserva);
+        controller2.setMain(this);
         stage.setScene(scene);
         stage.show();
         controller2.setData(reserva);
@@ -97,6 +101,19 @@ public class Main extends Application {
         Stage stage = new Stage();
         controller2.setDniTextField(dni);
         controller2.setReservaModelo(reservaModelo);
+        controller2.setReservaController(controllerReserva);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void AñadirReservaEditar(Reserva reserva) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditarReserva.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 600, 500);
+        NuevoEditarReserva controller2 = loader.getController();
+        Stage stage = new Stage();
+        controller2.setData(reserva);
+        controller2.setReservaModelo(reservaModelo);
+        controller2.setReservaController(controllerReserva);
         stage.setScene(scene);
         stage.show();
     }

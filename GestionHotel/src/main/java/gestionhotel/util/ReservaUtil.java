@@ -28,4 +28,16 @@ public class ReservaUtil {
     public static ReservaVO convertirReservaVO(Reserva reserva) {
         return new ReservaVO(reserva.getNumero_habitaciones(),String.valueOf(reserva.getRegimen()),reserva.isFumador(),String.valueOf(reserva.getTipoHabitacion()),reserva.getFechaLlegada(),reserva.getFechaSalida(),reserva.getDni_cliente());
     }
+    public static Reserva convertirReserva(ReservaVO reservaVO) {
+        return new Reserva(
+                reservaVO.getIdReserva(),
+                reservaVO.getFechaLlegada(),
+                reservaVO.getFechaSalida(),
+                tipo_habitacion.valueOf(reservaVO.getTipo_habitacion().replaceAll("\\s", "_")), // Convertimos el String a tipo_habitacion
+                reservaVO.isFumador(),
+                Regimen.valueOf(reservaVO.getRegimen().replaceAll("\\s", "_")), // Convertimos el String a Regimen
+                reservaVO.getNumero_habitaciones(),
+                reservaVO.getDni_cliente()
+        );
+    }
 }

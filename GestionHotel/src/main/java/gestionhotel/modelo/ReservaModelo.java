@@ -38,6 +38,9 @@ public class ReservaModelo {
     public void actualizarPersona(Persona persona) throws ExcepcionPersona {
     }
     public void addReserva(Reserva reserva) throws ExcepcionPersona {
-        System.out.println(ReservaUtil.convertirReservaVO(reserva));
+       reservaRepository.addReserva(ReservaUtil.convertirReservaVO(reserva));
+    }
+    public int getLastId() throws ExcepcionReserva {
+        return reservaRepository.lastId();
     }
 }

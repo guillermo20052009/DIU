@@ -31,6 +31,8 @@ public class ReservaController {
     Main main;
     private ArrayList<Reserva> reservas;
     String dni;
+    int col=0;
+    int row=0;
 
 
     public void setReservaModelo(ReservaModelo reservaModelo) {
@@ -45,59 +47,92 @@ public class ReservaController {
         this.main = main;
     }
 
+    public void nuevaTarjetasReserva(Reserva reserva)  {
+        if (!reservas.contains(reserva))
+            reservas.add(reserva);
+        // Crear VBox para la tarjeta
+        VBox card = new VBox(10);
+        card.setOnMouseClicked( (Event e) -> {
+            try {
+                verDetalles(e);  // Pasa el evento como parámetro
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        card.setId(String.valueOf(reserva.getIdReserva()));
+        card.setStyle("-fx-background-color: #A3C4DC; -fx-border-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(gaussian, #2A4D69, 10, 0, 0, 2);");
+        card.setAlignment(Pos.CENTER);
+
+        // Crear y configurar el Label para el ID de reserva
+        Label idLabel = new Label("ID Reserva: " + reserva.getIdReserva());
+        idLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2A4D69;");
+        idLabel.setTextAlignment(TextAlignment.CENTER);
+
+        // Crear y configurar el Label para la fecha de llegada
+        Label fechaLabel = new Label("Fecha Llegada: " + reserva.getFechaLlegada().toString());
+        fechaLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #3D5A80;");
+        fechaLabel.setTextAlignment(TextAlignment.CENTER);
+
+        // Añadir los labels al VBox (tarjeta)
+        card.getChildren().addAll(idLabel, fechaLabel);
+
+        // Añadir la tarjeta al GridPane
+        userCardContainer.add(card, col, row);
+
+        // Ajustar la posición de la siguiente tarjeta
+        col++;
+        if (col > 3) { // Cambiar de columna después de la segunda tarjeta en la fila
+            col = 0;
+            row++;
+        }
+    }
+
     public void mostrarTarjetasReserva() {
-        int col = 0; // Columna inicial
-        int row = 0; // Fila inicial
-
+         // Columna inicial
+        // Fila inicial
+        userCardContainer.getChildren().clear();
+        col=0;
+        row=0;
         for (Reserva reserva : reservas) {
-            // Crear VBox para la tarjeta
-            VBox card = new VBox(10);
-            card.setOnMouseClicked( (Event e) -> {
-                try {
-                    verDetalles(e);  // Pasa el evento como parámetro
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
+            nuevaTarjetasReserva(reserva);
+        }
+    }
 
-            card.setId(String.valueOf(reserva.getIdReserva()));
-            card.setStyle("-fx-background-color: #A3C4DC; -fx-border-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(gaussian, #2A4D69, 10, 0, 0, 2);");
-            card.setAlignment(Pos.CENTER);
-
-            // Crear y configurar el Label para el ID de reserva
-            Label idLabel = new Label("ID Reserva: " + reserva.getIdReserva());
-            idLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2A4D69;");
-            idLabel.setTextAlignment(TextAlignment.CENTER);
-
-            // Crear y configurar el Label para la fecha de llegada
-            Label fechaLabel = new Label("Fecha Llegada: " + reserva.getFechaLlegada().toString());
-            fechaLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #3D5A80;");
-            fechaLabel.setTextAlignment(TextAlignment.CENTER);
-
-            // Añadir los labels al VBox (tarjeta)
-            card.getChildren().addAll(idLabel, fechaLabel);
-
-            // Añadir la tarjeta al GridPane
-            userCardContainer.add(card, col, row);
-
-            // Ajustar la posición de la siguiente tarjeta
-            col++;
-            if (col > 3) { // Cambiar de columna después de la segunda tarjeta en la fila
-                col = 0;
-                row++;
+    public void eliminarTarjetasReserva(int idReserva) {
+        // Iterar sobre los nodos del GridPane (contenedor de las tarjetas)
+        for (var node : userCardContainer.getChildren()) {
+            // Comprobar si el nodo es un VBox y si su ID coincide con el idReserva
+            if (node instanceof VBox && node.getId() != null && node.getId().equals(String.valueOf(idReserva))) {
+                // Eliminar el nodo del GridPane
+                eliminarReservaDelArrayList(idReserva);
+                userCardContainer.getChildren().remove(node);
+                setData();
+                break; // Salir del bucle una vez encontrada y eliminada la tarjeta
+            }
+        }
+    }
+    public void eliminarReservaDelArrayList(int idReserva) {
+        // Usar un bucle para buscar y eliminar la reserva con el ID especificado
+        for (int i = 0; i < reservas.size(); i++) {
+            if (reservas.get(i).getIdReserva() == idReserva) {
+                reservas.remove(i); // Eliminar la reserva
+                break; // Salir del bucle una vez eliminada
             }
         }
     }
 
 
 
-
-    public void setData(){
+    public void setData()  {
         mostrarTarjetasReserva();
     }
     @FXML
     private void añadir() throws IOException {
         main.AñadirReservaEditar(dni);
+    }
+    public void lastidReserva() {
+        reservaModelo.getLastId();
     }
 
     public void initialize() {

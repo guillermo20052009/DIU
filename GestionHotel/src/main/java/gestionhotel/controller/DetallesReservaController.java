@@ -1,11 +1,16 @@
 package gestionhotel.controller;
 
+import gestionhotel.Main;
 import gestionhotel.Reserva;
+import gestionhotel.modelo.ReservaModelo;
+import gestionhotel.modelo.repository.ExcepcionPersona;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class DetallesReservaController {
 
@@ -29,13 +34,40 @@ public class DetallesReservaController {
     private Label dniClienteLabel;
     @FXML
     Button cancelButton;
+
+    private Reserva reserva;
+    private ReservaModelo reservaModelo;
+    private ReservaController reservaController;
+    private Main main;
     @FXML
     private void initialize() {
         // Verifica que los elementos en el FXML se hayan cargado correctamente
         System.out.println("Controlador cargado correctamente");
     }
 
+    public void setMain(Main main) {
+        this.main = main;
+    }
+
+    public void setReservaController(ReservaController reservaController) {
+        this.reservaController = reservaController;
+    }
+
+    public void ReservaModelo(ReservaModelo reservaModelo) {
+        this.reservaModelo = reservaModelo;
+    }
+    public void eliminarReserva() throws ExcepcionPersona {
+        reservaModelo.eliminarReserva(reserva.getIdReserva(),reserva.getDni_cliente());
+        reservaController.eliminarTarjetasReserva(reserva.getIdReserva());
+
+    }
+
+    public void editarReserva() throws ExcepcionPersona, IOException {
+        main.AñadirReservaEditar(reserva);
+    }
+
     public void setData(Reserva reserva) {
+        this.reserva = reserva;
         idReservaLabel.setText(String.valueOf(reserva.getIdReserva()));
         fechaLlegadaLabel.setText(String.valueOf(reserva.getFechaLlegada()));
         fechaSalidaLabel.setText(String.valueOf(reserva.getFechaSalida()));
@@ -52,5 +84,6 @@ public class DetallesReservaController {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
+
 
 }

@@ -38,7 +38,7 @@ public class ReservaRepositoryImpl implements ReservaRepository {
                 String regimen = rs.getString("regimen");
                 int numeroHabitaciones = rs.getInt("num_hab"); // Cambié a `num_hab`
                 String dniCliente = rs.getString("dni_cliente");
-                this.reserva = new ReservaVO(reservaid,numeroHabitaciones,regimen,fumador,tipoHabitacion,fechaLlegada, fechaSalida,dniCliente);
+                this.reserva = new ReservaVO(reservaid,numeroHabitaciones,regimen,fumador,tipoHabitacion,fechaSalida, fechaLlegada,dniCliente);
                 this.reservas.add(this.reserva);
             }
 
@@ -52,15 +52,16 @@ public class ReservaRepositoryImpl implements ReservaRepository {
     public void addReserva(ReservaVO reservaVO) throws ExcepcionReserva {
         try {
             Connection conn = this.conexion.conectarBD();
+            System.out.println(reservaVO);
             String sql = "INSERT INTO reserva (fecha_Salida, fecha_Llegada, tipo_Hab, fumador, regimen, num_hab, dni_cliente) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
 // Asumiendo que `reservaVO` tiene los métodos getters correctos
             stmt.setDate(1, reservaVO.getFechaSalida());  // Usa .getFechaSalida() que debería devolver un java.sql.Date
             stmt.setDate(2, reservaVO.getFechaLlegada());  // Usa .getFechaLlegada() que también debería devolver un java.sql.Date
-            stmt.setString(3, reservaVO.getTipo_habitacion());  // Tipo de habitación como String
+            stmt.setString(3, reservaVO.getTipo_habitacion().replaceAll("_"," "));
             stmt.setBoolean(4, reservaVO.isFumador());  // Fumador como boolean
-            stmt.setString(5, reservaVO.getRegimen());  // Régimen como String
+            stmt.setString(5, reservaVO.getRegimen().replaceAll("_"," "));  // Régimen como String
             stmt.setInt(6, reservaVO.getNumero_habitaciones());  // IntegerProperty necesita .get() para obtener el int
             stmt.setString(7, reservaVO.getDni_cliente());
 
@@ -108,16 +109,18 @@ public class ReservaRepositoryImpl implements ReservaRepository {
     }
 
     public int lastId() throws ExcepcionReserva {
-        int lastPersonaId = 0;
+        int lastReservaId = 0;
 
         try {
             Connection conn = this.conexion.conectarBD();
             Statement comando = conn.createStatement();
 
-            for(ResultSet registro = comando.executeQuery("SELECT codigo FROM persona ORDER BY codigo DESC LIMIT 1"); registro.next(); lastPersonaId = registro.getInt("codigo")) {
-            }
 
-            return lastPersonaId;
+            for(ResultSet registro = comando.executeQuery("SELECT id_reserva FROM reserva ORDER BY id_reserva DESC LIMIT 1"); registro.next(); lastReservaId = registro.getInt("id_reserva")) {
+            }
+            System.out.println("hola");
+
+            return lastReservaId;
         } catch (SQLException var5) {
             throw new ExcepcionReserva("No se ha podido realizar la busqueda del ID");
         }

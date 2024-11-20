@@ -5,6 +5,7 @@ import gestionhotel.modelo.Regimen;
 import gestionhotel.modelo.ReservaModelo;
 import gestionhotel.modelo.repository.ExcepcionPersona;
 import gestionhotel.modelo.tipo_habitacion;
+import gestionhotel.util.ReservaUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -47,6 +48,8 @@ public class NuevoEditarReserva {
         private RadioButton pensionCompletaRadioButton;
 
         private ReservaModelo reservaModelo;
+        private ReservaController reservaController;
+        private int opcion;
 
 
         @FXML
@@ -75,17 +78,26 @@ public class NuevoEditarReserva {
     public void setReservaModelo(ReservaModelo reservaModelo) {
         this.reservaModelo = reservaModelo;
     }
+    public void setReservaController(ReservaController reservaController) { this.reservaController = reservaController; }
 
     public void setDniTextField(String dniTextField) {
         this.dniTextField.setText(dniTextField);
+        opcion=1;
     }
     @FXML
     private void añadir() throws ExcepcionPersona {
-        reservaModelo.addReserva(crearReserva());
-    }
+        if (opcion==1) {
+            reservaModelo.addReserva(crearReserva());
+            Reserva reserva = crearReserva();
+            reservaController.nuevaTarjetasReserva(reserva);
+        } else {
+
+        }
+        }
 
     private Reserva crearReserva() {
         // Obtener valores de los campos del formulario
+        int idReserva = reservaModelo.getLastId();
         String dniCliente = dniTextField.getText();
         java.sql.Date fechaLlegada = fechaLlegadaDatePicker.getValue() != null ? Date.valueOf(fechaLlegadaDatePicker.getValue().toString()) : null;
         java.sql.Date fechaSalida = fechaSalidaDatePicker.getValue() != null ? Date.valueOf(fechaSalidaDatePicker.getValue().toString()) : null;
@@ -98,13 +110,13 @@ public class NuevoEditarReserva {
         if (regimenGroup.getSelectedToggle() == alojamientoRadioButton) {
             regimen = "desayuno";
         } else if (regimenGroup.getSelectedToggle() == mediaPensionRadioButton) {
-            regimen = "Media pensión";
+            regimen = "Media pension";
         } else if (regimenGroup.getSelectedToggle() == pensionCompletaRadioButton) {
-            regimen = "Pensión completa";
+            regimen = "Pension completa";
         }
 
         // Crear y devolver una nueva reserva
-        return new Reserva( fechaLlegada, fechaSalida,  tipo_habitacion.valueOf(tipoHabitacion.toUpperCase().replaceAll("\\s+", "_")), fumador, Regimen.valueOf(regimen.toUpperCase().replaceAll("\\s+", "_")), numeroHabitaciones,dniCliente);
+        return new Reserva( idReserva,fechaLlegada, fechaSalida,  tipo_habitacion.valueOf(tipoHabitacion.toUpperCase().replaceAll("\\s+", "_")), fumador, Regimen.valueOf(regimen.toUpperCase().replaceAll("\\s+", "_")), numeroHabitaciones,dniCliente);
     }
 
     // Métodos para manejar eventos (opcional)
@@ -119,12 +131,40 @@ public class NuevoEditarReserva {
         }
 
         @FXML
-        private void aceptarFormulario() {
-            // Lógica para aceptar (por ejemplo, validar datos y guardar)
-        }
-
-        @FXML
         private void cancelarFormulario() {
             // Lógica para cerrar o cancelar el formulario
         }
+
+    public void setData(Reserva reserva) {
+            opcion=0;
+        // Rellenar el campo DNI
+        dniTextField.setText(reserva.getDni_cliente());
+
+        // Rellenar los campos de fecha
+        fechaLlegadaDatePicker.setValue(reserva.getFechaLlegada().toLocalDate());
+        fechaSalidaDatePicker.setValue(reserva.getFechaSalida().toLocalDate());
+
+        // Rellenar el spinner de número de habitaciones
+        numeroHabitacionesSpinner.getValueFactory().setValue(reserva.getNumero_habitaciones());
+
+        // Seleccionar el tipo de habitación en el ComboBox
+        tipoHabitacionComboBox.setValue(reserva.getTipoHabitacion().toString().replaceAll("_", " "));
+
+        // Configurar el checkbox de fumador
+        fumadorCheckBox.setSelected(reserva.isFumador());
+
+        // Seleccionar el régimen adecuado
+        switch (reserva.getRegimen()) {
+            case DESAYUNO:
+                regimenGroup.selectToggle(alojamientoRadioButton);
+                break;
+            case MEDIA_PENSION:
+                regimenGroup.selectToggle(mediaPensionRadioButton);
+                break;
+            case PENSION_COMPLETA:
+                regimenGroup.selectToggle(pensionCompletaRadioButton);
+                break;
+        }
     }
+
+}

@@ -16,7 +16,7 @@
                         <Insets left="10.0" top="15.0" />
                     </HBox.margin>
                 </Label>
-                <Button fx:id="searchButton1" onAction="#añadir" style="-fx-background-color: #6B88A2; -fx-text-fill: WHITE;" text="Añadir">
+                <Button fx:id="searchButton1" onAction="#añadir" style="-fx-background-color: #60ae4c; -fx-text-fill: WHITE;" text="Añadir">
                     <HBox.margin>
                         <Insets top="15.0" />
                     </HBox.margin>
