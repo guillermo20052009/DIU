@@ -21,6 +21,8 @@ import javafx.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
+//
 public class ReservaController {
     @FXML
     private GridPane userCardContainer;
@@ -33,7 +35,6 @@ public class ReservaController {
     String dni;
     int col=0;
     int row=0;
-
 
     public void setReservaModelo(ReservaModelo reservaModelo) {
         this.reservaModelo = reservaModelo;
@@ -50,11 +51,10 @@ public class ReservaController {
     public void nuevaTarjetasReserva(Reserva reserva)  {
         if (!reservas.contains(reserva))
             reservas.add(reserva);
-        // Crear VBox para la tarjeta
         VBox card = new VBox(10);
         card.setOnMouseClicked( (Event e) -> {
             try {
-                verDetalles(e);  // Pasa el evento como parámetro
+                verDetalles(e);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
@@ -64,33 +64,26 @@ public class ReservaController {
         card.setStyle("-fx-background-color: #A3C4DC; -fx-border-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(gaussian, #2A4D69, 10, 0, 0, 2);");
         card.setAlignment(Pos.CENTER);
 
-        // Crear y configurar el Label para el ID de reserva
         Label idLabel = new Label("ID Reserva: " + reserva.getIdReserva());
         idLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2A4D69;");
         idLabel.setTextAlignment(TextAlignment.CENTER);
 
-        // Crear y configurar el Label para la fecha de llegada
         Label fechaLabel = new Label("Fecha Llegada: " + reserva.getFechaLlegada().toString());
         fechaLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #3D5A80;");
         fechaLabel.setTextAlignment(TextAlignment.CENTER);
 
-        // Añadir los labels al VBox (tarjeta)
         card.getChildren().addAll(idLabel, fechaLabel);
 
-        // Añadir la tarjeta al GridPane
         userCardContainer.add(card, col, row);
 
-        // Ajustar la posición de la siguiente tarjeta
         col++;
-        if (col > 3) { // Cambiar de columna después de la segunda tarjeta en la fila
+        if (col > 3) {
             col = 0;
             row++;
         }
     }
 
     public void mostrarTarjetasReserva() {
-         // Columna inicial
-        // Fila inicial
         userCardContainer.getChildren().clear();
         col=0;
         row=0;
@@ -100,43 +93,39 @@ public class ReservaController {
     }
 
     public void eliminarTarjetasReserva(int idReserva) {
-        // Iterar sobre los nodos del GridPane (contenedor de las tarjetas)
         for (var node : userCardContainer.getChildren()) {
-            // Comprobar si el nodo es un VBox y si su ID coincide con el idReserva
             if (node instanceof VBox && node.getId() != null && node.getId().equals(String.valueOf(idReserva))) {
-                // Eliminar el nodo del GridPane
                 eliminarReservaDelArrayList(idReserva);
                 userCardContainer.getChildren().remove(node);
                 setData();
-                break; // Salir del bucle una vez encontrada y eliminada la tarjeta
+                break;
             }
         }
     }
+
     public void eliminarReservaDelArrayList(int idReserva) {
-        // Usar un bucle para buscar y eliminar la reserva con el ID especificado
         for (int i = 0; i < reservas.size(); i++) {
             if (reservas.get(i).getIdReserva() == idReserva) {
-                reservas.remove(i); // Eliminar la reserva
-                break; // Salir del bucle una vez eliminada
+                reservas.remove(i);
+                break;
             }
         }
     }
-
-
 
     public void setData()  {
         mostrarTarjetasReserva();
     }
+
     @FXML
     private void añadir() throws IOException {
         main.AñadirReservaEditar(dni);
     }
+
     public void lastidReserva() {
         reservaModelo.getLastId();
     }
 
     public void initialize() {
-        // Crear las columnas y definir el ancho
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(25);
         col1.setHalignment(HPos.CENTER);
@@ -153,22 +142,23 @@ public class ReservaController {
         col4.setPercentWidth(25);
         col4.setHalignment(HPos.CENTER);
 
-        // Asignar las ColumnConstraints al GridPane
-        userCardContainer.getColumnConstraints().addAll(col1, col2,col3,col4);
+        userCardContainer.getColumnConstraints().addAll(col1, col2, col3, col4);
     }
 
     public void setReservas() throws ExcepcionReserva {
-        reservas=reservaModelo.obtenerListaReserva(dni);
-        titulo.setText("Reservas de "+dni);
+        reservas = reservaModelo.obtenerListaReserva(dni);
+        titulo.setText("Reservas de " + dni);
     }
+
     public void verDetalles(Event event) throws IOException {
         VBox vbox = (VBox) event.getSource();
         String id = vbox.getId();
-        Reserva reserva=buscarReserva(Integer.valueOf(id));
+        Reserva reserva = buscarReserva(Integer.valueOf(id));
 
         main.verDetalleReserva(reserva);
     }
-    public Reserva buscarReserva(int id){
+
+    public Reserva buscarReserva(int id) {
         for (Reserva reserva : reservas) {
             if (reserva.getIdReserva() == id) {
                 return reserva;

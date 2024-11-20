@@ -6,17 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane focusTraversable="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestionhotel.controller.ReservaController">
+<BorderPane focusTraversable="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestionhotel.controller.ReservaController" stylesheets="@styles/Reserva.css">
     <top>
-        <HBox spacing="10" style=" -fx-border-color: #3D4C56; -fx-background-color: #3D4C56; -fx-border-radius: 5; -fx-padding: 0 0 18 0">
+        <HBox spacing="10" styleClass="top-hbox">
             <children>
                 <!-- Centrado del Label -->
-                <Label fx:id="titulo" style="-fx-font-size: 18px;" textFill="WHITE" HBox.hgrow="ALWAYS">
+                <Label fx:id="titulo" styleClass="top-label" HBox.hgrow="ALWAYS">
                     <HBox.margin>
                         <Insets left="10.0" top="15.0" />
                     </HBox.margin>
                 </Label>
-                <Button fx:id="searchButton1" onAction="#añadir" style="-fx-background-color: #60ae4c; -fx-text-fill: WHITE;" text="Añadir">
+                <Button fx:id="searchButton1" onAction="#añadir" styleClass="top-button" text="Añadir">
                     <HBox.margin>
                         <Insets top="15.0" />
                     </HBox.margin>
@@ -26,10 +26,9 @@
     </top>
 
     <center>
-        <ScrollPane fx:id="scrollPane" fitToWidth="true" style="-fx-background-color: #F0F4F7;">
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="scroll-pane">
             <content>
-                <GridPane fx:id="userCardContainer" hgap="15" vgap="15" style="-fx-padding: 25 0 25 0;">
-
+                <GridPane fx:id="userCardContainer" hgap="15" vgap="15" styleClass="grid-pane">
                 </GridPane>
             </content>
         </ScrollPane>

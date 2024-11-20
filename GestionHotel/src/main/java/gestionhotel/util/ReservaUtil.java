@@ -26,7 +26,7 @@ public class ReservaUtil {
         return reservasConvertida;
     }
     public static ReservaVO convertirReservaVO(Reserva reserva) {
-        return new ReservaVO(reserva.getNumero_habitaciones(),String.valueOf(reserva.getRegimen()),reserva.isFumador(),String.valueOf(reserva.getTipoHabitacion()),reserva.getFechaLlegada(),reserva.getFechaSalida(),reserva.getDni_cliente());
+        return new ReservaVO(reserva.getIdReserva(),reserva.getNumero_habitaciones(),String.valueOf(reserva.getRegimen()),reserva.isFumador(),String.valueOf(reserva.getTipoHabitacion()),reserva.getFechaSalida(),reserva.getFechaLlegada(),reserva.getDni_cliente());
     }
     public static Reserva convertirReserva(ReservaVO reservaVO) {
         return new Reserva(

@@ -50,6 +50,7 @@ public class NuevoEditarReserva {
         private ReservaModelo reservaModelo;
         private ReservaController reservaController;
         private int opcion;
+        private Integer id= null;
 
 
         @FXML
@@ -87,17 +88,23 @@ public class NuevoEditarReserva {
     @FXML
     private void añadir() throws ExcepcionPersona {
         if (opcion==1) {
-            reservaModelo.addReserva(crearReserva());
             Reserva reserva = crearReserva();
+            reservaModelo.addReserva(reserva);
             reservaController.nuevaTarjetasReserva(reserva);
         } else {
-
+            Reserva reserva = crearReserva();
+            reservaModelo.actualizar(reserva);
+            reservaController.eliminarReservaDelArrayList(reserva.getIdReserva());
+            reservaController.nuevaTarjetasReserva(reserva);
+            reservaController.mostrarTarjetasReserva();
         }
         }
 
     private Reserva crearReserva() {
         // Obtener valores de los campos del formulario
-        int idReserva = reservaModelo.getLastId();
+        if (opcion==1) {
+            id = reservaModelo.getLastId();
+        }
         String dniCliente = dniTextField.getText();
         java.sql.Date fechaLlegada = fechaLlegadaDatePicker.getValue() != null ? Date.valueOf(fechaLlegadaDatePicker.getValue().toString()) : null;
         java.sql.Date fechaSalida = fechaSalidaDatePicker.getValue() != null ? Date.valueOf(fechaSalidaDatePicker.getValue().toString()) : null;
@@ -116,7 +123,7 @@ public class NuevoEditarReserva {
         }
 
         // Crear y devolver una nueva reserva
-        return new Reserva( idReserva,fechaLlegada, fechaSalida,  tipo_habitacion.valueOf(tipoHabitacion.toUpperCase().replaceAll("\\s+", "_")), fumador, Regimen.valueOf(regimen.toUpperCase().replaceAll("\\s+", "_")), numeroHabitaciones,dniCliente);
+        return new Reserva( id,fechaLlegada, fechaSalida,  tipo_habitacion.valueOf(tipoHabitacion.toUpperCase().replaceAll("\\s+", "_")), fumador, Regimen.valueOf(regimen.toUpperCase().replaceAll("\\s+", "_")), numeroHabitaciones,dniCliente);
     }
 
     // Métodos para manejar eventos (opcional)
@@ -138,6 +145,7 @@ public class NuevoEditarReserva {
     public void setData(Reserva reserva) {
             opcion=0;
         // Rellenar el campo DNI
+        id = reserva.getIdReserva();
         dniTextField.setText(reserva.getDni_cliente());
 
         // Rellenar los campos de fecha

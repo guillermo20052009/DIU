@@ -1,0 +1,45 @@
+/* Estilo general de fondo */
+/* Estilo de fondo para el formulario */
+.background {
+    -fx-background-color: #E3F2FD;
+}
+
+/* Estilo del título */
+.titulo {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1E88E5;
+}
+
+/* Estilo de subtítulos */
+.subtitulo {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1565C0;
+}
+
+/* Estilo de las etiquetas */
+.label {
+    -fx-font-size: 14px;
+}
+
+/* Estilo para el CheckBox */
+.checkBox {
+    -fx-font-size: 14px;
+}
+
+/* Estilo de los botones */
+.btnAceptar {
+    -fx-background-color: #70bc3e;
+    -fx-text-fill: #FFFFFF;
+}
+
+.btnLimpiar {
+    -fx-background-color: #64B5F6;
+    -fx-text-fill: white;
+}
+
+.btnCancelar {
+    -fx-background-color: #E57373;
+    -fx-text-fill: white;
+}

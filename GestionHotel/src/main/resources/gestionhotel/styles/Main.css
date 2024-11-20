@@ -1,0 +1,52 @@
+.border-pane {
+    -fx-background-color: #D1E4F1;
+}
+
+.top-hbox {
+    -fx-border-color: #2E3B46;
+    -fx-background-color: #2E3B46;
+    -fx-border-radius: 5;
+    -fx-padding: 0 0 18 0;
+}
+
+.top-label {
+    -fx-font-size: 18px;
+}
+
+.button-add {
+    -fx-background-color: #60b340;
+    -fx-text-fill: WHITE;
+}
+
+.button-edit {
+    -fx-background-color: #FFB74D;
+    -fx-text-fill: WHITE;
+}
+
+.button-delete {
+    -fx-background-color: #E57373;
+    -fx-text-fill: WHITE;
+}
+
+.button-reservas {
+    -fx-background-color: #4D8FAC;
+    -fx-text-fill: WHITE;
+}
+
+.search-field {
+    -fx-background-color: #D1D9E6;
+    -fx-text-fill: #3C4A5D;
+}
+
+.button-search {
+    -fx-background-color: #4D8FAC;
+    -fx-text-fill: WHITE;
+}
+
+.scroll-pane {
+    -fx-background-color: #D1E4F1;
+}
+
+.user-card-container {
+    -fx-padding: 25 0 25 0;
+}

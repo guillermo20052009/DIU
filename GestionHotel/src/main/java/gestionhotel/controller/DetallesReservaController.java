@@ -4,6 +4,7 @@ import gestionhotel.Main;
 import gestionhotel.Reserva;
 import gestionhotel.modelo.ReservaModelo;
 import gestionhotel.modelo.repository.ExcepcionPersona;
+import gestionhotel.modelo.repository.ExcepcionReserva;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -41,8 +42,6 @@ public class DetallesReservaController {
     private Main main;
     @FXML
     private void initialize() {
-        // Verifica que los elementos en el FXML se hayan cargado correctamente
-        System.out.println("Controlador cargado correctamente");
     }
 
     public void setMain(Main main) {
@@ -62,7 +61,7 @@ public class DetallesReservaController {
 
     }
 
-    public void editarReserva() throws ExcepcionPersona, IOException {
+    public void editarReserva() throws ExcepcionReserva, IOException {
         main.AñadirReservaEditar(reserva);
     }
 

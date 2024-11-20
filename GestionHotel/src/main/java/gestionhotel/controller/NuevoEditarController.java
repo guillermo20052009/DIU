@@ -14,7 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
-
+// Esta clase será la encargada de controlar la vista de la ventana de editar y añadir nuevo usuario
 public class NuevoEditarController {
 
     @FXML
@@ -37,10 +37,9 @@ public class NuevoEditarController {
     private MainController mainController;
 
 
-
+// Este metodo se encargará de ir recogiendo lo que escribamos en los editText
     @FXML
     private void actualizarPersona(KeyEvent event) {
-        // Crea un objeto persona con los datos de los TextField
         if (persona != null) {
             persona.setDNI(dniField.getText());
             persona.setNombre(nombreField.getText());
@@ -51,7 +50,6 @@ public class NuevoEditarController {
         }
     }
 
-    // Mtodo para inicializar el controlador con los datos del cliente (para edición)
     public void setPersona(Persona persona) {
         this.persona = persona;
         if (persona != null) {
@@ -64,9 +62,11 @@ public class NuevoEditarController {
             dniField.setEditable(dniField.getText().equals("Introduce Dni"));
         }
     }
+
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
+
     public void setPersonaModelo(PersonaModelo personaModelo) {
         this.personaModelo = personaModelo;
     }
@@ -74,10 +74,8 @@ public class NuevoEditarController {
     @FXML
     private void guardarCliente() {
         try {
-            // Validar campos y crear o actualizar el cliente
             if (comprobarCampos()) {
                 if (persona == null) {
-                    // Crear nuevo cliente
                     persona = new Persona(dniField.getText(), nombreField.getText(), apellidosField.getText(),
                             direccionField.getText(), localidadField.getText(), provinciaField.getText());
                     if (dniField.isEditable())
@@ -85,7 +83,6 @@ public class NuevoEditarController {
                     else
                         personaModelo.actualizarPersona(persona);
                 } else {
-                    // Actualizar cliente existente
                     persona.setNombre(nombreField.getText());
                     persona.setApellidos(apellidosField.getText());
                     persona.setDireccion(direccionField.getText());
@@ -106,29 +103,24 @@ public class NuevoEditarController {
                 stage.close();
             }
         } catch (ExcepcionPersona e) {
-
         }
     }
+
     public boolean comprobarCampos() {
-        // Verifica que ninguno de los campos de texto esté vacío
         if (nombreField.getText().isEmpty() ||
                 apellidosField.getText().isEmpty() ||
                 direccionField.getText().isEmpty() ||
                 localidadField.getText().isEmpty() ||
                 provinciaField.getText().isEmpty()) {
 
-            // Si alguno de los campos está vacío, muestra un mensaje de alerta
             Alert alerta = new Alert(Alert.AlertType.WARNING);
             alerta.setTitle("Campos incompletos");
             alerta.setHeaderText(null);
             alerta.setContentText("Por favor, complete todos los campos.");
             alerta.showAndWait();
 
-            // Devuelve falso si algún campo está vacío
             return false;
         }
-        // Devuelve verdadero si todos los campos están completos
         return true;
     }
-
 }

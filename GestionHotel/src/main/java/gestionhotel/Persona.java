@@ -2,6 +2,10 @@ package gestionhotel;
 
 import javafx.beans.property.SimpleStringProperty;
 
+// Esta clase se encarga de manejar los clientes dentro de la aplicacion, no es la clase que vamos a pasar a la base de
+// datos, ya que vamos a utilizar datos más sofisticados
+// tendrá su correspondiente constructor, getters, setters y ToString
+
 public class Persona {
     private SimpleStringProperty DNI;
     private SimpleStringProperty Nombre;
@@ -9,6 +13,7 @@ public class Persona {
     private SimpleStringProperty direccion;
     private SimpleStringProperty localidad;
     private SimpleStringProperty provincia;
+
 
     public Persona(String DNI, String nombre, String apellidos, String direccion, String localidad, String provincia) {
         this.Nombre = new SimpleStringProperty(nombre);

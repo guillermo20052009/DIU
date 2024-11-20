@@ -8,49 +8,47 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="gestionhotel.controller.DetallesReservaController"
-            style="-fx-background-color: #274157;">
+            styleClass="border-pane"
+            stylesheets="@styles/DetallesReserva.css">
     <top>
         <Label text="Detalles de la Reserva"
-               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"
+               styleClass="label-title"
                BorderPane.alignment="CENTER" />
     </top>
 
     <center>
-        <GridPane hgap="10" vgap="10" style="-fx-padding: 20; -fx-background-color: #A3C4DC; -fx-border-radius: 10;">
-            <Label text="ID Reserva:" style="-fx-font-size: 16px; -fx-text-fill: #2A4D69;" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-            <Label fx:id="idReservaLabel" style="-fx-font-size: 16px; -fx-text-fill: #3D5A80;" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        <GridPane hgap="10" vgap="10" styleClass="grid-pane-center">
+            <Label text="ID Reserva:" styleClass="label-grid" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <Label fx:id="idReservaLabel" styleClass="label-value" GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-            <Label text="Fecha de Llegada:" style="-fx-font-size: 16px; -fx-text-fill: #2A4D69;" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-            <Label fx:id="fechaLlegadaLabel" style="-fx-font-size: 16px; -fx-text-fill: #3D5A80;" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            <Label text="Fecha de Llegada:" styleClass="label-grid" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <Label fx:id="fechaLlegadaLabel" styleClass="label-value" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-            <Label text="Fecha de Salida:" style="-fx-font-size: 16px; -fx-text-fill: #2A4D69;" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-            <Label fx:id="fechaSalidaLabel" style="-fx-font-size: 16px; -fx-text-fill: #3D5A80;" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+            <Label text="Fecha de Salida:" styleClass="label-grid" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+            <Label fx:id="fechaSalidaLabel" styleClass="label-value" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
-            <Label text="Tipo de Habitación:" style="-fx-font-size: 16px; -fx-text-fill: #2A4D69;" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-            <Label fx:id="tipoLabel" style="-fx-font-size: 16px; -fx-text-fill: #3D5A80;" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+            <Label text="Tipo de Habitación:" styleClass="label-grid" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+            <Label fx:id="tipoLabel" styleClass="label-value" GridPane.rowIndex="3" GridPane.columnIndex="1" />
 
-            <Label text="Fumador:" style="-fx-font-size: 16px; -fx-text-fill: #2A4D69;" GridPane.rowIndex="4" GridPane.columnIndex="0" />
-            <Label fx:id="fumadorLabel" style="-fx-font-size: 16px; -fx-text-fill: #3D5A80;" GridPane.rowIndex="4" GridPane.columnIndex="1" />
+            <Label text="Fumador:" styleClass="label-grid" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+            <Label fx:id="fumadorLabel" styleClass="label-value" GridPane.rowIndex="4" GridPane.columnIndex="1" />
 
-            <Label text="Régimen:" style="-fx-font-size: 16px; -fx-text-fill: #2A4D69;" GridPane.rowIndex="5" GridPane.columnIndex="0" />
-            <Label fx:id="regimenLabel" style="-fx-font-size: 16px; -fx-text-fill: #3D5A80;" GridPane.rowIndex="5" GridPane.columnIndex="1" />
+            <Label text="Régimen:" styleClass="label-grid" GridPane.rowIndex="5" GridPane.columnIndex="0" />
+            <Label fx:id="regimenLabel" styleClass="label-value" GridPane.rowIndex="5" GridPane.columnIndex="1" />
 
-            <Label text="Número de Habitaciones:" style="-fx-font-size: 16px; -fx-text-fill: #2A4D69;" GridPane.rowIndex="6" GridPane.columnIndex="0" />
-            <Label fx:id="numeroHabitacionesLabel" style="-fx-font-size: 16px; -fx-text-fill: #3D5A80;" GridPane.rowIndex="6" GridPane.columnIndex="1" />
+            <Label text="Número de Habitaciones:" styleClass="label-grid" GridPane.rowIndex="6" GridPane.columnIndex="0" />
+            <Label fx:id="numeroHabitacionesLabel" styleClass="label-value" GridPane.rowIndex="6" GridPane.columnIndex="1" />
 
-            <Label text="DNI Cliente:" style="-fx-font-size: 16px; -fx-text-fill: #2A4D69;" GridPane.rowIndex="7" GridPane.columnIndex="0" />
-            <Label fx:id="dniClienteLabel" style="-fx-font-size: 16px; -fx-text-fill: #3D5A80;" GridPane.rowIndex="7" GridPane.columnIndex="1" />
+            <Label text="DNI Cliente:" styleClass="label-grid" GridPane.rowIndex="7" GridPane.columnIndex="0" />
+            <Label fx:id="dniClienteLabel" styleClass="label-value" GridPane.rowIndex="7" GridPane.columnIndex="1" />
         </GridPane>
     </center>
 
     <bottom>
-        <HBox alignment="CENTER" spacing="20" style="-fx-padding: 10;">
-            <Button text="Editar" fx:id="editButton" onAction="#editarReserva"
-                    style="-fx-background-color: #cab04f; -fx-text-fill: #FFFFFF; -fx-font-size: 16px; -fx-font-weight: bold;" />
-            <Button text="Eliminar" fx:id="deleteButton" onAction="#eliminarReserva"
-                    style="-fx-background-color: #A63D40; -fx-text-fill: #FFFFFF; -fx-font-size: 16px; -fx-font-weight: bold;" />
-            <Button text="Cerrar" fx:id="cancelButton" onAction="#cerrar"
-                    style="-fx-background-color: #2A4D69; -fx-text-fill: #FFFFFF; -fx-font-size: 16px; -fx-font-weight: bold;" />
+        <HBox alignment="CENTER" spacing="20" styleClass="hbox-bottom">
+            <Button text="Editar" fx:id="editButton" onAction="#editarReserva" styleClass="button-edit" />
+            <Button text="Eliminar" fx:id="deleteButton" onAction="#eliminarReserva" styleClass="button-delete" />
+            <Button text="Cerrar" fx:id="cancelButton" onAction="#cerrar" styleClass="button-cancel" />
         </HBox>
     </bottom>
 </BorderPane>

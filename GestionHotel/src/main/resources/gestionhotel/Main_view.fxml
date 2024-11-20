@@ -2,54 +2,54 @@
 
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane focusTraversable="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gestionhotel.controller.MainController">
+<BorderPane focusTraversable="true" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gestionhotel.controller.MainController"
+            styleClass="border-pane"
+            stylesheets="@styles/Main.css">
     <top>
-        <HBox spacing="10" style=" -fx-border-color: #2E3B46; -fx-background-color: #2E3B46; -fx-border-radius: 5; -fx-padding: 0 0 18 0">
+        <HBox spacing="10" styleClass="top-hbox">
             <children>
-                <!-- Centrado del Label -->
-                <Label style="-fx-font-size: 18px;" text="Listado de Usuarios" textFill="WHITE" HBox.hgrow="ALWAYS">
+                <Label text="Listado de Usuarios" textFill="WHITE" HBox.hgrow="ALWAYS" styleClass="top-label">
                     <HBox.margin>
                         <Insets left="10.0" top="15.0" />
                     </HBox.margin>
                 </Label>
 
-                <Button fx:id="searchButton1" onAction="#añadirUsuario" style="-fx-background-color: #60b340; -fx-text-fill: WHITE;" text="Añadir">
+                <Button fx:id="searchButton1" onAction="#añadirUsuario" text="Añadir" styleClass="button-add">
                     <HBox.margin>
                         <Insets top="15.0" />
                     </HBox.margin>
                 </Button>
 
-                <!-- Botones Editar y Eliminar al lado del botón Añadir -->
-                <Button fx:id="editButton" style="-fx-background-color: #FFB74D; -fx-text-fill: WHITE;" text="Editar">
+                <Button fx:id="editButton" text="Editar" styleClass="button-edit">
                     <HBox.margin>
-                        <Insets  top="15.0" />
+                        <Insets top="15.0" />
                     </HBox.margin>
                 </Button>
 
-                <Button fx:id="deleteButton" style="-fx-background-color: #E57373; -fx-text-fill: WHITE;" text="Eliminar">
+                <Button fx:id="deleteButton" text="Eliminar" styleClass="button-delete">
                     <HBox.margin>
-                        <Insets  top="15.0" />
+                        <Insets top="15.0" />
                     </HBox.margin>
                 </Button>
-                <Button fx:id="reservasButton" style="-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;" text="Reservas">
+
+                <Button fx:id="reservasButton" text="Reservas" styleClass="button-reservas">
                     <HBox.margin>
                         <Insets right="10.0" top="15.0" />
                     </HBox.margin>
                 </Button>
 
-                <!-- Alineación a la derecha para el TextField y el Button de Buscar -->
                 <Region HBox.hgrow="ALWAYS" />
 
-                <TextField fx:id="searchField" alignment="TOP_LEFT" promptText="Buscar..." style="-fx-background-color: #D1D9E6; -fx-text-fill: #3C4A5D;">
+                <TextField fx:id="searchField" alignment="TOP_LEFT" promptText="Buscar..." styleClass="search-field">
                     <HBox.margin>
                         <Insets top="15.0" />
                     </HBox.margin>
                 </TextField>
-                <Button fx:id="searchButton" onAction="#buscarPorDNI" style="-fx-background-color: #4D8FAC; -fx-text-fill: WHITE;" text="Buscar">
+                <Button fx:id="searchButton" onAction="#buscarPorDNI" text="Buscar" styleClass="button-search">
                     <HBox.margin>
                         <Insets right="10.0" top="15.0" />
                     </HBox.margin>
@@ -59,9 +59,9 @@
     </top>
 
     <center>
-        <ScrollPane fx:id="scrollPane" fitToWidth="true" style="-fx-background-color: #D1E4F1;">
+        <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="scroll-pane">
             <content>
-                <VBox fx:id="userCardContainer" spacing="10" style="-fx-padding: 25 0 25 0;">
+                <VBox fx:id="userCardContainer" spacing="10" styleClass="user-card-container">
                     <!-- Aquí se agregarán las tarjetas dinámicamente desde el controlador -->
                 </VBox>
             </content>

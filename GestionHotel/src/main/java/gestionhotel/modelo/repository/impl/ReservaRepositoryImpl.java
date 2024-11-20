@@ -52,13 +52,13 @@ public class ReservaRepositoryImpl implements ReservaRepository {
     public void addReserva(ReservaVO reservaVO) throws ExcepcionReserva {
         try {
             Connection conn = this.conexion.conectarBD();
-            System.out.println(reservaVO);
             String sql = "INSERT INTO reserva (fecha_Salida, fecha_Llegada, tipo_Hab, fumador, regimen, num_hab, dni_cliente) VALUES (?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
 
 // Asumiendo que `reservaVO` tiene los métodos getters correctos
             stmt.setDate(1, reservaVO.getFechaSalida());  // Usa .getFechaSalida() que debería devolver un java.sql.Date
             stmt.setDate(2, reservaVO.getFechaLlegada());  // Usa .getFechaLlegada() que también debería devolver un java.sql.Date
+            System.out.println(reservaVO.getFechaLlegada());
             stmt.setString(3, reservaVO.getTipo_habitacion().replaceAll("_"," "));
             stmt.setBoolean(4, reservaVO.isFumador());  // Fumador como boolean
             stmt.setString(5, reservaVO.getRegimen().replaceAll("_"," "));  // Régimen como String
@@ -91,18 +91,21 @@ public class ReservaRepositoryImpl implements ReservaRepository {
             Connection conn = this.conexion.conectarBD();
             String sql = "UPDATE reserva SET fecha_Salida = ?, fecha_Llegada = ?, tipo_Hab = ?, fumador = ?, regimen = ?, num_hab = ?, dni_cliente = ? WHERE id_reserva = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
+            System.out.println(reservaVO);
 
 // Asumiendo que `reservaVO` tiene los métodos getters correctos
             stmt.setDate(1, reservaVO.getFechaSalida());  // fecha_Salida como java.sql.Date
             stmt.setDate(2, reservaVO.getFechaLlegada());  // fecha_Llegada como java.sql.Date
-            stmt.setString(3, reservaVO.getTipo_habitacion());  // tipo_Hab como String
+            stmt.setString(3, reservaVO.getTipo_habitacion().replaceAll("_"," "));  // tipo_Hab como String
             stmt.setBoolean(4, reservaVO.isFumador());  // fumador como boolean
-            stmt.setString(5, reservaVO.getRegimen());  // regimen como String
+            stmt.setString(5, reservaVO.getRegimen().replaceAll("_"," "));  // regimen como String
             stmt.setInt(6, reservaVO.getNumero_habitaciones());  // num_hab como int, usando .get() para IntegerProperty
             stmt.setString(7, reservaVO.getDni_cliente());  // dni_cliente como String, usando .get() para StringProperty
             stmt.setInt(8, reservaVO.getIdReserva());
 
+
             stmt.executeUpdate();
+            System.out.println("hola");
         } catch (Exception var4) {
             throw new ExcepcionReserva("No se ha podido realizar la edición");
         }
@@ -118,7 +121,6 @@ public class ReservaRepositoryImpl implements ReservaRepository {
 
             for(ResultSet registro = comando.executeQuery("SELECT id_reserva FROM reserva ORDER BY id_reserva DESC LIMIT 1"); registro.next(); lastReservaId = registro.getInt("id_reserva")) {
             }
-            System.out.println("hola");
 
             return lastReservaId;
         } catch (SQLException var5) {

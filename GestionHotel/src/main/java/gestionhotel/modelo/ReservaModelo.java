@@ -32,12 +32,13 @@ public class ReservaModelo {
         }
         return ReservaUtil.convertirVOaReserva(reservas);
     }
-    public void eliminarReserva(int id,String dni) throws ExcepcionPersona {
+    public void eliminarReserva(int id,String dni) throws ExcepcionReserva {
         reservaRepository.deleteReserva(id);
     }
-    public void actualizarPersona(Persona persona) throws ExcepcionPersona {
+    public void actualizar(Reserva reserva) throws ExcepcionReserva {
+        reservaRepository.editReserva(ReservaUtil.convertirReservaVO(reserva));
     }
-    public void addReserva(Reserva reserva) throws ExcepcionPersona {
+    public void addReserva(Reserva reserva) throws ExcepcionReserva {
        reservaRepository.addReserva(ReservaUtil.convertirReservaVO(reserva));
     }
     public int getLastId() throws ExcepcionReserva {

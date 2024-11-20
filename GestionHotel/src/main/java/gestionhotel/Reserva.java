@@ -9,6 +9,10 @@ import javafx.beans.property.StringProperty;
 
 import java.sql.Date;
 
+// Esta clase se encarga de manejar las reservas dentro de la aplicación, no es la clase que vamos a pasar a la base de
+// datos, ya que vamos a utilizar datos más sofisticados
+// tendrá dos constructores, que se usarán más adelante, getters, setters y ToString
+
 public class Reserva {
     private IntegerProperty idReserva;
     private java.sql.Date fechaLlegada;

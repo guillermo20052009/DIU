@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
+//La clase Main será la clase principal del Programa donde Abriremos las ventanas e inyectaremos los datos necesarios en los controladores y modelos
+
 public class Main extends Application {
         MainController controller;
         PersonaModelo modelo;
@@ -22,7 +25,7 @@ public class Main extends Application {
         ReservaRepositoryImpl reservaRepository = new ReservaRepositoryImpl();
         ReservaController controllerReserva;
 
-
+//Iniciar Pantalla Principal
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/Main_view.fxml"));
@@ -39,6 +42,7 @@ public class Main extends Application {
         controller.setMain(this);
     }
 
+// Iniciar Pantalla de edicion para un cliente existente
     public void EditarONuevo(Persona persona) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Editar Persona");
@@ -51,6 +55,9 @@ public class Main extends Application {
         controller2.setMainController(controller);
         stage.show();
     }
+
+
+// Iniciar Pantalla Para añadir cliente nuevo, es la misma que la anterior, pero cambian los datos de los editText
     public void EditarONuevo() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Añadir Persona");
@@ -63,6 +70,8 @@ public class Main extends Application {
         controller2.setMainController(controller);
         stage.show();
     }
+
+//Iniciar Pantalla con las reservas de un cliente
     public void verReserva(String dni) throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Reservas");
@@ -80,6 +89,9 @@ public class Main extends Application {
         stage.show();
 
     }
+
+
+// En la anterior pantalla se ven todas las reservas y esta contendrá los detalles de la que pulsemos
     public void verDetalleReserva(Reserva reserva) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/DetallesReserva.fxml"));
         Parent root = loader.load();
@@ -93,6 +105,8 @@ public class Main extends Application {
         stage.show();
         controller2.setData(reserva);
     }
+
+// En esta pantalla se podrán añadir nuevas reservas
     public void AñadirReservaEditar(String dni) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditarReserva.fxml"));
         Parent root = loader.load();
@@ -105,6 +119,8 @@ public class Main extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+// La misma que la anterior, pero con los datos de la reserva que queremos editar
     public void AñadirReservaEditar(Reserva reserva) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditarReserva.fxml"));
         Parent root = loader.load();

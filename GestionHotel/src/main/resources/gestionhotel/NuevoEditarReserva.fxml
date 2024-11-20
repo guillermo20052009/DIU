@@ -6,39 +6,39 @@
 
 <?import java.lang.String?>
 <VBox xmlns:fx="http://javafx.com/fxml" fx:controller="gestionhotel.controller.NuevoEditarReserva"
-      alignment="CENTER" spacing="20" style="-fx-background-color: #E3F2FD;" prefWidth="600" prefHeight="500">
+      alignment="CENTER" spacing="20" styleClass="background" prefWidth="600" prefHeight="500" stylesheets="@styles/NuevoEditarReserva.css">
     <!-- Título -->
-    <Label text="Formulario de Reservas" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #1E88E5;" />
+    <Label text="Formulario de Reservas" styleClass="titulo"/>
 
     <!-- Datos del Cliente -->
     <VBox spacing="10" alignment="CENTER">
-        <Label text="Datos del cliente" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1565C0;" />
+        <Label text="Datos del cliente" styleClass="subtitulo"/>
         <HBox spacing="10" alignment="CENTER">
-            <Label text="DNI:" style="-fx-font-size: 14px;" />
+            <Label text="DNI:" styleClass="label"/>
             <TextField fx:id="dniTextField" prefWidth="200" />
         </HBox>
     </VBox>
 
     <!-- Datos de la Reserva -->
     <VBox spacing="15" alignment="CENTER">
-        <Label text="Datos de la reserva" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1565C0;" />
+        <Label text="Datos de la reserva" styleClass="subtitulo"/>
         <HBox spacing="20" alignment="CENTER">
             <VBox spacing="5" alignment="CENTER">
-                <Label text="Fecha de llegada:" style="-fx-font-size: 14px;" />
+                <Label text="Fecha de llegada:" styleClass="label"/>
                 <DatePicker fx:id="fechaLlegadaDatePicker" />
             </VBox>
             <VBox spacing="5" alignment="CENTER">
-                <Label text="Fecha de salida:" style="-fx-font-size: 14px;" />
+                <Label text="Fecha de salida:" styleClass="label"/>
                 <DatePicker fx:id="fechaSalidaDatePicker" />
             </VBox>
         </HBox>
         <HBox spacing="20" alignment="CENTER">
             <VBox spacing="5" alignment="CENTER">
-                <Label text="Número de habitaciones:" style="-fx-font-size: 14px;" />
+                <Label text="Número de habitaciones:" styleClass="label"/>
                 <Spinner fx:id="numeroHabitacionesSpinner" min="1" max="1" initialValue="1" prefWidth="100" />
             </VBox>
             <VBox spacing="5" alignment="CENTER">
-                <Label text="Tipo de habitación:" style="-fx-font-size: 14px;" />
+                <Label text="Tipo de habitación:" styleClass="label"/>
                 <ComboBox fx:id="tipoHabitacionComboBox" prefWidth="150">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
@@ -51,9 +51,9 @@
                 </ComboBox>
             </VBox>
         </HBox>
-        <CheckBox fx:id="fumadorCheckBox" text="Fumador" />
+        <CheckBox fx:id="fumadorCheckBox" text="Fumador" styleClass="checkBox"/>
         <VBox spacing="5" alignment="CENTER">
-            <Label text="Régimen:" style="-fx-font-size: 14px;" />
+            <Label text="Régimen:" styleClass="label"/>
             <RadioButton text="Alojamiento desayuno" fx:id="alojamientoRadioButton" />
             <RadioButton text="Media pension" fx:id="mediaPensionRadioButton" />
             <RadioButton text="Pension completa" fx:id="pensionCompletaRadioButton" />
@@ -62,9 +62,8 @@
 
     <!-- Botones -->
     <HBox spacing="10" alignment="CENTER">
-        <Button fx:id="aceptarButton" text="Aceptar" style="-fx-background-color: #70bc3e; -fx-text-fill:#FFFFFF ;" onAction="#añadir"/>
-        <Button fx:id="limpiarButton" text="Limpiar" style="-fx-background-color: #64B5F6; -fx-text-fill: white;" onAction="#limpiarFormulario" />
-        <Button fx:id="cancelarButton" text="Cancelar" style="-fx-background-color: #E57373; -fx-text-fill: white;" />
+        <Button fx:id="aceptarButton" text="Aceptar" styleClass="btnAceptar" onAction="#añadir"/>
+        <Button fx:id="limpiarButton" text="Limpiar" styleClass="btnLimpiar" onAction="#limpiarFormulario"/>
+        <Button fx:id="cancelarButton" text="Cancelar" styleClass="btnCancelar"/>
     </HBox>
 </VBox>
-
