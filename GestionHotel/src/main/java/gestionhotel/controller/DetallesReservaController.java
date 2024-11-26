@@ -13,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+// Esta clase es el controlador de los detalles de la reserva, contiene los botones de editar y eliminar.
 public class DetallesReservaController {
 
     @FXML
@@ -44,27 +45,34 @@ public class DetallesReservaController {
     private void initialize() {
     }
 
+    // Inyectamos el Main
     public void setMain(Main main) {
         this.main = main;
     }
 
+    // Inyectamos el controller de reservas para después pasarle el elemento que se ha creado
     public void setReservaController(ReservaController reservaController) {
         this.reservaController = reservaController;
     }
 
+    // Inyectamos el modelo de Reserva
     public void ReservaModelo(ReservaModelo reservaModelo) {
         this.reservaModelo = reservaModelo;
     }
+
+    // Eliminamos la reserva de la base de datos y de la vista
     public void eliminarReserva() throws ExcepcionPersona {
         reservaModelo.eliminarReserva(reserva.getIdReserva(),reserva.getDni_cliente());
         reservaController.eliminarTarjetasReserva(reserva.getIdReserva());
 
     }
 
+    // llamamos a la función del main que abre la pantalla de editar con los datos de la reserva actual
     public void editarReserva() throws ExcepcionReserva, IOException {
         main.AñadirReservaEditar(reserva);
     }
 
+    // Colocamos los datos
     public void setData(Reserva reserva) {
         this.reserva = reserva;
         idReservaLabel.setText(String.valueOf(reserva.getIdReserva()));
@@ -78,6 +86,7 @@ public class DetallesReservaController {
         dniClienteLabel.setText(reserva.getDni_cliente());
     }
 
+    // cerramos la ventana
     @FXML
     public void cerrar(){
         Stage stage = (Stage) cancelButton.getScene().getWindow();

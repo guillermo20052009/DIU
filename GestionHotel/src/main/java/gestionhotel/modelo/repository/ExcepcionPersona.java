@@ -1,5 +1,6 @@
 package gestionhotel.modelo.repository;
 
+// Manejo de las excepciones para Persona
 public class ExcepcionPersona extends Exception {
     private String mensaje;
 

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-//
+// Este controlador se encargará de manejar la vista donde se muestran las reservas de cada cliente
 public class ReservaController {
     @FXML
     private GridPane userCardContainer;
@@ -36,18 +36,24 @@ public class ReservaController {
     int col=0;
     int row=0;
 
+
+    // Inyectamos el modelo de Reserva
     public void setReservaModelo(ReservaModelo reservaModelo) {
         this.reservaModelo = reservaModelo;
     }
 
+    // Inyectamos el dni del cliente
     public void setDni(String dni) {
         this.dni = dni;
     }
 
+    // Inyectamos el Main
     public void setMain(Main main) {
         this.main = main;
     }
 
+
+    // Funcion para añadir una card de una reserva existente y añadirle un action cuando pulsemos
     public void nuevaTarjetasReserva(Reserva reserva)  {
         if (!reservas.contains(reserva))
             reservas.add(reserva);
@@ -83,6 +89,7 @@ public class ReservaController {
         }
     }
 
+    // Esta funcion Itera sobre la funcion anterior y crea tantas cards como reservas haya
     public void mostrarTarjetasReserva() {
         userCardContainer.getChildren().clear();
         col=0;
@@ -92,6 +99,7 @@ public class ReservaController {
         }
     }
 
+    // Itera sobre las tarjetas y busca la que coincida el id
     public void eliminarTarjetasReserva(int idReserva) {
         for (var node : userCardContainer.getChildren()) {
             if (node instanceof VBox && node.getId() != null && node.getId().equals(String.valueOf(idReserva))) {
@@ -103,6 +111,7 @@ public class ReservaController {
         }
     }
 
+    // Elimina la reserva del arraylist
     public void eliminarReservaDelArrayList(int idReserva) {
         for (int i = 0; i < reservas.size(); i++) {
             if (reservas.get(i).getIdReserva() == idReserva) {
@@ -112,19 +121,26 @@ public class ReservaController {
         }
     }
 
+    // Llama a la función que muestras las tarjetas
     public void setData()  {
         mostrarTarjetasReserva();
     }
 
+
+    // llama a la función de main que abre la ventana de editar
     @FXML
     private void añadir() throws IOException {
         main.AñadirReservaEditar(dni);
     }
 
+
+    // Nos devuelve el id de la ultima reserva, lo usamos cuando añadimos una nueva reserva y el id, se pone automaticamente
+
     public void lastidReserva() {
         reservaModelo.getLastId();
     }
 
+    // Inicia las columnas que usaremos y el tamaño que tendrán
     public void initialize() {
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setPercentWidth(25);
@@ -145,11 +161,14 @@ public class ReservaController {
         userCardContainer.getColumnConstraints().addAll(col1, col2, col3, col4);
     }
 
+    // se recogen las reservas de la base de datos
     public void setReservas() throws ExcepcionReserva {
         reservas = reservaModelo.obtenerListaReserva(dni);
         titulo.setText("Reservas de " + dni);
     }
 
+
+    // funcion que determina que tarjeta hemos pulsado y abre los detalles de la misma
     public void verDetalles(Event event) throws IOException {
         VBox vbox = (VBox) event.getSource();
         String id = vbox.getId();
@@ -158,6 +177,7 @@ public class ReservaController {
         main.verDetalleReserva(reserva);
     }
 
+    // funcion que busca la reserva
     public Reserva buscarReserva(int id) {
         for (Reserva reserva : reservas) {
             if (reserva.getIdReserva() == id) {

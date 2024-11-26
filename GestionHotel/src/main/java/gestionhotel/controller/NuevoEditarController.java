@@ -75,8 +75,21 @@ public class NuevoEditarController {
     private void guardarCliente() {
         try {
             if (comprobarCampos()) {
+                String dni = dniField.getText().trim();
+
+                // Comprobar si el DNI es válido
+                if (!validarDni(dni)) {
+                    Alert alerta = new Alert(Alert.AlertType.WARNING);
+                    alerta.setTitle("DNI inválido");
+                    alerta.setHeaderText(null);
+                    alerta.setContentText("El DNI introducido no es válido.");
+                    alerta.showAndWait();
+                    return; // Si el DNI no es válido, no seguimos
+                }
+
+                // Si la persona es nueva o se está actualizando
                 if (persona == null) {
-                    persona = new Persona(dniField.getText(), nombreField.getText(), apellidosField.getText(),
+                    persona = new Persona(dni, nombreField.getText(), apellidosField.getText(),
                             direccionField.getText(), localidadField.getText(), provinciaField.getText());
                     if (dniField.isEditable())
                         personaModelo.addPersona(persona);
@@ -94,17 +107,21 @@ public class NuevoEditarController {
                         personaModelo.actualizarPersona(persona);
                 }
 
-                if (dniField.isEditable()){
+                if (dniField.isEditable()) {
                     mainController.setData(mainController.nuevaTarjeta(persona));
                 } else {
                     mainController.actualizarCard(persona);
                 }
+
+                // Cerrar la ventana de edición
                 Stage stage = (Stage) guardarButton.getScene().getWindow();
                 stage.close();
             }
         } catch (ExcepcionPersona e) {
+            e.printStackTrace();
         }
     }
+
 
     public boolean comprobarCampos() {
         if (nombreField.getText().isEmpty() ||
@@ -123,4 +140,24 @@ public class NuevoEditarController {
         }
         return true;
     }
+
+    // Comprobamos la veracidad del dni
+    private boolean validarDni(String dni) {
+        if (dni == null || dni.length() != 9) {
+            return false;
+        }
+
+        String numero = dni.substring(0, 8);
+        String letra = dni.substring(8).toUpperCase();
+
+        try {
+            long num = Long.parseLong(numero);
+        } catch (NumberFormatException e) {
+            return false; // Si no es un número, no es válido
+        }
+        char[] letras = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
+        char letraEsperada = letras[(int) (Long.parseLong(numero) % 23)];
+        return letra.equals(String.valueOf(letraEsperada));
+    }
+
 }

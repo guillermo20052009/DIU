@@ -1,5 +1,7 @@
 package gestionhotel.modelo;
 
+// Esta clase es para recoger los registros de la base de datos, no va a ser utilizada internamente
+
 public class PersonaVO {
     private String DNI;
     private String nombre;

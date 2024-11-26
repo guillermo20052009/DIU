@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -9,54 +8,76 @@
             fx:controller="gestionhotel.controller.MainController"
             styleClass="border-pane"
             stylesheets="@styles/Main.css">
+
+    <!-- Menú Dropdown (Opciones) -->
     <top>
         <HBox spacing="10" styleClass="top-hbox">
             <children>
-                <Label text="Listado de Usuarios" textFill="WHITE" HBox.hgrow="ALWAYS" styleClass="top-label">
-                    <HBox.margin>
-                        <Insets left="10.0" top="15.0" />
-                    </HBox.margin>
-                </Label>
+                <MenuButton text="Opciones" styleClass="menu-button">
+                    <items>
+                        <MenuItem fx:id="menuItem1" text="Opción 1" />
+                        <MenuItem fx:id="menuItem2" text="Opción 2" />
+                        <MenuItem fx:id="menuItem3" text="Opción 3" />
+                    </items>
+                </MenuButton>
 
-                <Button fx:id="searchButton1" onAction="#añadirUsuario" text="Añadir" styleClass="button-add">
-                    <HBox.margin>
-                        <Insets top="15.0" />
-                    </HBox.margin>
-                </Button>
-
-                <Button fx:id="editButton" text="Editar" styleClass="button-edit">
-                    <HBox.margin>
-                        <Insets top="15.0" />
-                    </HBox.margin>
-                </Button>
-
-                <Button fx:id="deleteButton" text="Eliminar" styleClass="button-delete">
-                    <HBox.margin>
-                        <Insets top="15.0" />
-                    </HBox.margin>
-                </Button>
-
-                <Button fx:id="reservasButton" text="Reservas" styleClass="button-reservas">
-                    <HBox.margin>
-                        <Insets right="10.0" top="15.0" />
-                    </HBox.margin>
-                </Button>
-
-                <Region HBox.hgrow="ALWAYS" />
-
-                <TextField fx:id="searchField" alignment="TOP_LEFT" promptText="Buscar..." styleClass="search-field">
-                    <HBox.margin>
-                        <Insets top="15.0" />
-                    </HBox.margin>
-                </TextField>
-                <Button fx:id="searchButton" onAction="#buscarPorDNI" text="Buscar" styleClass="button-search">
-                    <HBox.margin>
-                        <Insets right="10.0" top="15.0" />
-                    </HBox.margin>
-                </Button>
+                <MenuButton text="Configuración" styleClass="menu-button">
+                    <items>
+                        <MenuItem fx:id="menuItem4" text="Ajustes" />
+                        <MenuItem fx:id="menuItem5" text="Preferencias" />
+                    </items>
+                </MenuButton>
             </children>
         </HBox>
     </top>
+
+    <!-- Barra con botones (ya existente) -->
+    <HBox spacing="10" styleClass="top-hbox">
+        <children>
+            <Label text="Listado de Usuarios" textFill="WHITE" HBox.hgrow="ALWAYS" styleClass="top-label">
+                <HBox.margin>
+                    <Insets left="10.0" top="15.0" />
+                </HBox.margin>
+            </Label>
+
+            <Button fx:id="searchButton1" onAction="#añadirUsuario" text="Añadir" styleClass="button-add">
+                <HBox.margin>
+                    <Insets top="15.0" />
+                </HBox.margin>
+            </Button>
+
+            <Button fx:id="editButton" text="Editar" styleClass="button-edit">
+                <HBox.margin>
+                    <Insets top="15.0" />
+                </HBox.margin>
+            </Button>
+
+            <Button fx:id="deleteButton" text="Eliminar" styleClass="button-delete">
+                <HBox.margin>
+                    <Insets top="15.0" />
+                </HBox.margin>
+            </Button>
+
+            <Button fx:id="reservasButton" text="Reservas" styleClass="button-reservas">
+                <HBox.margin>
+                    <Insets right="10.0" top="15.0" />
+                </HBox.margin>
+            </Button>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <TextField fx:id="searchField" alignment="TOP_LEFT" promptText="Buscar..." styleClass="search-field">
+                <HBox.margin>
+                    <Insets top="15.0" />
+                </HBox.margin>
+            </TextField>
+            <Button fx:id="searchButton" onAction="#buscarPorDNI" text="Buscar" styleClass="button-search">
+                <HBox.margin>
+                    <Insets right="10.0" top="15.0" />
+                </HBox.margin>
+            </Button>
+        </children>
+    </HBox>
 
     <center>
         <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="scroll-pane">

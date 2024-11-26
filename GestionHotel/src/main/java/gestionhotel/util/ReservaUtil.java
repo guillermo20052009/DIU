@@ -6,8 +6,10 @@ import gestionhotel.modelo.tipo_habitacion;
 
 import java.util.ArrayList;
 
+// Esta clase se encargará de hacer las transformaciones pertinentes entre Reserva y ReservaVO
 public class ReservaUtil {
 
+    // Convierte la lista que recogemos de la base de datos a Reserva
     public static ArrayList<Reserva> convertirVOaReserva(ArrayList<ReservaVO> reservas) {
         ArrayList<Reserva> reservasConvertida = new ArrayList<>();
 
@@ -25,9 +27,13 @@ public class ReservaUtil {
         }
         return reservasConvertida;
     }
+
+    // Convierte una instancia de Reserva a ReservaVO
     public static ReservaVO convertirReservaVO(Reserva reserva) {
         return new ReservaVO(reserva.getIdReserva(),reserva.getNumero_habitaciones(),String.valueOf(reserva.getRegimen()),reserva.isFumador(),String.valueOf(reserva.getTipoHabitacion()),reserva.getFechaSalida(),reserva.getFechaLlegada(),reserva.getDni_cliente());
     }
+
+    // Convierte una instancia de ResevaVO a Reserva
     public static Reserva convertirReserva(ReservaVO reservaVO) {
         return new Reserva(
                 reservaVO.getIdReserva(),

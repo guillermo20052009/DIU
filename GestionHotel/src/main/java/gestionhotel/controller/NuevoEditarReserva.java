@@ -87,18 +87,54 @@ public class NuevoEditarReserva {
     }
     @FXML
     private void añadir() throws ExcepcionPersona {
-        if (opcion==1) {
-            Reserva reserva = crearReserva();
-            reservaModelo.addReserva(reserva);
-            reservaController.nuevaTarjetasReserva(reserva);
+        if (opcion == 1) {
+            if (comprobarCampos()) {
+                Reserva reserva = crearReserva();
+                reservaModelo.addReserva(reserva);
+                reservaController.nuevaTarjetasReserva(reserva);
+            }
         } else {
-            Reserva reserva = crearReserva();
-            reservaModelo.actualizar(reserva);
-            reservaController.eliminarReservaDelArrayList(reserva.getIdReserva());
-            reservaController.nuevaTarjetasReserva(reserva);
-            reservaController.mostrarTarjetasReserva();
+            if (comprobarCampos()) {
+                Reserva reserva = crearReserva();
+                reservaModelo.actualizar(reserva);
+                reservaController.eliminarReservaDelArrayList(reserva.getIdReserva());
+                reservaController.nuevaTarjetasReserva(reserva);
+                reservaController.mostrarTarjetasReserva();
+            }
         }
+    }
+
+    private boolean comprobarCampos() {
+        // Comprobar que los campos no estén vacíos
+        if (dniTextField.getText().isEmpty() ||
+                fechaLlegadaDatePicker.getValue() == null ||
+                fechaSalidaDatePicker.getValue() == null ||
+                tipoHabitacionComboBox.getValue() == null ||
+                regimenGroup.getSelectedToggle() == null) {
+
+            // Mostrar una alerta si algún campo está vacío
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Campos incompletos");
+            alerta.setHeaderText(null);
+            alerta.setContentText("Por favor, complete todos los campos.");
+            alerta.showAndWait();
+            return false;
         }
+
+        // Comprobar que la fecha de llegada es menor que la fecha de salida
+        if (fechaLlegadaDatePicker.getValue().isAfter(fechaSalidaDatePicker.getValue())) {
+            // Mostrar una alerta si la fecha de llegada es posterior a la fecha de salida
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Fechas incorrectas");
+            alerta.setHeaderText(null);
+            alerta.setContentText("La fecha de llegada no puede ser posterior a la fecha de salida.");
+            alerta.showAndWait();
+            return false;
+        }
+
+        return true;
+    }
+
 
     private Reserva crearReserva() {
         // Obtener valores de los campos del formulario

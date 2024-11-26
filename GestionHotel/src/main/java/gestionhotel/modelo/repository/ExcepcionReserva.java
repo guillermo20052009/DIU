@@ -1,5 +1,6 @@
 package gestionhotel.modelo.repository;
 
+// Manejo de las excepciones para Reserva
 public class ExcepcionReserva extends RuntimeException {
     private String mensaje;
 

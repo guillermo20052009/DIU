@@ -2,6 +2,8 @@ package gestionhotel.modelo;
 
 import java.sql.Date;
 
+//Clase interna para recoger de la base de datos la reserva, no será utilizado internamente
+
 public class ReservaVO {
     private int idReserva;
     private java.sql.Date fechaLlegada;

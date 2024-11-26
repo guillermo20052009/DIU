@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="contenido" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="com.example.conversorexamen.controller.ImagenController" >
+   <children>
+       <Label layoutX="126.0" layoutY="236.0" prefHeight="19.0" prefWidth="190.0" text="Numero de Monedas actuales:" />
+      <Label fx:id="numero" layoutX="366.0" layoutY="236.0"/>
+      <ImageView fx:id="imagen" fitHeight="150.0" fitWidth="200.0" layoutX="216.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

@@ -4,6 +4,7 @@ import gestionhotel.modelo.PersonaVO;
 
 import java.util.ArrayList;
 
+// Interfaz que maneja las funciones de acceso a la base de datos, en concreto a la tabla Persona
 public interface PersonaRepository {
     ArrayList<PersonaVO> ObtenerListaPersonas() throws ExcepcionPersona;
 
