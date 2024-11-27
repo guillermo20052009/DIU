@@ -9,76 +9,82 @@
             styleClass="border-pane"
             stylesheets="@styles/Main.css">
 
-    <!-- Menú Dropdown (Opciones) -->
+    <!-- Contenedor de la barra superior -->
     <top>
-        <HBox spacing="10" styleClass="top-hbox">
+        <VBox spacing="5" styleClass="top-vbox" style="-fx-background-color: #2D3E50;">
             <children>
-                <MenuButton text="Opciones" styleClass="menu-button">
-                    <items>
-                        <MenuItem fx:id="menuItem1" text="Opción 1" />
-                        <MenuItem fx:id="menuItem2" text="Opción 2" />
-                        <MenuItem fx:id="menuItem3" text="Opción 3" />
-                    </items>
-                </MenuButton>
+                <!-- Menú Dropdown (Opciones) -->
+                <HBox spacing="10" styleClass="menu-hbox">
+                    <children>
+                        <MenuButton  text="Progreso" styleClass="menu-button">
+                            <items>
+                                <MenuItem fx:id="menuItem1" text="Doble" />
+                                <MenuItem fx:id="menuItem2" text="Doble Individual" />
+                                <MenuItem fx:id="menuItem3" text="Junior Suite"/>
+                                <MenuItem fx:id="menuItem4" text="Suite"/>
+                            </items>
+                        </MenuButton>
 
-                <MenuButton text="Configuración" styleClass="menu-button">
-                    <items>
-                        <MenuItem fx:id="menuItem4" text="Ajustes" />
-                        <MenuItem fx:id="menuItem5" text="Preferencias" />
-                    </items>
-                </MenuButton>
+                        <MenuButton text="Ocupación" styleClass="menu-button">
+                            <items>
+                                <MenuItem fx:id="menuItem1" text="Estadísticas" />
+                            </items>
+                        </MenuButton>
+                    </children>
+                </HBox>
+
+                <!-- Barra con botones -->
+                <HBox spacing="10" styleClass="top-hbox">
+                    <children>
+                        <Label text="Listado de Usuarios" textFill="WHITE" HBox.hgrow="ALWAYS" styleClass="top-label">
+                            <HBox.margin>
+                                <Insets left="10.0" top="15.0" />
+                            </HBox.margin>
+                        </Label>
+
+                        <Button fx:id="searchButton1" onAction="#añadirUsuario" text="Añadir" styleClass="button-add">
+                            <HBox.margin>
+                                <Insets top="15.0" />
+                            </HBox.margin>
+                        </Button>
+
+                        <Button fx:id="editButton" text="Editar" styleClass="button-edit">
+                            <HBox.margin>
+                                <Insets top="15.0" />
+                            </HBox.margin>
+                        </Button>
+
+                        <Button fx:id="deleteButton" text="Eliminar" styleClass="button-delete">
+                            <HBox.margin>
+                                <Insets top="15.0" />
+                            </HBox.margin>
+                        </Button>
+
+                        <Button fx:id="reservasButton" text="Reservas" styleClass="button-reservas">
+                            <HBox.margin>
+                                <Insets right="10.0" top="15.0" />
+                            </HBox.margin>
+                        </Button>
+
+                        <Region HBox.hgrow="ALWAYS" />
+
+                        <TextField fx:id="searchField" alignment="TOP_LEFT" promptText="Buscar..." styleClass="search-field">
+                            <HBox.margin>
+                                <Insets top="15.0" />
+                            </HBox.margin>
+                        </TextField>
+                        <Button fx:id="searchButton" onAction="#buscarPorDNI" text="Buscar" styleClass="button-search">
+                            <HBox.margin>
+                                <Insets right="10.0" top="15.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
             </children>
-        </HBox>
+        </VBox>
     </top>
 
-    <!-- Barra con botones (ya existente) -->
-    <HBox spacing="10" styleClass="top-hbox">
-        <children>
-            <Label text="Listado de Usuarios" textFill="WHITE" HBox.hgrow="ALWAYS" styleClass="top-label">
-                <HBox.margin>
-                    <Insets left="10.0" top="15.0" />
-                </HBox.margin>
-            </Label>
-
-            <Button fx:id="searchButton1" onAction="#añadirUsuario" text="Añadir" styleClass="button-add">
-                <HBox.margin>
-                    <Insets top="15.0" />
-                </HBox.margin>
-            </Button>
-
-            <Button fx:id="editButton" text="Editar" styleClass="button-edit">
-                <HBox.margin>
-                    <Insets top="15.0" />
-                </HBox.margin>
-            </Button>
-
-            <Button fx:id="deleteButton" text="Eliminar" styleClass="button-delete">
-                <HBox.margin>
-                    <Insets top="15.0" />
-                </HBox.margin>
-            </Button>
-
-            <Button fx:id="reservasButton" text="Reservas" styleClass="button-reservas">
-                <HBox.margin>
-                    <Insets right="10.0" top="15.0" />
-                </HBox.margin>
-            </Button>
-
-            <Region HBox.hgrow="ALWAYS" />
-
-            <TextField fx:id="searchField" alignment="TOP_LEFT" promptText="Buscar..." styleClass="search-field">
-                <HBox.margin>
-                    <Insets top="15.0" />
-                </HBox.margin>
-            </TextField>
-            <Button fx:id="searchButton" onAction="#buscarPorDNI" text="Buscar" styleClass="button-search">
-                <HBox.margin>
-                    <Insets right="10.0" top="15.0" />
-                </HBox.margin>
-            </Button>
-        </children>
-    </HBox>
-
+    <!-- Contenido principal -->
     <center>
         <ScrollPane fx:id="scrollPane" fitToWidth="true" styleClass="scroll-pane">
             <content>
