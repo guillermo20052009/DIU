@@ -1,0 +1,57 @@
+/* Estilo general de fondo */
+.root {
+    -fx-background-color: #e0f7fa; /* Fondo claro azul */
+    -fx-font-family: "Arial", sans-serif;
+}
+
+/* Estilo para el contenedor que tiene el título y las imágenes */
+#contenedorGaleria {
+    -fx-background-color: #80deea; /* Fondo azul claro para el contenedor */
+    -fx-border-radius: 10px;
+    -fx-padding: 20px;
+    -fx-alignment: center;
+}
+
+/* Título de la galería */
+#tituloGaleria {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #00796b; /* Color azul verdoso */
+    -fx-padding: 10px;
+    -fx-alignment: center;
+    -fx-font-family: "Arial", sans-serif;
+}
+
+/* Estilo para el TilePane (galería de imágenes) */
+#galeriaTilePane {
+    -fx-background-color: transparent; /* Sin fondo */
+    -fx-hgap: 10px; /* Espaciado horizontal */
+    -fx-vgap: 10px; /* Espaciado vertical */
+    -fx-padding: 20px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, #80deea, 10, 0, 0, 5); /* Sombra suave alrededor */
+}
+
+/* Estilo para las imágenes con sombra */
+.image-view {
+    -fx-effect: dropshadow(gaussian, #000000, 10, 0, 0, 5); /* Sombra negra */
+    -fx-background-color: transparent; /* Sin fondo */
+    -fx-border-radius: 10px;
+}
+
+/* Estilo para el botón de la flecha */
+#botonSiguiente {
+    -fx-background-color: #3f8e9e; /* Azul verdoso */
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-border-radius: 50%;
+    -fx-padding: 10px;
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, #004d40, 10, 0, 0, 5); /* Sombra suave */
+}
+
+/* Estilo cuando el botón es hover (al pasar el ratón) */
+#botonSiguiente:hover {
+    -fx-background-color: #004d40; /* Azul más oscuro */
+}

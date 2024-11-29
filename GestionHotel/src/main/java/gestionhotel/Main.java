@@ -134,6 +134,17 @@ public class Main extends Application {
         stage.show();
     }
 
+    public void Progreso() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/ProgresoDobleInd.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 900, 800);
+        ProgresoDobleIndController controller2 = loader.getController();
+        Stage stage = new Stage();
+        stage.setTitle("Progreso");
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     public static void main(String[] args) {
         launch(args);

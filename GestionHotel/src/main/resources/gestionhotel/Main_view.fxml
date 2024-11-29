@@ -18,7 +18,7 @@
                     <children>
                         <MenuButton  text="Progreso" styleClass="menu-button">
                             <items>
-                                <MenuItem fx:id="menuItem1" text="Doble" />
+                                <MenuItem fx:id="menuItem1" text="Doble" onAction="#abrirProgreso"/>
                                 <MenuItem fx:id="menuItem2" text="Doble Individual" />
                                 <MenuItem fx:id="menuItem3" text="Junior Suite"/>
                                 <MenuItem fx:id="menuItem4" text="Suite"/>

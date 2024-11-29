@@ -304,4 +304,10 @@ public class MainController {
             }
         }
     }
+
+    @FXML
+    private void abrirProgreso() throws IOException {
+        main.Progreso();
+    }
+
 }
