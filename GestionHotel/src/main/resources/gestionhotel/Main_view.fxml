@@ -19,15 +19,15 @@
                         <MenuButton  text="Progreso" styleClass="menu-button">
                             <items>
                                 <MenuItem fx:id="menuItem1" text="Doble" onAction="#abrirProgreso"/>
-                                <MenuItem fx:id="menuItem2" text="Doble Individual" />
-                                <MenuItem fx:id="menuItem3" text="Junior Suite"/>
-                                <MenuItem fx:id="menuItem4" text="Suite"/>
+                                <MenuItem fx:id="menuItem2" text="Doble Individual" onAction="#abrirProgreso"/>
+                                <MenuItem fx:id="menuItem3" text="Junior Suite" onAction="#abrirProgreso"/>
+                                <MenuItem fx:id="menuItem4" text="Suite" onAction="#abrirProgreso"/>
                             </items>
                         </MenuButton>
 
                         <MenuButton text="Ocupación" styleClass="menu-button">
                             <items>
-                                <MenuItem fx:id="menuItem1" text="Estadísticas" />
+                                <MenuItem fx:id="menuItem5" text="Estadísticas" />
                             </items>
                         </MenuButton>
                     </children>

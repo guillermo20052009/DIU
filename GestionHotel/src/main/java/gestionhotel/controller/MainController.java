@@ -306,8 +306,10 @@ public class MainController {
     }
 
     @FXML
-    private void abrirProgreso() throws IOException {
-        main.Progreso();
+    private void abrirProgreso(ActionEvent event) throws IOException {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String menuItemText = menuItem.getText();
+        main.Progreso(menuItemText);
     }
 
 }

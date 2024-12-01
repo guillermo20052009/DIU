@@ -127,4 +127,55 @@ public class ReservaRepositoryImpl implements ReservaRepository {
             throw new ExcepcionReserva("No se ha podido realizar la busqueda del ID");
         }
     }
+
+    @Override
+    public int countDobles() throws ExcepcionReserva {
+        return countByType("Doble");
+    }
+
+    @Override
+    public int countDoblesInd() throws ExcepcionReserva {
+        return countByType("Doble Individual");
+    }
+
+    @Override
+    public int countJSuite() throws ExcepcionReserva {
+        return countByType("Junior Suite");
+    }
+
+    @Override
+    public int countSuite() throws ExcepcionReserva {
+        return countByType("Suite");
+    }
+
+    /**
+     * Método auxiliar para contar habitaciones de un tipo específico reservadas actualmente.
+     *
+     * @param tipoHabitacion El tipo de habitación (Doble, Doble Individual, etc.)
+     * @return Número de habitaciones reservadas actualmente de ese tipo.
+     * @throws ExcepcionReserva Si ocurre algún error en la consulta.
+     */
+    private int countByType(String tipoHabitacion) throws ExcepcionReserva {
+        int count = 0;
+        String query = "SELECT COUNT(*) AS total " +
+                "FROM reserva " +
+                "WHERE tipo_Hab = ? AND fecha_Llegada <= CURRENT_DATE AND fecha_Salida >= CURRENT_DATE";
+
+        try (Connection conn = this.conexion.conectarBD();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, tipoHabitacion);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return count;
+    }
+
 }

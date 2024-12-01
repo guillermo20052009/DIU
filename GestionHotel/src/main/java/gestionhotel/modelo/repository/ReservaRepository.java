@@ -16,4 +16,9 @@ public interface ReservaRepository {
     void editReserva(ReservaVO var1) throws ExcepcionReserva;
 
     int lastId() throws ExcepcionReserva;
+
+    int countDobles() throws ExcepcionReserva;
+    int countDoblesInd() throws ExcepcionReserva;
+    int countJSuite() throws ExcepcionReserva;
+    int countSuite() throws ExcepcionReserva;
 }

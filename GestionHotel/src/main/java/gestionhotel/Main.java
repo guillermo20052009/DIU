@@ -3,7 +3,6 @@ package gestionhotel;
 import gestionhotel.controller.*;
 import gestionhotel.modelo.PersonaModelo;
 import gestionhotel.modelo.ReservaModelo;
-import gestionhotel.modelo.repository.PersonaRepository;
 import gestionhotel.modelo.repository.impl.PersonaRepositoryImpl;
 import gestionhotel.modelo.repository.impl.ReservaRepositoryImpl;
 import javafx.application.Application;
@@ -36,6 +35,14 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
         modelo=new PersonaModelo();
+
+        reservaModelo=new ReservaModelo();
+        reservaModelo.setReservaRepository(reservaRepository);
+        reservaModelo.contarDoblesOcupadas();
+        reservaModelo.contarDoblesIndOcupadas();
+        reservaModelo.contarJSuitesOcupadas();
+        reservaModelo.contarSuitesOcupadas();
+
         modelo.setPersonaRepository(personaRepository);
         controller.setPersonaModelo(modelo);
         controller.setPersonas();
@@ -78,8 +85,6 @@ public class Main extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/VistaReservas.fxml"));
         Parent root = loader.load();
         controllerReserva = loader.getController();
-        reservaModelo=new ReservaModelo();
-        reservaModelo.setPersonaRepository(reservaRepository);
         controllerReserva.setReservaModelo(reservaModelo);
         controllerReserva.setDni(dni);
         controllerReserva.setReservas();
@@ -134,18 +139,50 @@ public class Main extends Application {
         stage.show();
     }
 
-    public void Progreso() throws IOException {
+// Se encarga de abrir la ventana de progreso de ocupación de las habitaciones
+    public void Progreso(String opcion) throws IOException {
+        String[] imagenes=seleccionarImagenes(opcion);
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/ProgresoDobleInd.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, 900, 800);
         ProgresoDobleIndController controller2 = loader.getController();
+        controller2.setImagenes(imagenes);
+        controller2.setReservaModelo(reservaModelo);
         Stage stage = new Stage();
         stage.setTitle("Progreso");
         stage.setScene(scene);
         stage.show();
     }
 
+    // Decide las fotos que vamos a mostrar según la opcion del menú que hayamos pulsado
+    private String[] seleccionarImagenes(String opcion) throws IOException {
+        if (opcion.equals("Doble")) {
+            return new String[]{
+                    "file:resources/imagen2.jpg",
+                    "file:resources/imagen3.jpg",
+                    "file:resources/imagen4.jpg"
+            };
+        } else if (opcion.equals("Doble Individual")) {
+            return new String[]{
+                    "file:resources/imagen10.jpg",
+                    "file:resources/imagen11.jpg",
+                    "file:resources/imagen12.jpg"
+            };
+        } else if (opcion.equals("Junior Suite")) {
+            return new String[]{
+                    "file:resources/imagen5.jpg",
+                    "file:resources/imagen6.jpg",
+                    "file:resources/imagen7.jpg"
+            };
+        }
+        return new String[]{
+                "file:resources/imagen8.jpg",
+                "file:resources/imagen9.jpg",
+                "file:resources/imagen13.jpg"
+        };
 
+    }
     public static void main(String[] args) {
         launch(args);
     }

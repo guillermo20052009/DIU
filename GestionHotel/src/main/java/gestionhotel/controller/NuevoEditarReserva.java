@@ -139,7 +139,8 @@ public class NuevoEditarReserva {
     private Reserva crearReserva() {
         // Obtener valores de los campos del formulario
         if (opcion==1) {
-            id = reservaModelo.getLastId();
+            id = (reservaModelo.getLastId()+1);
+            System.out.println(id);
         }
         String dniCliente = dniTextField.getText();
         java.sql.Date fechaLlegada = fechaLlegadaDatePicker.getValue() != null ? Date.valueOf(fechaLlegadaDatePicker.getValue().toString()) : null;

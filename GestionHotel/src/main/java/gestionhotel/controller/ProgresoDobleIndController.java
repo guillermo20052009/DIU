@@ -1,10 +1,13 @@
 package gestionhotel.controller;
 
+import gestionhotel.modelo.ReservaModelo;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
@@ -23,23 +26,29 @@ public class ProgresoDobleIndController {
     @FXML
     private ImageView imagenView; // ImageView para mostrar la imagen actual
 
+    @FXML
+    private ProgressIndicator progressIndicator; // ProgressIndicator para mostrar el progreso
+
     private int imagenIndex = 0; // Índice para navegar entre las imágenes
-    private final String[] imagenes = {
-            "file:resources/imagen2.jpg",
-            "file:resources/imagen3.jpg",
-            "file:resources/imagen4.jpg"
-    };
+    private String[] imagenes;
+    private ReservaModelo reservaModelo;
 
     @FXML
     public void initialize() {
-        // Llamar al metodo para cargar la primera imagen
+    }
+
+    public void setImagenes(String[] imagenes) {
+        this.imagenes = imagenes;
         cargarImagen();
-
-        // Iniciar la animación para cambiar automáticamente la imagen cada 5 segundos
         iniciarCambioAutomatico();
-
-        // Configurar el botón para cambiar la imagen manualmente
         configurarBotonSiguiente();
+    }
+
+    public void setReservaModelo(ReservaModelo reservaModelo) {
+        this.reservaModelo = reservaModelo;
+
+        // Vincular bidireccionalmente el progreso del ProgressIndicator con el modelo
+        progressIndicator.progressProperty().bindBidirectional(reservaModelo.getProgresoDobleIndProperty());
     }
 
     private void cargarImagen() {
@@ -58,13 +67,13 @@ public class ProgresoDobleIndController {
         timeline.setCycleCount(Timeline.INDEFINITE);  // Ciclo infinito
         timeline.play();  // Iniciar la animación
     }
+
     @FXML
     private void cerrarVentana() {
         // Cerrar la ventana actual
         Stage stage = (Stage) botonCerrar.getScene().getWindow();
         stage.close();
     }
-
 
     @FXML
     private void cambiarImagen() {
@@ -88,10 +97,8 @@ public class ProgresoDobleIndController {
         fadeTransition.play(); // Reproducir la transición de salida
     }
 
-
     private void configurarBotonSiguiente() {
         // Configurar el botón para cambiar la imagen manualmente
-        // Este código depende de cómo tengas el botón en tu FXML, pero lo puedes hacer así:
         botonSiguiente.setOnAction(e -> cambiarImagen());
     }
 }
