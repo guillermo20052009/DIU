@@ -27,7 +27,10 @@
 
                         <MenuButton text="Ocupación" styleClass="menu-button">
                             <items>
-                                <MenuItem fx:id="menuItem5" text="Estadísticas" />
+                                <MenuItem fx:id="menuItem5" text="Doble" onAction="#abrirEstadisticas"/>
+                                <MenuItem fx:id="menuItem6" text="Doble Individual"  onAction="#abrirEstadisticas"/>
+                                <MenuItem fx:id="menuItem7" text="Junior Suite"  onAction="#abrirEstadisticas"/>
+                                <MenuItem fx:id="menuItem8" text="Suite"  onAction="#abrirEstadisticas"/>
                             </items>
                         </MenuButton>
                     </children>

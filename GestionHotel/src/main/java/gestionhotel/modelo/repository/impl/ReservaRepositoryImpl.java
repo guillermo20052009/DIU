@@ -58,7 +58,6 @@ public class ReservaRepositoryImpl implements ReservaRepository {
 // Asumiendo que `reservaVO` tiene los métodos getters correctos
             stmt.setDate(1, reservaVO.getFechaSalida());  // Usa .getFechaSalida() que debería devolver un java.sql.Date
             stmt.setDate(2, reservaVO.getFechaLlegada());  // Usa .getFechaLlegada() que también debería devolver un java.sql.Date
-            System.out.println(reservaVO.getFechaLlegada());
             stmt.setString(3, reservaVO.getTipo_habitacion().replaceAll("_"," "));
             stmt.setBoolean(4, reservaVO.isFumador());  // Fumador como boolean
             stmt.setString(5, reservaVO.getRegimen().replaceAll("_"," "));  // Régimen como String
@@ -105,7 +104,6 @@ public class ReservaRepositoryImpl implements ReservaRepository {
 
 
             stmt.executeUpdate();
-            System.out.println("hola");
         } catch (Exception var4) {
             throw new ExcepcionReserva("No se ha podido realizar la edición");
         }
@@ -148,13 +146,6 @@ public class ReservaRepositoryImpl implements ReservaRepository {
         return countByType("Suite");
     }
 
-    /**
-     * Método auxiliar para contar habitaciones de un tipo específico reservadas actualmente.
-     *
-     * @param tipoHabitacion El tipo de habitación (Doble, Doble Individual, etc.)
-     * @return Número de habitaciones reservadas actualmente de ese tipo.
-     * @throws ExcepcionReserva Si ocurre algún error en la consulta.
-     */
     private int countByType(String tipoHabitacion) throws ExcepcionReserva {
         int count = 0;
         String query = "SELECT COUNT(*) AS total " +
@@ -177,5 +168,49 @@ public class ReservaRepositoryImpl implements ReservaRepository {
 
         return count;
     }
+
+    @Override
+    public int[] countMonthsByType(String tipoHabitacion) throws ExcepcionReserva {
+        int[] countByMonth = new int[12]; // Un array para cada mes (de enero a diciembre)
+
+        String sql = "SELECT m.mes, COUNT(r.id_reserva) AS total " +
+                "FROM ( " +
+                "    SELECT 1 AS mes UNION ALL " +
+                "    SELECT 2 UNION ALL " +
+                "    SELECT 3 UNION ALL " +
+                "    SELECT 4 UNION ALL " +
+                "    SELECT 5 UNION ALL " +
+                "    SELECT 6 UNION ALL " +
+                "    SELECT 7 UNION ALL " +
+                "    SELECT 8 UNION ALL " +
+                "    SELECT 9 UNION ALL " +
+                "    SELECT 10 UNION ALL " +
+                "    SELECT 11 UNION ALL " +
+                "    SELECT 12 " +
+                ") AS m " +
+                "LEFT JOIN reserva r ON MONTH(r.fecha_Llegada) = m.mes AND r.tipo_Hab = ? " +
+                "GROUP BY m.mes " +
+                "ORDER BY m.mes";
+
+
+        try (Connection conn = this.conexion.conectarBD();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, tipoHabitacion);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int mes = rs.getInt("mes") - 1; // Los meses en la base de datos son de 1 a 12, pero el array empieza en 0
+                    countByMonth[mes] = rs.getInt("total");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ExcepcionReserva("Error al contar las reservas por mes.");
+        }
+
+        return countByMonth;
+    }
+
 
 }

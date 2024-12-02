@@ -62,9 +62,18 @@ public class DetallesReservaController {
 
     // Eliminamos la reserva de la base de datos y de la vista
     public void eliminarReserva() throws ExcepcionPersona {
-        reservaModelo.eliminarReserva(reserva.getIdReserva(),reserva.getDni_cliente());
-        reservaController.eliminarTarjetasReserva(reserva.getIdReserva());
+        // Eliminar reserva en el modelo
+        reservaModelo.eliminarReserva(reserva.getIdReserva(), reserva.getDni_cliente());
 
+        // Comprobar si la reserva es "actual"
+        java.time.LocalDate fechaActual = java.time.LocalDate.now();
+        if (reserva.getFechaLlegada().toLocalDate().isBefore(fechaActual) || reserva.getFechaLlegada().toLocalDate().isEqual(fechaActual)) {
+            if (reserva.getFechaSalida().toLocalDate().isAfter(fechaActual) || reserva.getFechaSalida().toLocalDate().isEqual(fechaActual)) {
+                // Llamar a incrementar si la reserva está "activa"
+                reservaModelo.decrementar(reserva.getTipoHabitacion());
+            }
+        }
+        reservaController.eliminarTarjetasReserva(reserva.getIdReserva());
     }
 
     // llamamos a la función del main que abre la pantalla de editar con los datos de la reserva actual

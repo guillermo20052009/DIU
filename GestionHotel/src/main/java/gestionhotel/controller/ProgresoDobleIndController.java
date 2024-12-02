@@ -7,6 +7,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +23,8 @@ public class ProgresoDobleIndController {
     Button botonSiguiente;
     @FXML
     Button botonCerrar;
+    @FXML
+    Label titulo;
 
     @FXML
     private ImageView imagenView; // ImageView para mostrar la imagen actual
@@ -44,11 +47,44 @@ public class ProgresoDobleIndController {
         configurarBotonSiguiente();
     }
 
-    public void setReservaModelo(ReservaModelo reservaModelo) {
+    public void setReservaModelo(ReservaModelo reservaModelo, String opcion) {
         this.reservaModelo = reservaModelo;
+        this.relacionar(opcion);
+    }
 
-        // Vincular bidireccionalmente el progreso del ProgressIndicator con el modelo
-        progressIndicator.progressProperty().bindBidirectional(reservaModelo.getProgresoDobleIndProperty());
+    private void relacionar(String opcion){
+        switch (opcion) {
+            case "Doble":
+                // Normalizar numeroDobles para que el ProgressIndicator represente un rango de 0 a 1
+                progressIndicator.progressProperty().bind(
+                        reservaModelo.numeroDoblesProperty().divide(50)
+                );
+                break;
+
+            case "Doble Individual":
+                // Normalizar numeroDoblesInd
+                progressIndicator.progressProperty().bind(
+                        reservaModelo.numeroDoblesIndProperty().divide(50)
+                );
+                break;
+
+            case "Junior Suite":
+                // Normalizar numeroJSuite
+                progressIndicator.progressProperty().bind(
+                        reservaModelo.numeroJSuiteProperty().divide(50)
+                );
+                break;
+
+            case "Suite":
+                // Normalizar numeroSuite
+                progressIndicator.progressProperty().bind(
+                        reservaModelo.numeroSuiteProperty().divide(50)
+                );
+                break;
+
+            default:
+                throw new IllegalArgumentException("Opción no válida: " + opcion);
+        }
     }
 
     private void cargarImagen() {
@@ -100,5 +136,8 @@ public class ProgresoDobleIndController {
     private void configurarBotonSiguiente() {
         // Configurar el botón para cambiar la imagen manualmente
         botonSiguiente.setOnAction(e -> cambiarImagen());
+    }
+    public void setTitle(String texto) {
+        titulo.setText("Progreso de habitaciones "+texto);
     }
 }

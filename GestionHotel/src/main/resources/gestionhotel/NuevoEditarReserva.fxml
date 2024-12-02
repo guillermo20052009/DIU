@@ -64,6 +64,6 @@
     <HBox spacing="10" alignment="CENTER">
         <Button fx:id="aceptarButton" text="Aceptar" styleClass="btnAceptar" onAction="#añadir"/>
         <Button fx:id="limpiarButton" text="Limpiar" styleClass="btnLimpiar" onAction="#limpiarFormulario"/>
-        <Button fx:id="cancelarButton" text="Cancelar" styleClass="btnCancelar"/>
+        <Button fx:id="cancelarButton" text="Cancelar" styleClass="btnCancelar" onAction="#cancelar"/>
     </HBox>
 </VBox>

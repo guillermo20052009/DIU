@@ -16,7 +16,7 @@
                 <Region HBox.hgrow="ALWAYS" />
 
                 <!-- Título centrado -->
-                <Label alignment="CENTER" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;" text="Progreso de Habitaciones Dobles" />
+                <Label fx:id="titulo" alignment="CENTER" style="-fx-text-fill: white; -fx-font-size: 18; -fx-font-weight: bold;" text="" />
 
                 <!-- Espaciador flexible que empuja el botón de cerrar hacia la derecha -->
                 <Region HBox.hgrow="ALWAYS" />

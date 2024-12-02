@@ -148,7 +148,8 @@ public class Main extends Application {
         Scene scene = new Scene(root, 900, 800);
         ProgresoDobleIndController controller2 = loader.getController();
         controller2.setImagenes(imagenes);
-        controller2.setReservaModelo(reservaModelo);
+        controller2.setReservaModelo(reservaModelo,opcion);
+        controller2.setTitle(opcion);
         Stage stage = new Stage();
         stage.setTitle("Progreso");
         stage.setScene(scene);
@@ -183,6 +184,29 @@ public class Main extends Application {
         };
 
     }
+
+    public void Estadisticas(String opcion) throws IOException {
+        String[] imagenes = seleccionarImagenes(opcion);
+
+        // Cargar la vista FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/Estadisticas.fxml"));
+        Parent root = loader.load();
+
+        // Obtener el controlador de la vista
+        EstadisticasController controller2 = loader.getController();
+
+        // Establecer los datos en el gráfico, configurarlo y cambiar el color
+        controller2.setReservaModelo(reservaModelo);
+        controller2.setMeses(opcion);
+
+        // Crear la escena y configurar la ventana
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = new Stage();
+        stage.setTitle(opcion);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }

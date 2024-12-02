@@ -21,4 +21,7 @@ public interface ReservaRepository {
     int countDoblesInd() throws ExcepcionReserva;
     int countJSuite() throws ExcepcionReserva;
     int countSuite() throws ExcepcionReserva;
+
+    int[] countMonthsByType(String tipo) throws ExcepcionReserva;
+
 }

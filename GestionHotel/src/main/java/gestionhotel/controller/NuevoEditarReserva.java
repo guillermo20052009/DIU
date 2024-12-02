@@ -9,6 +9,7 @@ import gestionhotel.util.ReservaUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 import java.sql.Date;
 
@@ -92,6 +93,8 @@ public class NuevoEditarReserva {
                 Reserva reserva = crearReserva();
                 reservaModelo.addReserva(reserva);
                 reservaController.nuevaTarjetasReserva(reserva);
+                Stage stage = (Stage) aceptarButton.getScene().getWindow();
+                stage.close();
             }
         } else {
             if (comprobarCampos()) {
@@ -100,8 +103,12 @@ public class NuevoEditarReserva {
                 reservaController.eliminarReservaDelArrayList(reserva.getIdReserva());
                 reservaController.nuevaTarjetasReserva(reserva);
                 reservaController.mostrarTarjetasReserva();
+                Stage stage = (Stage) aceptarButton.getScene().getWindow();
+                stage.close();
             }
         }
+
+
     }
 
     private boolean comprobarCampos() {
@@ -132,15 +139,35 @@ public class NuevoEditarReserva {
             return false;
         }
 
+        // Comprobar que la fecha de llegada es mayor o igual a la fecha actual
+        if (fechaLlegadaDatePicker.getValue().isBefore(java.time.LocalDate.now())) {
+            // Mostrar una alerta si la fecha de llegada es anterior a la fecha actual
+            Alert alerta = new Alert(Alert.AlertType.WARNING);
+            alerta.setTitle("Fecha de llegada no válida");
+            alerta.setHeaderText(null);
+            alerta.setContentText("La fecha de llegada no puede ser anterior a hoy.");
+            alerta.showAndWait();
+            return false;
+        }
+
         return true;
     }
+
+    @FXML
+    private void cancelar() {
+        // Obtener el Stage actual
+        Stage stage = (Stage) cancelarButton.getScene().getWindow();
+
+        // Cerrar el Stage
+        stage.close();
+    }
+
 
 
     private Reserva crearReserva() {
         // Obtener valores de los campos del formulario
         if (opcion==1) {
             id = (reservaModelo.getLastId()+1);
-            System.out.println(id);
         }
         String dniCliente = dniTextField.getText();
         java.sql.Date fechaLlegada = fechaLlegadaDatePicker.getValue() != null ? Date.valueOf(fechaLlegadaDatePicker.getValue().toString()) : null;

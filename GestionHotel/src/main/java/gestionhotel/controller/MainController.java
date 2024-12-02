@@ -311,5 +311,11 @@ public class MainController {
         String menuItemText = menuItem.getText();
         main.Progreso(menuItemText);
     }
+    @FXML
+    private void abrirEstadisticas(ActionEvent event) throws IOException {
+        MenuItem menuItem = (MenuItem) event.getSource();
+        String menuItemText = menuItem.getText();
+        main.Estadisticas(menuItemText);
+    }
 
 }
