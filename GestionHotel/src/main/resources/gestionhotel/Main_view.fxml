@@ -33,6 +33,11 @@
                                 <MenuItem fx:id="menuItem8" text="Suite"  onAction="#abrirEstadisticas"/>
                             </items>
                         </MenuButton>
+                        <MenuButton text="Recursos">
+                            <items>
+                            <MenuItem fx:id="menuItem9" text="PaginaWeb"  onAction="#abrirWeb"/>
+                            </items>
+                        </MenuButton>
                     </children>
                 </HBox>
 

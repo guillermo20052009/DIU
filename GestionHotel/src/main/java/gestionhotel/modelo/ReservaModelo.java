@@ -18,15 +18,22 @@ import java.util.Iterator;
 // Clase usada para toda la lógica de negocio y la manipulación de la base de datos
 public class ReservaModelo {
     ReservaRepository reservaRepository;
-    DoubleProperty numeroDobles = new SimpleDoubleProperty(50);
-    DoubleProperty numeroDoblesInd = new SimpleDoubleProperty(50);
-    DoubleProperty numeroJSuite = new SimpleDoubleProperty(50);
-    DoubleProperty numeroSuite = new SimpleDoubleProperty(50);
+    int[] maximo = {20,80,15,5};
+    DoubleProperty numeroDobles = new SimpleDoubleProperty(maximo[1]);
+    DoubleProperty numeroDoblesInd = new SimpleDoubleProperty(maximo[0]);
+    DoubleProperty numeroJSuite = new SimpleDoubleProperty(maximo[2]);
+    DoubleProperty numeroSuite = new SimpleDoubleProperty(maximo[3]);
 
     // Constructor vacío para inicializar
     public ReservaModelo() {
     }
 
+    public void inicializarPropiedades() {
+        numeroDobles.set(maximo[1]);
+        numeroDoblesInd.set(maximo[0]);
+        numeroJSuite.set(maximo[2]);
+        numeroSuite.set(maximo[3]);
+    }
     // Inyectar el repository correspondiente
     public void setReservaRepository(ReservaRepository reservaRepository) {
         this.reservaRepository = reservaRepository;
@@ -72,18 +79,16 @@ public class ReservaModelo {
         return reservaRepository.lastId();
     }
 
-    public void contarOcupadas (){
-            double ocupadas = reservaRepository.countDobles();
-            numeroDobles.set(numeroDobles.get() - ocupadas);
-
-            ocupadas = reservaRepository.countDoblesInd();
-            numeroDoblesInd.set(numeroDoblesInd.get() - ocupadas);
-
-            ocupadas = reservaRepository.countJSuite();
-            numeroJSuite.set(numeroJSuite.get() - ocupadas);
-
-            ocupadas = reservaRepository.countSuite();
-            numeroSuite.set(numeroSuite.get() - ocupadas);
+    public void contarOcupadas() {
+        inicializarPropiedades();
+        int[] actuales = reservaRepository.countActuales();
+        for (int i = 0; i < actuales.length; i++) {
+            System.out.println(actuales[i]);
+        }
+        numeroDoblesInd.set(actuales[1]);
+        numeroDobles.set(actuales[0]);
+        numeroJSuite.set(actuales[2]);
+        numeroSuite.set(actuales[3]);
     }
 
     // Getters para las propiedades observables
@@ -103,57 +108,64 @@ public class ReservaModelo {
         return numeroSuite;
     }
 
+    public double getNumeroDobles() {
+        return numeroDobles.get();
+    }
+    public double getNumeroDoblesInd() {
+        return numeroDoblesInd.get();
+    }
+    public double getNumeroJSuite() {
+        return numeroJSuite.get();
+    }
+    public double getNumeroSuite() {
+        return numeroSuite.get();
+    }
 
+    public int getMaximo(tipo_habitacion tipoHabitacion) {
+        return tipoHabitacion == tipo_habitacion.DOBLE ? maximo[1] :
+                tipoHabitacion == tipo_habitacion.DOBLE_INDIVIDUAL ? maximo[0] :
+                        tipoHabitacion == tipo_habitacion.JUNIOR_SUITE ? maximo[2] :
+                                tipoHabitacion == tipo_habitacion.SUITE ? maximo[3] :
+                                        -1; // Devuelve -1 si no coincide ningún tipo
+    }
     public void setNumeroSuite(double valor) {
         numeroSuite.set(valor);
     }
     public void decrementar(tipo_habitacion tipoHabitacion) throws ExcepcionReserva {
-        switch (tipoHabitacion) {
-            case DOBLE:
-                numeroDobles.set(numeroDobles.get() + 1);
-                break;
-
-            case DOBLE_INDIVIDUAL:
-                numeroDoblesInd.set(numeroDoblesInd.get() + 1);
-                break;
-
-            case JUNIOR_SUITE:
-                numeroJSuite.set(numeroJSuite.get() + 1);
-                break;
-
-            case SUITE:
-                numeroSuite.set(numeroSuite.get() + 1);
-                break;
-
-            default:
-                throw new IllegalArgumentException("Tipo de habitación no reconocido: " + tipoHabitacion);
-        }
+        ajustarValor(-1,tipoHabitacion);
     }
 
     public void incrementar(tipo_habitacion tipoHabitacion){
+        ajustarValor(1,tipoHabitacion);
+    }
+    public void ajustarValor(double valor,tipo_habitacion tipoHabitacion) throws ExcepcionReserva {
         switch (tipoHabitacion) {
             case DOBLE:
-                numeroDobles.set(numeroDobles.get() - 1);
+                numeroDobles.set(numeroDobles.get() + valor);
                 break;
 
             case DOBLE_INDIVIDUAL:
-                numeroDoblesInd.set(numeroDoblesInd.get() - 1);
+                numeroDoblesInd.set(numeroDoblesInd.get() + valor);
                 break;
 
             case JUNIOR_SUITE:
-                numeroJSuite.set(numeroJSuite.get() - 1);
+                numeroJSuite.set(numeroJSuite.get() + valor);
                 break;
 
             case SUITE:
-                numeroSuite.set(numeroSuite.get() - 1);
+                numeroSuite.set(numeroSuite.get() + valor);
                 break;
 
             default:
                 throw new IllegalArgumentException("Tipo de habitación no reconocido: " + tipoHabitacion);
         }
     }
+
     public int[] contarReservasPorMes(String tipoHabitacion) throws ExcepcionReserva {
         return reservaRepository.countMonthsByType(tipoHabitacion);
+    }
+    public int contarReservasFecha(Reserva reserva) throws ExcepcionReserva {
+        return reservaRepository.countConcretasByType(ReservaUtil.convertirReservaVO(reserva));
     }
 
 }

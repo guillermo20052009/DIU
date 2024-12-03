@@ -135,9 +135,10 @@ public class MainController {
     // Devuelve el estilo de una tarjeta
     private String getCardStyle(boolean isSelected) {
         return isSelected
-                ? "-fx-border-color: #6E7C7F; -fx-background-color: #2689a6; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;"
-                : "-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;";
+                ? "-fx-border-color: #6E7C7F; -fx-background-color: #2689a6; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10; -fx-text-fill: white;"
+                : "-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10; -fx-text-fill: black;";
     }
+
 
     // Actualiza el contenedor con las tarjetas de las personas
     public void setData() {
@@ -271,6 +272,11 @@ public class MainController {
 
     public void alerta(String message, Alert.AlertType alertType) {
         new Alert(alertType, message).show();
+    }
+
+    @FXML
+    private void abrirWeb() throws IOException {
+        main.paginaWeb();
     }
 
 }

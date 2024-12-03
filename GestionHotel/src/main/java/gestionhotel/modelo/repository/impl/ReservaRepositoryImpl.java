@@ -1,5 +1,6 @@
 package gestionhotel.modelo.repository.impl;
 
+import gestionhotel.Reserva;
 import gestionhotel.modelo.PersonaVO;
 import gestionhotel.modelo.Regimen;
 import gestionhotel.modelo.ReservaVO;
@@ -127,27 +128,13 @@ public class ReservaRepositoryImpl implements ReservaRepository {
     }
 
     @Override
-    public int countDobles() throws ExcepcionReserva {
-        return countByType("Doble");
+    public int[] countActuales() throws ExcepcionReserva {
+        return countByType();
     }
 
-    @Override
-    public int countDoblesInd() throws ExcepcionReserva {
-        return countByType("Doble Individual");
-    }
-
-    @Override
-    public int countJSuite() throws ExcepcionReserva {
-        return countByType("Junior Suite");
-    }
-
-    @Override
-    public int countSuite() throws ExcepcionReserva {
-        return countByType("Suite");
-    }
-
-    private int countByType(String tipoHabitacion) throws ExcepcionReserva {
-        int count = 0;
+    private int[] countByType() throws ExcepcionReserva {
+        int[] counts = new int[4]; // Array para almacenar las cantidades de cada tipo
+        String[] tiposHabitacion = {"DOBLE INDIVIDUAL", "DOBLE", "JUNIOR SUITE", "SUITE"}; // Tipos de habitación
         String query = "SELECT COUNT(*) AS total " +
                 "FROM reserva " +
                 "WHERE tipo_Hab = ? AND fecha_Llegada <= CURRENT_DATE AND fecha_Salida >= CURRENT_DATE";
@@ -155,19 +142,21 @@ public class ReservaRepositoryImpl implements ReservaRepository {
         try (Connection conn = this.conexion.conectarBD();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, tipoHabitacion);
+            for (int i = 0; i < tiposHabitacion.length; i++) {
+                stmt.setString(1, tiposHabitacion[i]);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    count = rs.getInt("total");
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        counts[i] = rs.getInt("total"); // Almacenar la cantidad en el array
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return count;
+        return counts;
     }
+
 
     @Override
     public int[] countMonthsByType(String tipoHabitacion) throws ExcepcionReserva {
@@ -210,6 +199,39 @@ public class ReservaRepositoryImpl implements ReservaRepository {
         }
 
         return countByMonth;
+    }
+
+    @Override
+    public int countConcretasByType(ReservaVO reserva) throws ExcepcionReserva {
+        int count = 0;
+
+        // Consulta SQL para contar las reservas con las condiciones especificadas
+        String sql = "SELECT COUNT(*) AS total " +
+                "FROM reserva " +
+                "WHERE tipo_Hab = ? " +
+                "AND fecha_Llegada < ? " +
+                "AND fecha_Salida > ?";
+
+        try (Connection conn = this.conexion.conectarBD();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            // Establecer los valores en la consulta preparada
+            stmt.setString(1, reserva.getTipo_habitacion().replaceAll("_"," ")); // Tipo de habitación
+            stmt.setDate(2, reserva.getFechaLlegada());      // Fecha de llegada de la reserva pasada como parámetro
+            stmt.setDate(3, reserva.getFechaSalida());       // Fecha de salida de la reserva pasada como parámetro
+
+            // Ejecutar la consulta
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt("total"); // Obtener el conteo
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new ExcepcionReserva("Error al contar las reservas específicas.");
+        }
+
+        return count;
     }
 
 

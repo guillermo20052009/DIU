@@ -38,7 +38,7 @@ public class Main extends Application {
 
         reservaModelo=new ReservaModelo();
         reservaModelo.setReservaRepository(reservaRepository);
-        reservaModelo.contarOcupadas();
+
 
         modelo.setPersonaRepository(personaRepository);
         controller.setPersonaModelo(modelo);
@@ -112,7 +112,7 @@ public class Main extends Application {
     public void AñadirReservaEditar(String dni) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditarReserva.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root, 600, 500);
+        Scene scene = new Scene(root, 700, 500);
         NuevoEditarReserva controller2 = loader.getController();
         Stage stage = new Stage();
         controller2.setDniTextField(dni);
@@ -126,7 +126,7 @@ public class Main extends Application {
     public void AñadirReservaEditar(Reserva reserva) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/NuevoEditarReserva.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root, 600, 500);
+        Scene scene = new Scene(root, 700, 500);
         NuevoEditarReserva controller2 = loader.getController();
         Stage stage = new Stage();
         controller2.setData(reserva);
@@ -145,6 +145,7 @@ public class Main extends Application {
         Scene scene = new Scene(root, 900, 800);
         ProgresoDobleIndController controller2 = loader.getController();
         controller2.setImagenes(imagenes);
+        reservaModelo.contarOcupadas();
         controller2.setReservaModelo(reservaModelo,opcion);
         controller2.setTitle(opcion);
         Stage stage = new Stage();
@@ -175,23 +176,24 @@ public class Main extends Application {
     }
 
     public void Estadisticas(String opcion) throws IOException {
-        String[] imagenes = seleccionarImagenes(opcion);
-
-        // Cargar la vista FXML
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/Estadisticas.fxml"));
         Parent root = loader.load();
-
-        // Obtener el controlador de la vista
         EstadisticasController controller2 = loader.getController();
-
-        // Establecer los datos en el gráfico, configurarlo y cambiar el color
         controller2.setReservaModelo(reservaModelo);
         controller2.setMeses(opcion);
-
-        // Crear la escena y configurar la ventana
         Scene scene = new Scene(root, 800, 500);
         Stage stage = new Stage();
         stage.setTitle(opcion);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void paginaWeb() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gestionhotel/WebView.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, 600, 550);
+        Stage stage = new Stage();
+        stage.setTitle("Progreso");
         stage.setScene(scene);
         stage.show();
     }

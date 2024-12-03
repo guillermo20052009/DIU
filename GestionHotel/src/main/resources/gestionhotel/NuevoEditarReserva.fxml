@@ -51,8 +51,8 @@
                 </ComboBox>
             </VBox>
         </HBox>
-        <CheckBox fx:id="fumadorCheckBox" text="Fumador" styleClass="checkBox"/>
-        <VBox spacing="5" alignment="CENTER">
+        <CheckBox fx:id="fumadorCheckBox" text="Fumador" styleClass="checkBox" onAction="#mostrarLabelFumador"/>
+        <Label fx:id="fumadorLabel" text="En virtud de la ley de sanidad se informa a los clientes de que solo podrán fumar en las habitaciones reservadas para tal fin" visible="false" wrapText="true" />        <VBox spacing="5" alignment="CENTER">
             <Label text="Régimen:" styleClass="label"/>
             <RadioButton text="Alojamiento desayuno" fx:id="alojamientoRadioButton" />
             <RadioButton text="Media pension" fx:id="mediaPensionRadioButton" />

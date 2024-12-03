@@ -1,6 +1,7 @@
 package gestionhotel.controller;
 
 import gestionhotel.modelo.ReservaModelo;
+import gestionhotel.modelo.tipo_habitacion;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -54,10 +55,10 @@ public class ProgresoDobleIndController {
 
     private void relacionar(String opcion) {
         progressIndicator.progressProperty().bind(
-                opcion.equals("Doble") ? reservaModelo.numeroDoblesProperty().divide(50) :
-                   opcion.equals("Doble Individual") ? reservaModelo.numeroDoblesIndProperty().divide(50) :
-                      opcion.equals("Junior Suite") ? reservaModelo.numeroJSuiteProperty().divide(50) :
-                         opcion.equals("Suite") ? reservaModelo.numeroSuiteProperty().divide(50) :
+                opcion.equals("Doble") ? reservaModelo.numeroDoblesProperty().divide(reservaModelo.getMaximo(tipo_habitacion.DOBLE)) :
+                   opcion.equals("Doble Individual") ? reservaModelo.numeroDoblesIndProperty().divide(reservaModelo.getMaximo(tipo_habitacion.DOBLE_INDIVIDUAL)) :
+                      opcion.equals("Junior Suite") ? reservaModelo.numeroJSuiteProperty().divide(reservaModelo.getMaximo(tipo_habitacion.JUNIOR_SUITE)) :
+                         opcion.equals("Suite") ? reservaModelo.numeroSuiteProperty().divide(reservaModelo.getMaximo(tipo_habitacion.SUITE)) :
                              null // O valor por defecto (como 0 o un comportamiento de tu preferencia)
         );
     }

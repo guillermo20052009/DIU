@@ -12,6 +12,9 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.chrono.ChronoLocalDate;
 
 public class NuevoEditarReserva {
     // Campos de "Datos del cliente"
@@ -29,6 +32,8 @@ public class NuevoEditarReserva {
     private ComboBox<String> tipoHabitacionComboBox;
     @FXML
     private CheckBox fumadorCheckBox;
+    @FXML
+    private Label fumadorLabel;
 
     // Grupo de radio buttons
     private ToggleGroup regimenGroup;
@@ -86,16 +91,26 @@ public class NuevoEditarReserva {
         opcion = 1;
     }
 
+    private int espacio(Reserva reserva){
+        System.out.println(reservaModelo.contarReservasFecha(reserva));
+        return reservaModelo.contarReservasFecha(reserva);
+
+    }
+
     @FXML
     private void añadir() throws ExcepcionPersona {
         if (opcion == 1) {
             if (comprobarCampos()) {
                 Reserva reserva = crearReserva();
-                reservaModelo.addReserva(reserva);
-                reserva.setIdReserva(reservaModelo.getLastId());
-                reservaController.nuevaTarjetasReserva(reserva);
-                Stage stage = (Stage) aceptarButton.getScene().getWindow();
-                stage.close();
+                if (espacio(reserva)<reservaModelo.getMaximo(reserva.getTipoHabitacion())) {
+                    reservaModelo.addReserva(reserva);
+                    reserva.setIdReserva(reservaModelo.getLastId());
+                    reservaController.nuevaTarjetasReserva(reserva);
+                    Stage stage = (Stage) aceptarButton.getScene().getWindow();
+                    stage.close();
+                } else {
+                    mostrarAlerta("LLENOS","Lo siento señor las reservas para hoy están completas");
+                }
             }
         } else {
             if (comprobarCampos()) {
@@ -227,6 +242,14 @@ public class NuevoEditarReserva {
         alerta.setHeaderText(null);
         alerta.setContentText(mensaje);
         alerta.showAndWait();
+    }
+    @FXML
+    private void mostrarLabelFumador() {
+        if (fumadorCheckBox.isSelected()) {
+            fumadorLabel.setVisible(true); // Mostrar el Label
+        } else {
+            fumadorLabel.setVisible(false); // Ocultar el Label
+        }
     }
 }
 

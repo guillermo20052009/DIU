@@ -70,5 +70,9 @@
 .context-menu{
     -fx-background-color: #2E3B46;
 }
+Label{
+    -fx-text-fill: #2E3B46;
+    -fx-font-weight: bold;
+}
 
 

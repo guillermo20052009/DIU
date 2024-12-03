@@ -1,5 +1,6 @@
 package gestionhotel.modelo.repository;
 
+import gestionhotel.Reserva;
 import gestionhotel.modelo.PersonaVO;
 import gestionhotel.modelo.ReservaVO;
 
@@ -17,13 +18,10 @@ public interface ReservaRepository {
 
     int lastId() throws ExcepcionReserva;
 
-    int countDobles() throws ExcepcionReserva;
-    int countDoblesInd() throws ExcepcionReserva;
-    int countJSuite() throws ExcepcionReserva;
-    int countSuite() throws ExcepcionReserva;
-
-    int countActuales(String tipo) throws ExcepcionReserva;
+    int[] countActuales() throws ExcepcionReserva;
 
     int[] countMonthsByType(String tipo) throws ExcepcionReserva;
+
+    int countConcretasByType(ReservaVO reserva) throws ExcepcionReserva;
 
 }
