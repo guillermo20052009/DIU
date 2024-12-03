@@ -6,23 +6,17 @@ import gestionhotel.modelo.PersonaModelo;
 import gestionhotel.modelo.repository.ExcepcionPersona;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.VBox;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javafx.scene.control.Button;
-
-// Esta clase es la encargada de controlar el comportamiento de la primera ventana que se abre, es decir la vista de los clientes
+// Controlador principal para gestionar la vista de clientes
 public class MainController {
 
     @FXML
@@ -45,261 +39,221 @@ public class MainController {
     private ArrayList<Persona> personas;
     private Main main;
 
-
-    // vamos a controlar la velocidad del scroll y vamos a añadirle a los botones los "SetOnAction", lo hago aquí
-    // y no en el FXML porque van a tener un parámetro cosa que desde el FXML no se puede gestionar
+    // Inicializa el controlador y asigna eventos
     public void initialize() {
+        configurarScrollPane();
+        configurarBotones();
+    }
+
+    // Configura el scroll suave del contenedor
+    private void configurarScrollPane() {
         scrollPane.addEventFilter(ScrollEvent.SCROLL, event -> {
-            double deltaY = event.getDeltaY();
-            double currentVvalue = scrollPane.getVvalue();
-            double newVvalue = currentVvalue - deltaY * 0.0005;
-
+            double newVvalue = scrollPane.getVvalue() - event.getDeltaY() * 0.0005;
             scrollPane.setVvalue(Math.min(Math.max(newVvalue, 0), 1));
-
             event.consume();
         });
-        deleteButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    eliminar(deleteButton.getId());
-                } catch (ExcepcionPersona e) {
-                    throw new RuntimeException(e);
-                }
+    }
+
+    // Configura los botones principales
+    private void configurarBotones() {
+        deleteButton.setOnAction(event ->  {
+            try {
+                eliminar(deleteButton.getId());
+            } catch (ExcepcionPersona e) {
+                throw new RuntimeException(e);
             }
         });
-        editButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    editar(getPersona(editButton.getId()));
-                } catch (ExcepcionPersona e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        editButton.setOnAction(event ->  {
+            try {
+                editar(getPersona(editButton.getId()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
-        reservasButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    verReserva(reservasButton.getId());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        reservasButton.setOnAction(event -> {
+            try {
+                verReserva(reservasButton.getId());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         });
     }
 
-    //Inyectar el main
+    // Inyección de dependencias
     public void setMain(Main main) {
         this.main = main;
     }
 
-    //Inyectar el Modelo
     public void setPersonaModelo(PersonaModelo personaModelo) {
         this.personaModelo = personaModelo;
     }
 
-    //Inyectar la lista de personas
     public void setPersonas() throws ExcepcionPersona {
         personas = personaModelo.obtenerListaPersonas();
         setData();
     }
+    public ArrayList<Persona> getPersonas(){
+        return personas;
+    }
 
+    // Busca una persona en la lista
+    public Persona getPersona(String id) {
+        return personas.stream()
+                .filter(persona -> persona.getDNI().equals(id))
+                .findFirst()
+                .orElse(null);
+    }
 
-    // Función que busca a una persona en la lista
-    public Persona getPersona(String id){
-        for (Persona persona : personas) {
-            if (persona.getDNI().equals(id)) {
-                return persona;
+    // Crea una tarjeta de cliente
+    public VBox nuevaTarjeta(Persona persona) {
+        if (!personas.contains(persona)) personas.add(persona);
+
+        VBox userCard = crearTarjetaBase(persona);
+        userCard.setOnMouseClicked(event -> Seleccionar(event));
+        return userCard;
+    }
+
+    // Configura el estilo base de una tarjeta
+    private VBox crearTarjetaBase(Persona persona) {
+        VBox userCard = new VBox();
+        userCard.setStyle(getCardStyle(false));
+        userCard.setId(persona.getDNI());
+        userCard.setUserData(persona.getDNI());
+
+        Label dniLabel = new Label("DNI: " + persona.getDNI());
+        dniLabel.setId("dniLabel");
+        Label nameLabel = new Label("Nombre: " + persona.getNombre() + " " + persona.getApellidos());
+        nameLabel.setId("nameLabel");
+        Label addressLabel = new Label("Dirección: " + persona.getDireccion() + ", " +
+                persona.getLocalidad() + ", " + persona.getProvincia());
+        addressLabel.setId("addressLabel");
+
+        userCard.getChildren().addAll(dniLabel, nameLabel, addressLabel);
+        return userCard;
+    }
+
+    // Devuelve el estilo de una tarjeta
+    private String getCardStyle(boolean isSelected) {
+        return isSelected
+                ? "-fx-border-color: #6E7C7F; -fx-background-color: #2689a6; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;"
+                : "-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;";
+    }
+
+    // Actualiza el contenedor con las tarjetas de las personas
+    public void setData() {
+        personas.forEach(persona -> userCardContainer.getChildren().add(nuevaTarjeta(persona)));
+    }
+
+    public void setData(VBox userCard) {
+        userCardContainer.getChildren().add(userCard);
+    }
+
+    @FXML
+    private void buscarPorDNI() {
+        String dniBusqueda = searchField.getText().trim();
+        boolean encontrado = false;
+
+        for (Node node : userCardContainer.getChildren()) {
+            VBox userCard = (VBox) node;
+            boolean match = dniBusqueda.equals(userCard.getUserData());
+            userCard.setStyle(getCardStyle(match));
+            if (match) {
+                encontrado = true;
+                actualizarBotones(userCard);
+                scrollPane.setVvalue(userCardContainer.getChildren().indexOf(userCard) / (double) userCardContainer.getChildren().size());
+            }
+        }
+
+        alerta(encontrado ? "DNI encontrado" : "Este DNI no existe", encontrado ? Alert.AlertType.CONFIRMATION : Alert.AlertType.ERROR);
+    }
+
+    public Persona eliminarPersonaDelArrayList(String id) throws ExcepcionPersona {
+        Persona personaAEliminar = null;
+        for (Persona p : personas) {
+            if (p.getDNI().equals(id)) {
+                return p;
             }
         }
         return null;
     }
 
 
-    // Este metodo Construye una tarjeta de cliente, a partir de un Objeto Persona y la añade a la vista
-    public VBox nuevaTarjeta(Persona persona) {
-        if (!personas.contains(persona))
-            personas.add(persona);
-        VBox userCard = new VBox();
-        userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
-        userCard.setOnMouseClicked( (Event e) -> {
-            try {
-                Seleccionar(e);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
-        userCard.setId(persona.getDNI());
-        userCard.setUserData(persona.getDNI());
-
-        Label dniLabel = new Label("DNI: " + persona.getDNI());
-        dniLabel.setTextFill(javafx.scene.paint.Color.WHITE);
-        dniLabel.setId("dniLabel");
-        Label nameLabel = new Label("Nombre: " + persona.getNombre() + " " + persona.getApellidos());
-        nameLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-        nameLabel.setTextFill(javafx.scene.paint.Color.WHITE);
-        nameLabel.setId("nameLabel");
-
-        Label addressLabel = new Label("Dirección: " + persona.getDireccion() + ", "
-                + persona.getLocalidad() + ", "
-                + persona.getProvincia());
-        addressLabel.setTextFill(javafx.scene.paint.Color.WHITE);
-        addressLabel.setId("addressLabel");
-
-        userCard.getChildren().addAll(dniLabel, nameLabel, addressLabel);
-
-        return userCard;
-    }
-
-    // Itera sobre la lista y crea una tarjeta por cada elemento del ArrayList
-    public void setData() {
-        for (Persona persona : personas) {
-            VBox userCard = nuevaTarjeta(persona);
-            userCardContainer.getChildren().add(userCard);
-        }
-    }
-
-    // Esto lo usaremos para añadir una tarjeta nueva, una sola.
-    public void setData(VBox userCard) {
-        userCardContainer.getChildren().add(userCard);
-    }
-
-
-    // Esta función se encarga de iterar todas las cards hasta que encuentra una coincidencia en el dni y selecciona esa tarjeta
-    @FXML
-    private void buscarPorDNI() {
-        boolean encontrado = false;
-        String dniBusqueda = searchField.getText().trim();
-
-        for (javafx.scene.Node node : userCardContainer.getChildren()) {
-            VBox userCard = (VBox) node;
-            String dniTarjeta = (String) userCard.getUserData();
-            if (dniBusqueda.equals(dniTarjeta)) {
-                encontrado = true;
-                userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #2689a6; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
-                double targetScrollValue = userCardContainer.getChildren().indexOf(userCard) / (double) userCardContainer.getChildren().size();
-
-                lastSelectedVBox = userCard;
-                String id = userCard.getId();
-                deleteButton.setId(id);
-                editButton.setId(id);
-                reservasButton.setId(id);
-                scrollPane.setVvalue(targetScrollValue);
-            } else {
-                userCard.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
-            }
-        }
-        if (!encontrado) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Este DNI no existe");
-            alert.show();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "DNI encontrado");
-            alert.show();
-        }
-    }
-
-
-    // Elimina la persona seleccionada de la base de datos y luego llama una función que elimina esa card
     public void eliminar(String id) throws ExcepcionPersona {
         personaModelo.eliminarPersona(id);
+        personas.remove(eliminarPersonaDelArrayList(id));
         eliminarCard(id);
     }
 
-
-    // esta función itera sobre las cards
     public void eliminarCard(String id) {
+        Iterator<Node> iterator = userCardContainer.getChildren().iterator();
         boolean encontrado = false;
-        ObservableList<Node> children = userCardContainer.getChildren();
-        Iterator<Node> iterator = children.iterator();
 
-        while (iterator.hasNext() && !encontrado) {
+        while (iterator.hasNext()) {
             VBox userCard = (VBox) iterator.next();
-            String dniTarjeta = (String) userCard.getUserData();
-
-            if (id.equals(dniTarjeta)) {
-                encontrado = true;
+            if (id.equals(userCard.getUserData())) {
                 iterator.remove();
+                encontrado = true;
+                break;
             }
         }
-        if (!encontrado) {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "No se ha podido eliminar");
-            alert.show();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Eliminado con exito");
-            alert.show();
-        }
+
+        alerta(encontrado ? "Eliminado con éxito" : "No se ha podido eliminar", encontrado ? Alert.AlertType.CONFIRMATION : Alert.AlertType.ERROR);
     }
 
-    // Esta funcion se encarga de abrir la ventana de edición de usuario
-    public void editar(Persona persona) throws ExcepcionPersona, IOException {
-        if (lastSelectedVBox != null)
+    public void editar(Persona persona) throws IOException {
+        if (lastSelectedVBox != null) {
             main.EditarONuevo(persona);
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Debe tener a un usuario seleccionado");
-            alert.show();
+        } else {
+            alerta("Debe tener a un usuario seleccionado", Alert.AlertType.ERROR);
         }
     }
 
-    // Esta función se encarga de abrir la ventana de añadir usuarios
-    public void añadirUsuario() throws ExcepcionPersona, IOException {
+    public void añadirUsuario() throws IOException {
         main.EditarONuevo();
     }
 
-    // Esta función se encarga de abrir las reservas del cliente Seleccionado
     public void verReserva(String id) throws IOException {
-        if (lastSelectedVBox != null)
+        if (lastSelectedVBox != null) {
             main.verReserva(id);
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR, "Debe tener a un usuario seleccionado");
-            alert.show();
+        } else {
+            alerta("Debe tener a un usuario seleccionado", Alert.AlertType.ERROR);
         }
     }
 
-    // Esta función se encarga de manetener la logica de la carda seleccionada, cuando hacemos clic en una card, se
-    // cambia de color y se cambian los "id" de los botones al DNI de esa persona seleccionada
-    public void Seleccionar(Event event) throws IOException {
+    public void Seleccionar(javafx.event.Event event) {
         VBox vbox = (VBox) event.getSource();
         if (lastSelectedVBox != null && lastSelectedVBox != vbox) {
-            lastSelectedVBox.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #A2B9C0; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
+            lastSelectedVBox.setStyle(getCardStyle(false));
         }
-        vbox.setStyle("-fx-border-color: #6E7C7F; -fx-background-color: #2689a6; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;");
+        vbox.setStyle(getCardStyle(true));
         lastSelectedVBox = vbox;
-        String id = vbox.getId();
+        actualizarBotones(vbox);
+    }
+
+    private void actualizarBotones(VBox userCard) {
+        String id = userCard.getId();
         deleteButton.setId(id);
         editButton.setId(id);
         reservasButton.setId(id);
     }
 
-    // Esta función se encarga de buscar la tarjeta que tenemos que actualizar
     public void actualizarCard(Persona persona) {
-        ObservableList<Node> children = userCardContainer.getChildren();
-
-        for (Node node : children) {
+        for (Node node : userCardContainer.getChildren()) {
             VBox userCard = (VBox) node;
-            String dniTarjeta = (String) userCard.getUserData();
-
-            if (!persona.getDNI().equals(dniTarjeta)) continue;
-
-            actualizarTarjeta(userCard, persona);
-            break;
+            if (persona.getDNI().equals(userCard.getUserData())) {
+                actualizarTarjeta(userCard, persona);
+                break;
+            }
         }
     }
 
-    // Actualiza la tarjeta que hemos encontrado
     private void actualizarTarjeta(VBox userCard, Persona persona) {
         for (Node node : userCard.getChildren()) {
-            if (node instanceof Label) {
-                Label label = (Label) node;
-                if (label.getId().equals("dniLabel")) {
-                    label.setText("DNI: " + persona.getDNI());
-                } else if (label.getId().equals("nameLabel")) {
-                    label.setText("Nombre: " + persona.getNombre() + " " + persona.getApellidos());
-                } else if (label.getId().equals("addressLabel")) {
-                    label.setText("Dirección: " + persona.getDireccion() + ", " + persona.getLocalidad() + ", " + persona.getProvincia());
+            if (node instanceof Label label) {
+                switch (label.getId()) {
+                    case "dniLabel" -> label.setText("DNI: " + persona.getDNI());
+                    case "nameLabel" -> label.setText("Nombre: " + persona.getNombre() + " " + persona.getApellidos());
+                    case "addressLabel" -> label.setText("Dirección: " + persona.getDireccion() + ", " + persona.getLocalidad() + ", " + persona.getProvincia());
                 }
             }
         }
@@ -307,15 +261,16 @@ public class MainController {
 
     @FXML
     private void abrirProgreso(ActionEvent event) throws IOException {
-        MenuItem menuItem = (MenuItem) event.getSource();
-        String menuItemText = menuItem.getText();
-        main.Progreso(menuItemText);
+        main.Progreso(((MenuItem) event.getSource()).getText());
     }
+
     @FXML
     private void abrirEstadisticas(ActionEvent event) throws IOException {
-        MenuItem menuItem = (MenuItem) event.getSource();
-        String menuItemText = menuItem.getText();
-        main.Estadisticas(menuItemText);
+        main.Estadisticas(((MenuItem) event.getSource()).getText());
+    }
+
+    public void alerta(String message, Alert.AlertType alertType) {
+        new Alert(alertType, message).show();
     }
 
 }

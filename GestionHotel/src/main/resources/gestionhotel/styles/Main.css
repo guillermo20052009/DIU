@@ -67,5 +67,8 @@
 .user-card-container {
     -fx-padding: 25 0 25 0;
 }
+.context-menu{
+    -fx-background-color: #2E3B46;
+}
 
 

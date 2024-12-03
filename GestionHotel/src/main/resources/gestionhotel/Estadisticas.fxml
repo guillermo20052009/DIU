@@ -1,15 +1,15 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
-
 <?import javafx.scene.layout.AnchorPane?>
+
 <AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="gestionhotel.controller.EstadisticasController">
     <BarChart fx:id="barChart" prefWidth="600" prefHeight="400" styleClass="chart-style">
         <xAxis>
-            <CategoryAxis fx:id="xAxis"/>
+            <CategoryAxis fx:id="xAxis" label="Mes"/>
         </xAxis>
         <yAxis>
-            <NumberAxis fx:id="yAxis"/>
+            <NumberAxis fx:id="yAxis" label="Habitaciones Alquiladas" tickUnit="1" autoRanging="false" lowerBound="0" upperBound="50"/>
         </yAxis>
     </BarChart>
 </AnchorPane>

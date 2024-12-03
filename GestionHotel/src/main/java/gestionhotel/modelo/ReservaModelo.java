@@ -96,51 +96,7 @@ public class ReservaModelo {
         numeroSuite.set(numeroSuite.get() - ocupadas);
     }
 
-    // Getters para las propiedades observables
-    public DoubleProperty numeroDoblesProperty() {
-        return numeroDobles;
-    }
 
-    public DoubleProperty numeroDoblesIndProperty() {
-        return numeroDoblesInd;
-    }
-
-    public DoubleProperty numeroJSuiteProperty() {
-        return numeroJSuite;
-    }
-
-    public DoubleProperty numeroSuiteProperty() {
-        return numeroSuite;
-    }
-
-    // Métodos para obtener y establecer los valores (opcional)
-    public double getNumeroDobles() {
-        return numeroDobles.get();
-    }
-
-    public void setNumeroDobles(double valor) {
-        numeroDobles.set(valor);
-    }
-
-    public double getNumeroDoblesInd() {
-        return numeroDoblesInd.get();
-    }
-
-    public void setNumeroDoblesInd(double valor) {
-        numeroDoblesInd.set(valor);
-    }
-
-    public double getNumeroJSuite() {
-        return numeroJSuite.get();
-    }
-
-    public void setNumeroJSuite(double valor) {
-        numeroJSuite.set(valor);
-    }
-
-    public double getNumeroSuite() {
-        return numeroSuite.get();
-    }
 
     public void setNumeroSuite(double valor) {
         numeroSuite.set(valor);
@@ -213,6 +169,22 @@ public class ReservaModelo {
     // Método auxiliar común que llama al método countMonthsByType
     private int[] contarReservasPorMes(String tipoHabitacion) throws ExcepcionReserva {
         return reservaRepository.countMonthsByType(tipoHabitacion);
+    }
+    // Getters para las propiedades observables
+    public DoubleProperty numeroDoblesProperty() {
+        return numeroDobles;
+    }
+
+    public DoubleProperty numeroDoblesIndProperty() {
+        return numeroDoblesInd;
+    }
+
+    public DoubleProperty numeroJSuiteProperty() {
+        return numeroJSuite;
+    }
+
+    public DoubleProperty numeroSuiteProperty() {
+        return numeroSuite;
     }
 
 }

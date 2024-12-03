@@ -158,31 +158,23 @@ public class Main extends Application {
 
     // Decide las fotos que vamos a mostrar según la opcion del menú que hayamos pulsado
     private String[] seleccionarImagenes(String opcion) throws IOException {
-        if (opcion.equals("Doble")) {
-            return new String[]{
-                    "file:resources/imagen2.jpg",
-                    "file:resources/imagen3.jpg",
-                    "file:resources/imagen4.jpg"
-            };
-        } else if (opcion.equals("Doble Individual")) {
-            return new String[]{
-                    "file:resources/imagen10.jpg",
-                    "file:resources/imagen11.jpg",
-                    "file:resources/imagen12.jpg"
-            };
-        } else if (opcion.equals("Junior Suite")) {
-            return new String[]{
-                    "file:resources/imagen5.jpg",
-                    "file:resources/imagen6.jpg",
-                    "file:resources/imagen7.jpg"
-            };
-        }
-        return new String[]{
+        return opcion.equals("Doble") ? new String[]{
+                "file:resources/imagen2.jpg",
+                "file:resources/imagen3.jpg",
+                "file:resources/imagen4.jpg"
+        } : opcion.equals("Doble Individual") ? new String[]{
+                "file:resources/imagen10.jpg",
+                "file:resources/imagen11.jpg",
+                "file:resources/imagen12.jpg"
+        } : opcion.equals("Junior Suite") ? new String[]{
+                "file:resources/imagen5.jpg",
+                "file:resources/imagen6.jpg",
+                "file:resources/imagen7.jpg"
+        } : new String[]{
                 "file:resources/imagen8.jpg",
                 "file:resources/imagen9.jpg",
                 "file:resources/imagen13.jpg"
         };
-
     }
 
     public void Estadisticas(String opcion) throws IOException {

@@ -24,66 +24,86 @@ public class EstadisticasController {
         this.reservaModelo = reservaModelo;
     }
 
-
-    public void setMeses(String opcion) {
-        switch (opcion) {
-            case "Doble":
-                this.meses = reservaModelo.contarReservasPorMesDobles();
-                break;
-
-            case "Doble Individual":
-                this.meses = reservaModelo.contarReservasPorMesDoblesInd();
-                break;
-
-            case "Junior Suite":
-                this.meses = reservaModelo.contarReservasPorMesJSuite();
-                break;
-
-            case "Suite":
-                this.meses = reservaModelo.contarReservasPorMesSuites();
-                break;
-
-            default:
-                throw new IllegalArgumentException("Opción no válida: " + opcion);
+        public void setMeses(String opcion) {
+            this.meses = opcion.equals("Doble") ? reservaModelo.contarReservasPorMesDobles() :
+                    opcion.equals("Doble Individual") ? reservaModelo.contarReservasPorMesDoblesInd() :
+                            opcion.equals("Junior Suite") ? reservaModelo.contarReservasPorMesJSuite() :
+                                    opcion.equals("Suite") ? reservaModelo.contarReservasPorMesSuites() :
+                                            null; // O también puedes poner una lista vacía o cualquier valor por defecto
+            setDatosGrafico();
         }
-        setDatosGrafico();
-    }
 
 
     public void setDatosGrafico() {
-        if (xAxis != null && yAxis != null) {
-            // Limpiar datos previos
-            barChart.getData().clear();
-
-            // Títulos de los ejes
-            xAxis.setLabel("Mes");
-            yAxis.setLabel("Habitaciones Alquiladas");
-
-            // Array con los nombres de los meses
-            String[] nombresMeses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-                    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-
-            // Crear una nueva serie de datos
-            XYChart.Series<String, Number> series = new XYChart.Series<>();
-            series.setName("Habitaciones Alquiladas");
-
-            // Rellenar los datos en la serie
-            for (int i = 0; i < nombresMeses.length; i++) {
-                series.getData().add(new XYChart.Data<>(nombresMeses[i], meses[i]));
-            }
-
-            // Agregar la serie al gráfico
-            barChart.getData().add(series);
-
-            // Estilo CSS (recomendado usar un archivo externo)
-            barChart.lookupAll(".chart-bar").forEach(node -> {
-                node.setStyle("-fx-bar-fill: #4c82af;"); // Color azul
-            });
-
-            // Ajustar el tamaño del gráfico
-            barChart.setPrefSize(800, 400);
-        } else {
+        if (xAxis == null || yAxis == null) {
             System.err.println("Error: xAxis o yAxis no están inicializados.");
+            return;
         }
+
+        // Limpiar datos previos y establecer etiquetas de los ejes
+        limpiarDatosPrevios();
+        establecerEtiquetasEjes();
+
+        // Crear y agregar los datos al gráfico
+        agregarDatosAlGrafico();
+
+        // Establecer estilo del gráfico
+        aplicarEstiloGrafico();
+
+        // Ajustar el rango del eje Y y tamaño del gráfico
+        actualizarRangoEjeY();
+        ajustarTamanioGrafico();
     }
+
+    private void limpiarDatosPrevios() {
+        barChart.getData().clear();
+    }
+
+    private void establecerEtiquetasEjes() {
+        xAxis.setLabel("Mes");
+        yAxis.setLabel("Habitaciones Alquiladas");
+    }
+
+    private void agregarDatosAlGrafico() {
+        String[] nombresMeses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Habitaciones Alquiladas");
+
+        for (int i = 0; i < nombresMeses.length; i++) {
+            series.getData().add(new XYChart.Data<>(nombresMeses[i], meses[i]));
+        }
+
+        barChart.getData().add(series);
+    }
+
+    private void aplicarEstiloGrafico() {
+        barChart.lookupAll(".chart-bar").forEach(node -> node.setStyle("-fx-bar-fill: #4c82af;"));
+    }
+
+    private void ajustarTamanioGrafico() {
+        barChart.setPrefSize(800, 400);
+    }
+
+    public void actualizarRangoEjeY() {
+        // Encontrar el máximo en los datos
+        int maxReservas = obtenerMaximoReservas();
+
+        // Ajustar el límite superior dinámicamente
+        yAxis.setLowerBound(0); // El límite inferior siempre es 0
+        yAxis.setUpperBound(maxReservas + 1); // Límite superior ajustado (+1 para margen)
+        yAxis.setTickUnit(1); // Asegurar que las marcas incrementen de 1 en 1
+    }
+
+    private int obtenerMaximoReservas() {
+        int max = 0;
+        for (int reservas : meses) {
+            if (reservas > max) {
+                max = reservas;
+            }
+        }
+        return max;
+    }
+
 }

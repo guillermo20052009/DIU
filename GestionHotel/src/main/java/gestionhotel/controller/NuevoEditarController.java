@@ -13,7 +13,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-
 // Esta clase será la encargada de controlar la vista de la ventana de editar y añadir nuevo usuario
 public class NuevoEditarController {
 
@@ -36,8 +35,7 @@ public class NuevoEditarController {
     private Persona persona;
     private MainController mainController;
 
-
-// Este metodo se encargará de ir recogiendo lo que escribamos en los editText
+    // Este metodo se encargará de ir recogiendo lo que escribamos en los editText
     @FXML
     private void actualizarPersona(KeyEvent event) {
         if (persona != null) {
@@ -79,11 +77,6 @@ public class NuevoEditarController {
 
                 // Comprobar si el DNI es válido
                 if (!validarDni(dni)) {
-                    Alert alerta = new Alert(Alert.AlertType.WARNING);
-                    alerta.setTitle("DNI inválido");
-                    alerta.setHeaderText(null);
-                    alerta.setContentText("El DNI introducido no es válido.");
-                    alerta.showAndWait();
                     return; // Si el DNI no es válido, no seguimos
                 }
 
@@ -122,7 +115,6 @@ public class NuevoEditarController {
         }
     }
 
-
     public boolean comprobarCampos() {
         if (nombreField.getText().isEmpty() ||
                 apellidosField.getText().isEmpty() ||
@@ -130,34 +122,56 @@ public class NuevoEditarController {
                 localidadField.getText().isEmpty() ||
                 provinciaField.getText().isEmpty()) {
 
-            Alert alerta = new Alert(Alert.AlertType.WARNING);
-            alerta.setTitle("Campos incompletos");
-            alerta.setHeaderText(null);
-            alerta.setContentText("Por favor, complete todos los campos.");
-            alerta.showAndWait();
-
+            mostrarAlerta("Campos incompletos", "Por favor, complete todos los campos.");
             return false;
         }
         return true;
     }
 
-    // Comprobamos la veracidad del dni
+    // Agregar la función para verificar si el DNI ya existe en el ArrayList
+    private boolean dniRepetido(String dni) {
+        // Asumiendo que personaModelo.getPersonas() devuelve el ArrayList de personas
+        for (Persona p : mainController.getPersonas()) {
+            if (p.getDNI().equals(dni)) {
+                return true; // El DNI ya está en el sistema
+            }
+        }
+        return false; // El DNI no está repetido
+    }
+
+    // Modificar la función validarDni para llamar a dniRepetido
     private boolean validarDni(String dni) {
         if (dni == null || dni.length() != 9) {
+            mostrarAlerta("DNI inválido", "El DNI introducido no es válido.");
             return false;
         }
 
         String numero = dni.substring(0, 8);
         String letra = dni.substring(8).toUpperCase();
 
+        // Verificar si el DNI ya está repetido
+        if (dniRepetido(dni)) {
+            mostrarAlerta("DNI repetido", "El DNI ya existe en el sistema.");
+            return false;
+        }
+
         try {
             long num = Long.parseLong(numero);
         } catch (NumberFormatException e) {
             return false; // Si no es un número, no es válido
         }
+
         char[] letras = {'T', 'R', 'W', 'A', 'G', 'M', 'Y', 'F', 'P', 'D', 'X', 'B', 'N', 'J', 'Z', 'S', 'Q', 'V', 'H', 'L', 'C', 'K', 'E'};
         char letraEsperada = letras[(int) (Long.parseLong(numero) % 23)];
         return letra.equals(String.valueOf(letraEsperada));
     }
 
+
+    // Método para mostrar alertas
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle(titulo);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
 }

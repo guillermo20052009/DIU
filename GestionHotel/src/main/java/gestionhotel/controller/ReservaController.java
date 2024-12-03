@@ -36,6 +36,16 @@ public class ReservaController {
     int col=0;
     int row=0;
 
+    // Inicia las columnas que usaremos y el tamaño que tendrán
+    public void initialize() {
+        // Crear las columnas y asignarles el mismo valor de forma eficiente
+        for (int i = 0; i < 4; i++) {
+            ColumnConstraints column = new ColumnConstraints();
+            column.setPercentWidth(25);
+            column.setHalignment(HPos.CENTER);
+            userCardContainer.getColumnConstraints().add(column);
+        }
+    }
 
     // Inyectamos el modelo de Reserva
     public void setReservaModelo(ReservaModelo reservaModelo) {
@@ -54,38 +64,49 @@ public class ReservaController {
 
 
     // Funcion para añadir una card de una reserva existente y añadirle un action cuando pulsemos
-    public void nuevaTarjetasReserva(Reserva reserva)  {
-        if (!reservas.contains(reserva))
+    public void nuevaTarjetasReserva(Reserva reserva) {
+        if (!reservas.contains(reserva)) {
             reservas.add(reserva);
-        VBox card = new VBox(10);
-        card.setOnMouseClicked( (Event e) -> {
-            try {
-                verDetalles(e);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+        }
 
+        VBox card = crearCardReserva(reserva);
+        userCardContainer.add(card, col, row);
+
+        // Actualizar columnas y filas
+        col = (col + 1) % 4;
+        if (col == 0) {
+            row++;
+        }
+    }
+
+    private VBox crearCardReserva(Reserva reserva) {
+        VBox card = new VBox(10);
         card.setId(String.valueOf(reserva.getIdReserva()));
         card.setStyle("-fx-background-color: #A3C4DC; -fx-border-radius: 10; -fx-padding: 15; -fx-effect: dropshadow(gaussian, #2A4D69, 10, 0, 0, 2);");
         card.setAlignment(Pos.CENTER);
+        card.setOnMouseClicked(e -> verDetallesConExcepcion(e));
 
-        Label idLabel = new Label("ID Reserva: " + reserva.getIdReserva());
-        idLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #2A4D69;");
-        idLabel.setTextAlignment(TextAlignment.CENTER);
-
-        Label fechaLabel = new Label("Fecha Llegada: " + reserva.getFechaLlegada().toString());
-        fechaLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #3D5A80;");
-        fechaLabel.setTextAlignment(TextAlignment.CENTER);
+        // Crear y agregar etiquetas
+        Label idLabel = crearLabel("ID Reserva: " + reserva.getIdReserva(), 18, "#2A4D69", true);
+        Label fechaLabel = crearLabel("Fecha Llegada: " + reserva.getFechaLlegada().toString(), 16, "#3D5A80", false);
 
         card.getChildren().addAll(idLabel, fechaLabel);
 
-        userCardContainer.add(card, col, row);
+        return card;
+    }
 
-        col++;
-        if (col > 3) {
-            col = 0;
-            row++;
+    private Label crearLabel(String text, int fontSize, String color, boolean bold) {
+        Label label = new Label(text);
+        label.setStyle(String.format("-fx-font-size: %dpx; -fx-font-weight: %s; -fx-text-fill: %s;", fontSize, bold ? "bold" : "normal", color));
+        label.setTextAlignment(TextAlignment.CENTER);
+        return label;
+    }
+
+    private void verDetallesConExcepcion(Event e) {
+        try {
+            verDetalles(e);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -140,26 +161,7 @@ public class ReservaController {
         reservaModelo.getLastId();
     }
 
-    // Inicia las columnas que usaremos y el tamaño que tendrán
-    public void initialize() {
-        ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(25);
-        col1.setHalignment(HPos.CENTER);
 
-        ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(25);
-        col2.setHalignment(HPos.CENTER);
-
-        ColumnConstraints col3 = new ColumnConstraints();
-        col3.setPercentWidth(25);
-        col3.setHalignment(HPos.CENTER);
-
-        ColumnConstraints col4 = new ColumnConstraints();
-        col4.setPercentWidth(25);
-        col4.setHalignment(HPos.CENTER);
-
-        userCardContainer.getColumnConstraints().addAll(col1, col2, col3, col4);
-    }
 
     // se recogen las reservas de la base de datos
     public void setReservas() throws ExcepcionReserva {

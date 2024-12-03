@@ -6,12 +6,14 @@ import gestionhotel.modelo.ReservaModelo;
 import gestionhotel.modelo.repository.ExcepcionPersona;
 import gestionhotel.modelo.repository.ExcepcionReserva;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 // Esta clase es el controlador de los detalles de la reserva, contiene los botones de editar y eliminar.
 public class DetallesReservaController {
@@ -35,12 +37,15 @@ public class DetallesReservaController {
     @FXML
     private Label dniClienteLabel;
     @FXML
-    Button cancelButton;
+    private Button cancelButton;
+    @FXML
+    private Button editButton;
 
     private Reserva reserva;
     private ReservaModelo reservaModelo;
     private ReservaController reservaController;
     private Main main;
+
     @FXML
     private void initialize() {
     }
@@ -74,11 +79,30 @@ public class DetallesReservaController {
             }
         }
         reservaController.eliminarTarjetasReserva(reserva.getIdReserva());
+
+        // Cerrar el stage después de eliminar
+        cerrar();
     }
 
     // llamamos a la función del main que abre la pantalla de editar con los datos de la reserva actual
     public void editarReserva() throws ExcepcionReserva, IOException {
-        main.AñadirReservaEditar(reserva);
+        // Verificamos si la reserva es futura
+        LocalDate fechaActual = LocalDate.now();
+        if (reserva.getFechaLlegada().toLocalDate().isAfter(fechaActual)) {
+            main.AñadirReservaEditar(reserva);
+            cerrar();
+        } else {
+            mostrarAlerta("No se puede editar una reserva pasada", "La reserva que intentas editar ya ha pasado y no puede modificarse.");
+        }
+    }
+
+    // Mostrar alerta
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.WARNING);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 
     // Colocamos los datos
@@ -97,10 +121,8 @@ public class DetallesReservaController {
 
     // cerramos la ventana
     @FXML
-    public void cerrar(){
+    public void cerrar() {
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
-
-
 }

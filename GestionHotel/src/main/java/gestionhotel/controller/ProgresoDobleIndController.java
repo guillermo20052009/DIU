@@ -52,40 +52,17 @@ public class ProgresoDobleIndController {
         this.relacionar(opcion);
     }
 
-    private void relacionar(String opcion){
-        switch (opcion) {
-            case "Doble":
-                // Normalizar numeroDobles para que el ProgressIndicator represente un rango de 0 a 1
-                progressIndicator.progressProperty().bind(
-                        reservaModelo.numeroDoblesProperty().divide(50)
-                );
-                break;
-
-            case "Doble Individual":
-                // Normalizar numeroDoblesInd
-                progressIndicator.progressProperty().bind(
-                        reservaModelo.numeroDoblesIndProperty().divide(50)
-                );
-                break;
-
-            case "Junior Suite":
-                // Normalizar numeroJSuite
-                progressIndicator.progressProperty().bind(
-                        reservaModelo.numeroJSuiteProperty().divide(50)
-                );
-                break;
-
-            case "Suite":
-                // Normalizar numeroSuite
-                progressIndicator.progressProperty().bind(
-                        reservaModelo.numeroSuiteProperty().divide(50)
-                );
-                break;
-
-            default:
-                throw new IllegalArgumentException("Opción no válida: " + opcion);
-        }
+    private void relacionar(String opcion) {
+        progressIndicator.progressProperty().bind(
+                opcion.equals("Doble") ? reservaModelo.numeroDoblesProperty().divide(50) :
+                   opcion.equals("Doble Individual") ? reservaModelo.numeroDoblesIndProperty().divide(50) :
+                      opcion.equals("Junior Suite") ? reservaModelo.numeroJSuiteProperty().divide(50) :
+                         opcion.equals("Suite") ? reservaModelo.numeroSuiteProperty().divide(50) :
+                             null // O valor por defecto (como 0 o un comportamiento de tu preferencia)
+        );
     }
+
+
 
     private void cargarImagen() {
         // Cargar la imagen en el ImageView
