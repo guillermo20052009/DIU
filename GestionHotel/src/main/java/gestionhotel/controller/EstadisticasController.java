@@ -25,11 +25,8 @@ public class EstadisticasController {
     }
 
         public void setMeses(String opcion) {
-            this.meses = opcion.equals("Doble") ? reservaModelo.contarReservasPorMesDobles() :
-                    opcion.equals("Doble Individual") ? reservaModelo.contarReservasPorMesDoblesInd() :
-                            opcion.equals("Junior Suite") ? reservaModelo.contarReservasPorMesJSuite() :
-                                    opcion.equals("Suite") ? reservaModelo.contarReservasPorMesSuites() :
-                                            null; // O también puedes poner una lista vacía o cualquier valor por defecto
+            this.meses=reservaModelo.contarReservasPorMes(opcion);
+
             setDatosGrafico();
         }
 

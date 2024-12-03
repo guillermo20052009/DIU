@@ -38,10 +38,7 @@ public class Main extends Application {
 
         reservaModelo=new ReservaModelo();
         reservaModelo.setReservaRepository(reservaRepository);
-        reservaModelo.contarDoblesOcupadas();
-        reservaModelo.contarDoblesIndOcupadas();
-        reservaModelo.contarJSuitesOcupadas();
-        reservaModelo.contarSuitesOcupadas();
+        reservaModelo.contarOcupadas();
 
         modelo.setPersonaRepository(personaRepository);
         controller.setPersonaModelo(modelo);

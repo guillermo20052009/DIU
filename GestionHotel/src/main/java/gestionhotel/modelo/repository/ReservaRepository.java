@@ -22,6 +22,8 @@ public interface ReservaRepository {
     int countJSuite() throws ExcepcionReserva;
     int countSuite() throws ExcepcionReserva;
 
+    int countActuales(String tipo) throws ExcepcionReserva;
+
     int[] countMonthsByType(String tipo) throws ExcepcionReserva;
 
 }

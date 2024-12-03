@@ -72,30 +72,36 @@ public class ReservaModelo {
         return reservaRepository.lastId();
     }
 
-    // Contar habitaciones Dobles ocupadas actualmente
-    public void contarDoblesOcupadas() throws ExcepcionReserva {
-        double ocupadas = reservaRepository.countDobles();
-        numeroDobles.set(numeroDobles.get() - ocupadas);
+    public void contarOcupadas (){
+            double ocupadas = reservaRepository.countDobles();
+            numeroDobles.set(numeroDobles.get() - ocupadas);
+
+            ocupadas = reservaRepository.countDoblesInd();
+            numeroDoblesInd.set(numeroDoblesInd.get() - ocupadas);
+
+            ocupadas = reservaRepository.countJSuite();
+            numeroJSuite.set(numeroJSuite.get() - ocupadas);
+
+            ocupadas = reservaRepository.countSuite();
+            numeroSuite.set(numeroSuite.get() - ocupadas);
     }
 
-    // Contar habitaciones Dobles Individuales ocupadas actualmente
-    public void contarDoblesIndOcupadas() throws ExcepcionReserva {
-        double ocupadas = reservaRepository.countDoblesInd();
-        numeroDoblesInd.set(numeroDoblesInd.get() - ocupadas);
+    // Getters para las propiedades observables
+    public DoubleProperty numeroDoblesProperty() {
+        return numeroDobles;
     }
 
-    // Contar Junior Suites ocupadas actualmente
-    public void contarJSuitesOcupadas() throws ExcepcionReserva {
-        double ocupadas = reservaRepository.countJSuite();
-        numeroJSuite.set(numeroJSuite.get() - ocupadas);
+    public DoubleProperty numeroDoblesIndProperty() {
+        return numeroDoblesInd;
     }
 
-    // Contar Suites ocupadas actualmente
-    public void contarSuitesOcupadas() throws ExcepcionReserva {
-        double ocupadas = reservaRepository.countSuite();
-        numeroSuite.set(numeroSuite.get() - ocupadas);
+    public DoubleProperty numeroJSuiteProperty() {
+        return numeroJSuite;
     }
 
+    public DoubleProperty numeroSuiteProperty() {
+        return numeroSuite;
+    }
 
 
     public void setNumeroSuite(double valor) {
@@ -146,45 +152,8 @@ public class ReservaModelo {
                 throw new IllegalArgumentException("Tipo de habitación no reconocido: " + tipoHabitacion);
         }
     }
-    // Método para contar las reservas por mes para habitaciones DOBLE
-    public int[] contarReservasPorMesDobles() throws ExcepcionReserva {
-        return contarReservasPorMes("Doble");
-    }
-
-    // Método para contar las reservas por mes para habitaciones DOBLE_INDIVIDUAL
-    public int[] contarReservasPorMesDoblesInd() throws ExcepcionReserva {
-        return contarReservasPorMes("Doble Individual");
-    }
-
-    // Método para contar las reservas por mes para Junior Suites
-    public int[] contarReservasPorMesJSuite() throws ExcepcionReserva {
-        return contarReservasPorMes("Junior Suite");
-    }
-
-    // Método para contar las reservas por mes para Suites
-    public int[] contarReservasPorMesSuites() throws ExcepcionReserva {
-        return contarReservasPorMes("Suite");
-    }
-
-    // Método auxiliar común que llama al método countMonthsByType
-    private int[] contarReservasPorMes(String tipoHabitacion) throws ExcepcionReserva {
+    public int[] contarReservasPorMes(String tipoHabitacion) throws ExcepcionReserva {
         return reservaRepository.countMonthsByType(tipoHabitacion);
-    }
-    // Getters para las propiedades observables
-    public DoubleProperty numeroDoblesProperty() {
-        return numeroDobles;
-    }
-
-    public DoubleProperty numeroDoblesIndProperty() {
-        return numeroDoblesInd;
-    }
-
-    public DoubleProperty numeroJSuiteProperty() {
-        return numeroJSuite;
-    }
-
-    public DoubleProperty numeroSuiteProperty() {
-        return numeroSuite;
     }
 
 }
